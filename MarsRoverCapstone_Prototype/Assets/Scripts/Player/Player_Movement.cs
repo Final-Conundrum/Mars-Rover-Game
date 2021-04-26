@@ -19,8 +19,8 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] public Camera mainCamera => Camera.main;
 
     // Speed variables, the range between min and max speed is -1 to 1
-    public float driveSpeed = 0.03f;
-    public float airSpeed = 1f;
+    public float driveSpeed = 0.1f;
+    public float airSpeedDivision = 0.5f;
     public float rotateSpeed = 1f;
     public float jumpSpeed = 400f;
 
@@ -37,14 +37,15 @@ public class Player_Movement : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
-        switch(grounded)
+    {
+
+        // Movement inputs for WASD and Arrow keys trigger continuous translation
+        float acceleration = Input.GetAxis("Vertical") * driveSpeed;
+        float rotation = Input.GetAxis("Horizontal") * rotateSpeed;
+
+        switch (grounded)
         {
             case true:
-                // Movement inputs for WASD and Arrow keys trigger continuous translation
-                float acceleration = Input.GetAxis("Vertical") * driveSpeed;
-                float rotation = Input.GetAxis("Horizontal") * rotateSpeed;
-
                 // Acceleration of Rover
                 body.velocity += transform.forward * acceleration;
                 
@@ -70,8 +71,11 @@ public class Player_Movement : MonoBehaviour
                 //AirRotationDirection(horizontalAxis);
 
                 // ALTERNATE MID-AIR ROTATIONS
-                body.velocity += transform.forward * verticalAxis * airSpeed;
-                transform.Rotate(0, horizontalAxis * rotateSpeed / 2, 0);
+                if(acceleration >= 0f)
+                {
+                    body.velocity += transform.forward * acceleration * airSpeedDivision;
+                }
+                transform.Rotate(0, rotation * 0.8f, 0);
 
                 // ALTERNATE MID-AIR TRANSLATIONS
                 //body.velocity += transform.right * horizontalAxis * airSpeed;
