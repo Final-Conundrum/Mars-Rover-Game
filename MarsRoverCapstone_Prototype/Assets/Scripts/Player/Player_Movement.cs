@@ -16,18 +16,17 @@ public class Player_Movement : MonoBehaviour
      * The movement is designed after 'tank' controls, where players can accelerate, reverse 
      * and rotate their vehicle to drive in a different direction.
      */
-    [SerializeField] public Camera mainCamera => Camera.main;
+    [SerializeField] private Camera mainCamera => Camera.main;
+    [SerializeField] private bool grounded;
+    Rigidbody body => GetComponent<Rigidbody>();
+
+    public float maxSpeed = 20f;
 
     // Speed variables, the range between min and max speed is -1 to 1
     public float driveSpeed = 0.1f;
     public float airSpeedDivision = 0.5f;
     public float rotateSpeed = 1f;
-    public float jumpSpeed = 400f;
-
-    Rigidbody body => GetComponent<Rigidbody>();
-    BoxCollider col => GetComponent<BoxCollider>();
-
-    [SerializeField] private bool grounded;
+    public float jumpVelocity = 400f;
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +37,6 @@ public class Player_Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         // Movement inputs for WASD and Arrow keys trigger continuous translation
         float acceleration = Input.GetAxis("Vertical") * driveSpeed;
         float rotation = Input.GetAxis("Horizontal") * rotateSpeed;
@@ -49,39 +47,32 @@ public class Player_Movement : MonoBehaviour
                 // Acceleration of Rover
                 body.velocity += transform.forward * acceleration;
                 
+                // Rotate Rover
                 transform.Rotate(0, rotation, 0);
 
                 // Input and AddForce for JUMP
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKey(KeyCode.Space))
                 {
-                    body.AddForce(transform.up * jumpSpeed);
+                    body.AddForce(transform.up * jumpVelocity);
                 }
-
-                // ALTERNATE MOVEMENT: Use translate for acceleration
-                //transform.Translate(0, 0, acceleration);
                 break;
 
             case false:
-                // Floats for mid-air translation
-                float verticalAxis = Input.GetAxis("Vertical");
-                float horizontalAxis = Input.GetAxis("Horizontal");
-
-                //body.velocity += (transform.forward * verticalAxis * airSpeed) + AirMovementDirection(verticalAxis, horizontalAxis) * airSpeed;     
-
-                //AirRotationDirection(horizontalAxis);
-
-                // ALTERNATE MID-AIR ROTATIONS
+                // Modify speed while mid-air
+                // While mid-air, only forward inputs apply to speed
                 if(acceleration >= 0f)
                 {
-                    body.velocity += transform.forward * acceleration * airSpeedDivision;
+                    body.velocity += transform.forward * (acceleration * airSpeedDivision);
                 }
-                transform.Rotate(0, rotation * 0.8f, 0);
 
-                // ALTERNATE MID-AIR TRANSLATIONS
-                //body.velocity += transform.right * horizontalAxis * airSpeed;
-                //body.velocity += transform.forward * verticalAxis * airSpeed;
-                //transform.Translate(horizontalAxis, 0, verticalAxis);
+                transform.Rotate(0, rotation * airSpeedDivision, 0);
                 break;
+        }
+
+        // Cap the speed at MaxSpeed
+        if (body.velocity.magnitude > maxSpeed)
+        {
+            body.velocity = body.velocity.normalized * maxSpeed;
         }
     }
 
@@ -137,4 +128,17 @@ public class Player_Movement : MonoBehaviour
             grounded = false;
         }
     }
+
+
+    // ALTERNATE MOVEMENT EXPERIMENTATION
+
+    // ALTERNATE MOVEMENT: Use translate for acceleration
+    //transform.Translate(0, 0, acceleration);
+
+    // ALTERNATE MID-AIR TRANSLATIONS
+    //body.velocity += (transform.forward * verticalAxis * airSpeed) + AirMovementDirection(verticalAxis, horizontalAxis) * airSpeed;     
+    //AirRotationDirection(horizontalAxis);
+    //body.velocity += transform.right * horizontalAxis * airSpeed;
+    //body.velocity += transform.forward * verticalAxis * airSpeed;
+    //transform.Translate(horizontalAxis, 0, verticalAxis);
 }
