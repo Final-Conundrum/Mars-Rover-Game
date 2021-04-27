@@ -27,7 +27,15 @@ public class Player_Movement : MonoBehaviour
     public float driveSpeed = 0.1f;
     public float airSpeedDivision = 0.5f;
     public float rotateSpeed = 1f;
+
+    // Jump variables, the Fall variables modify the speed in which the rover drops after the jump to give it weight
     public float jumpVelocity = 400f;
+    public float highJumpFall = 2f;
+    public float lowJumpFall = 1f;
+
+    // Input variables
+    private float _acceleration;
+    private float _rotation;
 
     // Start is called before the first frame update
     void Start()
@@ -39,9 +47,13 @@ public class Player_Movement : MonoBehaviour
     void Update()
     {
         // Movement inputs for WASD and Arrow keys trigger continuous translation
-        float acceleration = Input.GetAxis("Vertical") * driveSpeed;
-        float rotation = Input.GetAxis("Horizontal") * rotateSpeed;
-        
+        _acceleration = Input.GetAxis("Vertical") * driveSpeed;
+        _rotation = Input.GetAxis("Horizontal") * rotateSpeed;
+    }
+
+    // FixedUpdate reserved for modifying physics
+    private void FixedUpdate()
+    {
         switch (tankControls)
         {
             // The Rover is controlled by Tank controls (Forward/Back = Acceleration/Deceleration, Left/Right = Rotate Rover)
@@ -50,10 +62,10 @@ public class Player_Movement : MonoBehaviour
                 {
                     case true:
                         // Acceleration of Rover
-                        body.velocity += transform.forward * acceleration;
+                        body.velocity += transform.forward * _acceleration;
 
                         // Rotate Rover
-                        transform.Rotate(0, rotation, 0);
+                        transform.Rotate(0, _rotation, 0);
 
                         // Input and AddForce for JUMP
                         if (Input.GetKey(KeyCode.Space))
@@ -64,13 +76,23 @@ public class Player_Movement : MonoBehaviour
 
                     case false:
                         // Modify speed while mid-air, while mid-air, only forward inputs apply to speed
-                        if (acceleration >= 0f)
+                        if (_acceleration >= 0f)
                         {
-                            body.velocity += transform.forward * (acceleration * airSpeedDivision);
+                            body.velocity += transform.forward * (_acceleration * airSpeedDivision);
                         }
 
                         // Decrease Rotation speed
-                        transform.Rotate(0, rotation * airSpeedDivision, 0);
+                        transform.Rotate(0, _rotation * airSpeedDivision, 0);
+
+                        // Stop jump velocity after force, giving it weighted feeling
+                        if (body.velocity.y < 0)
+                        {
+                            body.velocity += transform.up * Physics.gravity.y * (highJumpFall - 1) * Time.deltaTime;
+                        }
+                        else if (body.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
+                        {
+                            body.velocity += transform.up * Physics.gravity.y * (lowJumpFall - 1) * Time.deltaTime;
+                        }
                         break;
                 }
                 break;
@@ -78,13 +100,14 @@ public class Player_Movement : MonoBehaviour
             // Standard Character controls (Forward/Back = Transform Forward/Backward, Left/Right = Move Left, Move Right(
             case false:
                 // RigidBody's velocity moves on axis based on angle of camera.
-                body.velocity += (transform.forward * acceleration) + StandardMovementDirection(acceleration, rotation);
+                body.velocity += (transform.forward * _acceleration) + StandardMovementDirection(_acceleration, _rotation);
 
                 // Rotate the Rover automatically in direction of movement
-                StandardRotationDirection(rotation);
+                StandardRotationDirection(_rotation);
                 break;
         }
-        
+
+
         // Cap the speed at MaxSpeed
         if (body.velocity.magnitude > maxSpeed)
         {
@@ -149,8 +172,8 @@ public class Player_Movement : MonoBehaviour
 
     // ALTERNATE MOVEMENT EXPERIMENTATION
 
-    // ALTERNATE MOVEMENT: Use translate for acceleration
-    //transform.Translate(0, 0, acceleration);
+    // ALTERNATE MOVEMENT: Use translate for _acceleration
+    //transform.Translate(0, 0, _acceleration);
 
     // ALTERNATE MID-AIR TRANSLATIONS
     //body.velocity += (transform.forward * verticalAxis * airSpeed) + AirMovementDirection(verticalAxis, horizontalAxis) * airSpeed;     
