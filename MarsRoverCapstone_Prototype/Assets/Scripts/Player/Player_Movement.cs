@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(BoxCollider))]
 
 public class Player_Movement : MonoBehaviour
 {
@@ -18,8 +17,10 @@ public class Player_Movement : MonoBehaviour
      */
     [SerializeField] private Camera mainCamera => Camera.main;
     [SerializeField] private bool grounded;
+    
     Rigidbody body => GetComponent<Rigidbody>();
 
+    public bool tankControls = true;
     public float maxSpeed = 20f;
 
     // Speed variables, the range between min and max speed is -1 to 1
@@ -40,35 +41,50 @@ public class Player_Movement : MonoBehaviour
         // Movement inputs for WASD and Arrow keys trigger continuous translation
         float acceleration = Input.GetAxis("Vertical") * driveSpeed;
         float rotation = Input.GetAxis("Horizontal") * rotateSpeed;
-
-        switch (grounded)
+        
+        switch (tankControls)
         {
+            // The Rover is controlled by Tank controls (Forward/Back = Acceleration/Deceleration, Left/Right = Rotate Rover)
             case true:
-                // Acceleration of Rover
-                body.velocity += transform.forward * acceleration;
-                
-                // Rotate Rover
-                transform.Rotate(0, rotation, 0);
-
-                // Input and AddForce for JUMP
-                if (Input.GetKey(KeyCode.Space))
+                switch (grounded)
                 {
-                    body.AddForce(transform.up * jumpVelocity);
+                    case true:
+                        // Acceleration of Rover
+                        body.velocity += transform.forward * acceleration;
+
+                        // Rotate Rover
+                        transform.Rotate(0, rotation, 0);
+
+                        // Input and AddForce for JUMP
+                        if (Input.GetKey(KeyCode.Space))
+                        {
+                            body.AddForce(transform.up * jumpVelocity);
+                        }
+                        break;
+
+                    case false:
+                        // Modify speed while mid-air, while mid-air, only forward inputs apply to speed
+                        if (acceleration >= 0f)
+                        {
+                            body.velocity += transform.forward * (acceleration * airSpeedDivision);
+                        }
+
+                        // Decrease Rotation speed
+                        transform.Rotate(0, rotation * airSpeedDivision, 0);
+                        break;
                 }
                 break;
 
+            // Standard Character controls (Forward/Back = Transform Forward/Backward, Left/Right = Move Left, Move Right(
             case false:
-                // Modify speed while mid-air
-                // While mid-air, only forward inputs apply to speed
-                if(acceleration >= 0f)
-                {
-                    body.velocity += transform.forward * (acceleration * airSpeedDivision);
-                }
+                // RigidBody's velocity moves on axis based on angle of camera.
+                body.velocity += (transform.forward * acceleration) + StandardMovementDirection(acceleration, rotation);
 
-                transform.Rotate(0, rotation * airSpeedDivision, 0);
+                // Rotate the Rover automatically in direction of movement
+                StandardRotationDirection(rotation);
                 break;
         }
-
+        
         // Cap the speed at MaxSpeed
         if (body.velocity.magnitude > maxSpeed)
         {
@@ -76,24 +92,24 @@ public class Player_Movement : MonoBehaviour
         }
     }
 
-    // Move object in Right Axis direction based on camera angle
-    private Vector3 AirMovementDirection(float verticalAxis, float horizontalAxis)
+    // NON-TANK CONTROLS: Transform Rover in Right Axis direction based on camera angle.
+    private Vector3 StandardMovementDirection(float verticalAxis, float horizontalAxis)
     {       
         Vector3 direction;
-        //Vector3 forward = mainCamera.transform.forward;
+        Vector3 forward = mainCamera.transform.forward;
         Vector3 right = mainCamera.transform.right;
 
-        //forward.y = 0f;
+        forward.y = 0f;
         right.y = 0f;
 
-        //forward.Normalize();
+        forward.Normalize();
         right.Normalize();
 
-        //return direction = forward * verticalAxis + right * horizontalAxis;
-        return direction = right * horizontalAxis;
+        return direction = forward * verticalAxis + right * horizontalAxis;
     }
 
-    private void AirRotationDirection(float horizontalAxis)
+    // NON-TANK CONTROLS: Rotate Rover in direction of movement automatically.
+    private void StandardRotationDirection(float horizontalAxis)
     {
         Vector3 right = mainCamera.transform.right;
         right.y = 0f;
@@ -113,6 +129,7 @@ public class Player_Movement : MonoBehaviour
         }
     }
 
+    // COLLISION Detection
     private void OnCollisionStay(Collision c)
     {
         if(c.gameObject.tag == "Ground")
