@@ -4848,26 +4848,6 @@ Transform:
   m_Father: {fileID: 1442746708}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2105040341 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 148121015741349523, guid: 0b74b425c94e8754e935e82eb5506f5b,
-    type: 3}
-  m_PrefabInstance: {fileID: 148121014933469061}
-  m_PrefabAsset: {fileID: 0}
---- !u!136 &2105040342
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2105040341}
-  m_Material: {fileID: 13400000, guid: 3395bef210a731148a4e535d185275bb, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 1.2549722
-  m_Height: 3.5
-  m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &148121014933469061
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4879,31 +4859,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TestRover
-      objectReference: {fileID: 0}
-    - target: {fileID: 148121015741349532, guid: 0b74b425c94e8754e935e82eb5506f5b,
-        type: 3}
-      propertyPath: maxSpeed
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 148121015741349532, guid: 0b74b425c94e8754e935e82eb5506f5b,
-        type: 3}
-      propertyPath: driveSpeed
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 148121015741349532, guid: 0b74b425c94e8754e935e82eb5506f5b,
-        type: 3}
-      propertyPath: jumpVelocity
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 148121015741349532, guid: 0b74b425c94e8754e935e82eb5506f5b,
-        type: 3}
-      propertyPath: tankControls
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 148121015741349533, guid: 0b74b425c94e8754e935e82eb5506f5b,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 148121015741349535, guid: 0b74b425c94e8754e935e82eb5506f5b,
         type: 3}
@@ -5042,46 +4997,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TestMainCamera
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002754286291531194, guid: 7ce582195f6627b45b4df04f08150d13,
-        type: 3}
-      propertyPath: minSmooth
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002754286291531194, guid: 7ce582195f6627b45b4df04f08150d13,
-        type: 3}
-      propertyPath: orbitCamera
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002754286291531194, guid: 7ce582195f6627b45b4df04f08150d13,
-        type: 3}
-      propertyPath: cameraSmooth
-      value: 0.001
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002754286291531194, guid: 7ce582195f6627b45b4df04f08150d13,
-        type: 3}
-      propertyPath: lookAtOffset
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002754286291531194, guid: 7ce582195f6627b45b4df04f08150d13,
-        type: 3}
-      propertyPath: cameraOffset.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002754286291531194, guid: 7ce582195f6627b45b4df04f08150d13,
-        type: 3}
-      propertyPath: cameraOffset.y
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002754286291531194, guid: 7ce582195f6627b45b4df04f08150d13,
-        type: 3}
-      propertyPath: cameraOffset.z
-      value: -14
-      objectReference: {fileID: 0}
-    - target: {fileID: 9002754286291531194, guid: 7ce582195f6627b45b4df04f08150d13,
-        type: 3}
-      propertyPath: mouseSensitivity
-      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 9002754286291531195, guid: 7ce582195f6627b45b4df04f08150d13,
         type: 3}
