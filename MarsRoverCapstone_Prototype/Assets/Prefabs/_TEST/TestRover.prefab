@@ -772,6 +772,7 @@ GameObject:
   - component: {fileID: 148121015741349532}
   - component: {fileID: 148121015741349533}
   - component: {fileID: 148121015741349522}
+  - component: {fileID: 2105040342}
   m_Layer: 0
   m_Name: TestRover
   m_TagString: Player
@@ -807,11 +808,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grounded: 0
-  maxSpeed: 20
+  tankControls: 1
+  maxSpeed: 15
   driveSpeed: 0.2
   airSpeedDivision: 0.5
   rotateSpeed: 1
-  jumpVelocity: 1000
+  jumpVelocity: 200
 --- !u!65 &148121015741349533
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -821,7 +823,7 @@ BoxCollider:
   m_GameObject: {fileID: 148121015741349523}
   m_Material: {fileID: 13400000, guid: 3395bef210a731148a4e535d185275bb, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 2, y: 1.6962702, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
@@ -841,6 +843,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 1
+--- !u!136 &2105040342
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 148121015741349523}
+  m_Material: {fileID: 13400000, guid: 3395bef210a731148a4e535d185275bb, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.2549722
+  m_Height: 3.5
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &148121015916554114
 GameObject:
   m_ObjectHideFlags: 0
