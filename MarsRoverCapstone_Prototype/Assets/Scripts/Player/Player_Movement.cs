@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent (typeof(CharacterController))]
+[RequireComponent (typeof(Rigidbody))]
 
 public class Player_Movement : MonoBehaviour
 {
@@ -15,13 +16,17 @@ public class Player_Movement : MonoBehaviour
      * The movement is designed after 'tank' controls, where players can accelerate, reverse 
      * and rotate their vehicle to drive in a different direction.
      */
-    [SerializeField] private Camera mainCamera => Camera.main;
+    Camera mainCamera => Camera.main;    
+    Rigidbody RB => GetComponent<Rigidbody>();
+    CharacterController CC => GetComponent<CharacterController>();
+
     [SerializeField] private bool grounded;
-    
-    Rigidbody body => GetComponent<Rigidbody>();
 
     public bool tankControls = true;
-    public float maxSpeed = 20f;
+
+    // Character Controller variables
+    private Vector3 _CCMovement;
+    public float gravity = 2f;
 
     // Speed variables, the range between min and max speed is -1 to 1
     public float driveSpeed = 0.1f;
@@ -29,7 +34,7 @@ public class Player_Movement : MonoBehaviour
     public float rotateSpeed = 1f;
 
     // Jump variables, the Fall variables modify the speed in which the rover drops after the jump to give it weight
-    public float jumpVelocity = 400f;
+    public float jumpHeight = 4f;
     public float highJumpFall = 2f;
     public float lowJumpFall = 1f;
 
@@ -40,13 +45,14 @@ public class Player_Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        // Freeze constraints so that Character Controller overrides phyhsics
+        RB.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Movement inputs for WASD and Arrow keys trigger continuous translation
+        // Movement inputs for WASD and Arrow keys
         _acceleration = Input.GetAxis("Vertical") * driveSpeed;
         _rotation = Input.GetAxis("Horizontal") * rotateSpeed;
     }
@@ -61,95 +67,66 @@ public class Player_Movement : MonoBehaviour
                 switch (grounded)
                 {
                     case true:
-                        // Acceleration of Rover
-                        body.velocity += transform.forward * _acceleration;
-
-                        // Rotate Rover
-                        transform.Rotate(0, _rotation, 0);
+                        _CCMovement.y = 0f;
 
                         // Input and AddForce for JUMP
                         if (Input.GetKey(KeyCode.Space))
                         {
-                            body.AddForce(transform.up * jumpVelocity);
+                            _CCMovement.y = jumpHeight;
                         }
+
+                        // Rotate Rover
+                        transform.Rotate(0, _rotation, 0);
+
+                        CCMovementControl(driveSpeed);
+
                         break;
 
                     case false:
-                        // Modify speed while mid-air, while mid-air, only forward inputs apply to speed
-                        if (_acceleration >= 0f)
-                        {
-                            body.velocity += transform.forward * (_acceleration * airSpeedDivision);
-                        }
-
-                        // Decrease Rotation speed
+                        // Decrease Rotation and Movement speed
                         transform.Rotate(0, _rotation * airSpeedDivision, 0);
 
-                        // Stop jump velocity after force, giving it weighted feeling
-                        if (body.velocity.y < 0)
-                        {
-                            body.velocity += transform.up * Physics.gravity.y * (highJumpFall - 1) * Time.deltaTime;
-                        }
-                        else if (body.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
-                        {
-                            body.velocity += transform.up * Physics.gravity.y * (lowJumpFall - 1) * Time.deltaTime;
-                        }
+                        _CCMovement.y -= gravity * Time.deltaTime;
+
+                        // Stop jump velocity after letting go jump button, giving it weighted feeling
+
+                        CCMovementControl(driveSpeed * airSpeedDivision);                    
                         break;
                 }
                 break;
 
-            // Standard Character controls (Forward/Back = Transform Forward/Backward, Left/Right = Move Left, Move Right(
+            // Standard Character controls (Forward/Back = Transform Forward/Backward, Left/Right = Move Left, Move Right)
             case false:
-                // RigidBody's velocity moves on axis based on angle of camera.
-                body.velocity += (transform.forward * _acceleration) + StandardMovementDirection(_acceleration, _rotation);
 
-                // Rotate the Rover automatically in direction of movement
-                StandardRotationDirection(_rotation);
                 break;
-        }
-
-
-        // Cap the speed at MaxSpeed
-        if (body.velocity.magnitude > maxSpeed)
-        {
-            body.velocity = body.velocity.normalized * maxSpeed;
         }
     }
 
+    // Method to encompass getting input and using CC to move object
+    private void CCMovementControl(float movementSpeed)
+    {
+        // Control movement and direction
+        Vector3 inputDirection = new Vector3(0, 0, Input.GetAxis("Vertical"));
+        Vector3 transformDirection = transform.TransformDirection(inputDirection);
+
+        Vector3 flatMovement = movementSpeed * Time.deltaTime * transformDirection;
+
+        _CCMovement = new Vector3(flatMovement.x, _CCMovement.y, flatMovement.z);
+
+        CC.Move(_CCMovement);
+    }
+
+
     // NON-TANK CONTROLS: Transform Rover in Right Axis direction based on camera angle.
-    private Vector3 StandardMovementDirection(float verticalAxis, float horizontalAxis)
+    private void StandardMovementDirection(float verticalAxis, float horizontalAxis)
     {       
-        Vector3 direction;
-        Vector3 forward = mainCamera.transform.forward;
-        Vector3 right = mainCamera.transform.right;
 
-        forward.y = 0f;
-        right.y = 0f;
-
-        forward.Normalize();
-        right.Normalize();
-
-        return direction = forward * verticalAxis + right * horizontalAxis;
     }
 
     // NON-TANK CONTROLS: Rotate Rover in direction of movement automatically.
     private void StandardRotationDirection(float horizontalAxis)
     {
-        Vector3 right = mainCamera.transform.right;
-        right.y = 0f;
-        right.Normalize();
 
-        if (horizontalAxis > 0f)
-        {
-            Vector3 rotateTarget = right - transform.position;
-            Vector3 newDirection = Vector3.RotateTowards(transform.forward, rotateTarget, rotateSpeed / 2, 0f);
-            transform.rotation = Quaternion.LookRotation(newDirection);
-        }
-        else if (horizontalAxis < 1f)
-        {
-            Vector3 rotateTarget = right - transform.position;
-            Vector3 newDirection = Vector3.RotateTowards(transform.forward, rotateTarget, rotateSpeed / 2, 0f);
-            transform.rotation = Quaternion.LookRotation(newDirection);
-        }
     }
 
     // COLLISION Detection
