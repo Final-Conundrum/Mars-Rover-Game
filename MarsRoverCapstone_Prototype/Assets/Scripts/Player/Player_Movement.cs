@@ -35,6 +35,7 @@ public class Player_Movement : MonoBehaviour
 
     // Jump variables, the Fall variables modify the speed in which the rover drops after the jump to give it weight
     public float jumpHeight = 4f;
+    private float _currentJump;
     public float highJumpFall = 2f;
     public float lowJumpFall = 1f;
 
@@ -78,8 +79,8 @@ public class Player_Movement : MonoBehaviour
                         // Rotate Rover
                         transform.Rotate(0, _rotation, 0);
 
+                        // Finalize Movement
                         CCMovementControl(driveSpeed);
-
                         break;
 
                     case false:
@@ -89,7 +90,11 @@ public class Player_Movement : MonoBehaviour
                         _CCMovement.y -= gravity * Time.deltaTime;
 
                         // Stop jump velocity after letting go jump button, giving it weighted feeling
+                        if(CC.transform.position.y < jumpHeight && !Input.GetKey(KeyCode.Space)) {
+                            
+                        }
 
+                        // Finalize Movement
                         CCMovementControl(driveSpeed * airSpeedDivision);                    
                         break;
                 }
@@ -129,7 +134,7 @@ public class Player_Movement : MonoBehaviour
 
     }
 
-    // COLLISION Detection
+    // COLLISION Detection : Convert to seperate script in future
     private void OnCollisionStay(Collision c)
     {
         if(c.gameObject.tag == "Ground")
@@ -145,17 +150,4 @@ public class Player_Movement : MonoBehaviour
             grounded = false;
         }
     }
-
-
-    // ALTERNATE MOVEMENT EXPERIMENTATION
-
-    // ALTERNATE MOVEMENT: Use translate for _acceleration
-    //transform.Translate(0, 0, _acceleration);
-
-    // ALTERNATE MID-AIR TRANSLATIONS
-    //body.velocity += (transform.forward * verticalAxis * airSpeed) + AirMovementDirection(verticalAxis, horizontalAxis) * airSpeed;     
-    //AirRotationDirection(horizontalAxis);
-    //body.velocity += transform.right * horizontalAxis * airSpeed;
-    //body.velocity += transform.forward * verticalAxis * airSpeed;
-    //transform.Translate(horizontalAxis, 0, verticalAxis);
 }
