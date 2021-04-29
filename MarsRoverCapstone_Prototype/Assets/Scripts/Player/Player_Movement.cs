@@ -36,8 +36,6 @@ public class Player_Movement : MonoBehaviour
     // Jump variables, the Fall variables modify the speed in which the rover drops after the jump to give it weight
     public float jumpHeight = 4f;
     private float _currentJump;
-    public float highJumpFall = 2f;
-    public float lowJumpFall = 1f;
 
     // Input variables
     private float _acceleration;
@@ -84,20 +82,24 @@ public class Player_Movement : MonoBehaviour
                         break;
 
                     case false:
+                        // Stop jump velocity after letting go jump button, giving it weighted feeling
+                        if (_CCMovement.y > (jumpHeight / 2) && !Input.GetKey(KeyCode.Space))
+                        {
+                            _CCMovement.y = 0f;
+                        }
+
+                        // CC Gravity
+                        _CCMovement.y -= gravity * Time.deltaTime;
+
                         // Decrease Rotation and Movement speed
                         transform.Rotate(0, _rotation * airSpeedDivision, 0);
 
-                        _CCMovement.y -= gravity * Time.deltaTime;
-
-                        // Stop jump velocity after letting go jump button, giving it weighted feeling
-                        if(CC.transform.position.y < jumpHeight && !Input.GetKey(KeyCode.Space)) {
-                            
-                        }
-
                         // Finalize Movement
-                        CCMovementControl(driveSpeed * airSpeedDivision);                    
+                        CCMovementControl(driveSpeed * airSpeedDivision);
                         break;
                 }
+
+                
                 break;
 
             // Standard Character controls (Forward/Back = Transform Forward/Backward, Left/Right = Move Left, Move Right)
