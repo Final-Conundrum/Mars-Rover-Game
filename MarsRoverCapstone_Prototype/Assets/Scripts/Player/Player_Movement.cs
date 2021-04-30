@@ -27,6 +27,8 @@ public class Player_Movement : MonoBehaviour
     // Character Controller variables
     private Vector3 _CCMovement;
     public float gravity = 2f;
+    private Vector3 currentGround;
+
 
     // Speed variables, the range between min and max speed is -1 to 1
     public float driveSpeed = 0.1f;
@@ -36,6 +38,7 @@ public class Player_Movement : MonoBehaviour
     // Jump variables, the Fall variables modify the speed in which the rover drops after the jump to give it weight
     public float jumpHeight = 4f;
     private float _currentJump;
+    private float jumpRotation;
 
     // Input variables
     private float _acceleration;
@@ -86,6 +89,15 @@ public class Player_Movement : MonoBehaviour
                         if (_CCMovement.y > (jumpHeight / 2) && !Input.GetKey(KeyCode.Space))
                         {
                             _CCMovement.y = 0f;
+                        }
+                        // Rotate charater in direction of height
+                        else if(Input.GetKey(KeyCode.Space))
+                        {
+
+                        }
+                        else if(_CCMovement.y == 0f)
+                        {
+
                         }
 
                         // CC Gravity
