@@ -4,6 +4,7 @@ using UnityEngine;
 
 [RequireComponent (typeof(CharacterController))]
 [RequireComponent (typeof(Rigidbody))]
+[RequireComponent (typeof(BoxCollider))]
 
 public class Player_Movement : MonoBehaviour
 {
@@ -20,15 +21,14 @@ public class Player_Movement : MonoBehaviour
     Rigidbody RB => GetComponent<Rigidbody>();
     CharacterController CC => GetComponent<CharacterController>();
 
-    [SerializeField] private bool grounded;
-
+    [SerializeField] public static bool grounded;
+    public bool groundAlignment = false;
     public bool tankControls = true;
 
     // Character Controller variables
     private Vector3 _CCMovement;
     public float gravity = 2f;
-    private Vector3 currentGround;
-
+    private Vector3 _currentGround;
 
     // Speed variables, the range between min and max speed is -1 to 1
     public float driveSpeed = 0.1f;
@@ -38,7 +38,12 @@ public class Player_Movement : MonoBehaviour
     // Jump variables, the Fall variables modify the speed in which the rover drops after the jump to give it weight
     public float jumpHeight = 4f;
     private float _currentJump;
-    private float jumpRotation;
+    private float _jumpRotation;
+    private string _diffInY;
+    private float _lastYPos;
+
+    // Slope rotation variables
+    public float rayCastDistance;
 
     // Input variables
     private float _acceleration;
@@ -56,7 +61,7 @@ public class Player_Movement : MonoBehaviour
     {
         // Movement inputs for WASD and Arrow keys
         _acceleration = Input.GetAxis("Vertical") * driveSpeed;
-        _rotation = Input.GetAxis("Horizontal") * rotateSpeed;
+        _rotation = Input.GetAxis("Horizontal") * rotateSpeed;     
     }
 
     // FixedUpdate reserved for modifying physics
@@ -71,13 +76,21 @@ public class Player_Movement : MonoBehaviour
                     case true:
                         _CCMovement.y = 0f;
 
+                        // Methods for aligning character to ground
+                        if (groundAlignment)
+                        {
+                            // Modify rotation constraints
+                            RBCustomConstraints(true);
+                            GroundAlignment();
+                        }
+
                         // Input and AddForce for JUMP
                         if (Input.GetKey(KeyCode.Space))
                         {
                             _CCMovement.y = jumpHeight;
                         }
 
-                        // Rotate Rover
+                        // Rotate Rover direction with input
                         transform.Rotate(0, _rotation, 0);
 
                         // Finalize Movement
@@ -85,12 +98,21 @@ public class Player_Movement : MonoBehaviour
                         break;
 
                     case false:
+                        // CC Gravity
+                        _CCMovement.y -= gravity * Time.deltaTime;
+
+                        if (groundAlignment)
+                        {
+                            RBCustomConstraints(false);
+                        }
+
                         // Stop jump velocity after letting go jump button, giving it weighted feeling
                         if (_CCMovement.y > (jumpHeight / 2) && !Input.GetKey(KeyCode.Space))
                         {
                             _CCMovement.y = 0f;
+
                         }
-                        // Rotate charater in direction of height
+                        // Rotate charater in direction of jump velocitys
                         else if(Input.GetKey(KeyCode.Space))
                         {
 
@@ -100,18 +122,13 @@ public class Player_Movement : MonoBehaviour
 
                         }
 
-                        // CC Gravity
-                        _CCMovement.y -= gravity * Time.deltaTime;
-
                         // Decrease Rotation and Movement speed
                         transform.Rotate(0, _rotation * airSpeedDivision, 0);
 
                         // Finalize Movement
                         CCMovementControl(driveSpeed * airSpeedDivision);
                         break;
-                }
-
-                
+                }                
                 break;
 
             // Standard Character controls (Forward/Back = Transform Forward/Backward, Left/Right = Move Left, Move Right)
@@ -135,6 +152,67 @@ public class Player_Movement : MonoBehaviour
         CC.Move(_CCMovement);
     }
 
+    // Track if Y position changes
+    private void DifferenceInY()
+    {
+        if (transform.position.y < _lastYPos)
+        {
+            Debug.Log("Decreased!");
+            _lastYPos = transform.position.y;
+            _diffInY = "Increase";
+        }
+        else if (transform.position.y > _lastYPos)
+        {
+            Debug.Log("Increased");
+            _lastYPos = transform.position.y;
+            _diffInY = "Decrease";
+        }
+
+        _diffInY = "None";
+    }
+
+    // Raycast to align Rover orientation to current slope
+    private bool GroundAlignment()
+    {
+        RaycastHit R1;
+        RaycastHit R2;
+        RaycastHit R3;
+        RaycastHit R4;
+
+        if (Physics.Raycast(transform.position + new Vector3(1f, 0, 1.5f), -transform.up, out R1, rayCastDistance, 7))
+        {
+            Physics.Raycast(transform.position + new Vector3(1f, 0, -1.5f), -transform.up, out R2, rayCastDistance, 7);
+            Physics.Raycast(transform.position + new Vector3(-1f, 0, 1.5f), -transform.up, out R3, rayCastDistance, 7);
+            Physics.Raycast(transform.position + new Vector3(-1f, 0, -1.5f), -transform.up, out R4, rayCastDistance, 7);
+
+            Vector3 newAlignment = (R1.normal + R2.normal + R3.normal + R4.normal).normalized;
+            newAlignment.x = Mathf.Clamp(newAlignment.x, -18f, 18f);
+            newAlignment.z = Mathf.Clamp(newAlignment.z, -18f, 18f);
+
+            transform.up = newAlignment;
+            return true;
+        }
+
+        return false;
+    }
+
+    private void RBCustomConstraints(bool grounded)
+    {
+        switch (grounded)
+        {
+            case true:
+                RB.constraints = RigidbodyConstraints.None;
+                RB.constraints = RigidbodyConstraints.FreezePositionX;
+                RB.constraints = RigidbodyConstraints.FreezePositionY;
+                RB.constraints = RigidbodyConstraints.FreezePositionZ;
+                RB.constraints = RigidbodyConstraints.FreezeRotationY;
+
+                break;
+            case false:
+                RB.constraints = RigidbodyConstraints.FreezeAll;
+                break;
+        }
+    }
 
     // NON-TANK CONTROLS: Transform Rover in Right Axis direction based on camera angle.
     private void StandardMovementDirection(float verticalAxis, float horizontalAxis)
@@ -146,22 +224,5 @@ public class Player_Movement : MonoBehaviour
     private void StandardRotationDirection(float horizontalAxis)
     {
 
-    }
-
-    // COLLISION Detection : Convert to seperate script in future
-    private void OnCollisionStay(Collision c)
-    {
-        if(c.gameObject.tag == "Ground")
-        {
-            grounded = true;
-        }
-    }
-
-    private void OnCollisionExit(Collision c)
-    {
-        if (c.gameObject.tag == "Ground")
-        {
-            grounded = false;
-        }
     }
 }
