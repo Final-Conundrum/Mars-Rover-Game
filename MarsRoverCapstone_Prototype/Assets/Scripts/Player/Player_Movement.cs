@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent (typeof(CharacterController))]
 [RequireComponent (typeof(Rigidbody))]
-[RequireComponent (typeof(BoxCollider))]
+[RequireComponent (typeof(CapsuleCollider))]
 
 public class Player_Movement : MonoBehaviour
 {
@@ -20,15 +20,16 @@ public class Player_Movement : MonoBehaviour
     Camera mainCamera => Camera.main;    
     Rigidbody RB => GetComponent<Rigidbody>();
     CharacterController CC => GetComponent<CharacterController>();
+    CapsuleCollider coll => GetComponent<CapsuleCollider>();
 
-    [SerializeField] public static bool grounded;
-    public bool groundAlignment = false;
+    public static bool grounded;
+    public bool alignToGround = false;
     public bool tankControls = true;
 
     // Character Controller variables
     private Vector3 _CCMovement;
-    public float gravity = 2f;
     private Vector3 _currentGround;
+    public float gravity = 2f;
 
     // Speed variables, the range between min and max speed is -1 to 1
     public float driveSpeed = 0.1f;
@@ -36,14 +37,18 @@ public class Player_Movement : MonoBehaviour
     public float rotateSpeed = 1f;
 
     // Jump variables, the Fall variables modify the speed in which the rover drops after the jump to give it weight
+    [SerializeField] private bool _isJumping = false;
     public float jumpHeight = 4f;
     private float _currentJump;
     private float _jumpRotation;
+
     private string _diffInY;
     private float _lastYPos;
 
-    // Slope rotation variables
-    public float rayCastDistance;
+    // Slope variables
+    public bool onSlope = false;
+    public float slopeRaycastDistance;
+    public float slopeGravityMuliplier;
 
     // Input variables
     private float _acceleration;
@@ -61,7 +66,14 @@ public class Player_Movement : MonoBehaviour
     {
         // Movement inputs for WASD and Arrow keys
         _acceleration = Input.GetAxis("Vertical") * driveSpeed;
-        _rotation = Input.GetAxis("Horizontal") * rotateSpeed;     
+        _rotation = Input.GetAxis("Horizontal") * rotateSpeed;
+
+        
+        // Increase gravity while moving down slope for smooth incline 
+        if ((Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) && OnSlope())
+        {
+            CC.Move(Vector3.down * CC.height / 2 * slopeGravityMuliplier * Time.deltaTime);
+        }
     }
 
     // FixedUpdate reserved for modifying physics
@@ -73,21 +85,26 @@ public class Player_Movement : MonoBehaviour
             case true:
                 switch (grounded)
                 {
+                    // Player is Grounded
                     case true:
                         _CCMovement.y = 0f;
 
                         // Methods for aligning character to ground
-                        if (groundAlignment)
+                        if (alignToGround)
                         {
                             // Modify rotation constraints
                             RBCustomConstraints(true);
-                            GroundAlignment();
+                            if((Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) && OnSlope())
+                            {
+                                AlignToGround();
+                            }
                         }
 
                         // Input and AddForce for JUMP
                         if (Input.GetKey(KeyCode.Space))
                         {
                             _CCMovement.y = jumpHeight;
+                            _isJumping = true;
                         }
 
                         // Rotate Rover direction with input
@@ -97,11 +114,13 @@ public class Player_Movement : MonoBehaviour
                         CCMovementControl(driveSpeed);
                         break;
 
+                    // Player is Mid-air
                     case false:
                         // CC Gravity
                         _CCMovement.y -= gravity * Time.deltaTime;
 
-                        if (groundAlignment)
+                        // Halt ground alignment code while mid-air
+                        if (alignToGround)
                         {
                             RBCustomConstraints(false);
                         }
@@ -110,16 +129,16 @@ public class Player_Movement : MonoBehaviour
                         if (_CCMovement.y > (jumpHeight / 2) && !Input.GetKey(KeyCode.Space))
                         {
                             _CCMovement.y = 0f;
+                            _isJumping = false;
 
                         }
-                        // Rotate charater in direction of jump velocitys
-                        else if(Input.GetKey(KeyCode.Space))
+                        else if(!Input.GetKey(KeyCode.Space))
                         {
-
+                            _isJumping = false;
                         }
-                        else if(_CCMovement.y == 0f)
+                        else if(_CCMovement.y == jumpHeight)
                         {
-
+                            _isJumping = false;
                         }
 
                         // Decrease Rotation and Movement speed
@@ -153,60 +172,70 @@ public class Player_Movement : MonoBehaviour
     }
 
     // Track if Y position changes
-    private void DifferenceInY()
+    private string DifferenceInY()
     {
-        if (transform.position.y < _lastYPos)
+        if (transform.position.y < _lastYPos - 1f)
         {
-            Debug.Log("Decreased!");
             _lastYPos = transform.position.y;
-            _diffInY = "Increase";
+            return "Decreased";
         }
-        else if (transform.position.y > _lastYPos)
+        else if (transform.position.y > _lastYPos + 1f)
         {
-            Debug.Log("Increased");
             _lastYPos = transform.position.y;
-            _diffInY = "Decrease";
+            return "Increased";
         }
-
-        _diffInY = "None";
+        return "None";
     }
 
-    // Raycast to align Rover orientation to current slope
-    private bool GroundAlignment()
+    // Return if positioned on a slope
+    private bool OnSlope()
     {
-        RaycastHit R1;
-        RaycastHit R2;
-        RaycastHit R3;
-        RaycastHit R4;
-
-        if (Physics.Raycast(transform.position + new Vector3(1f, 0, 1.5f), -transform.up, out R1, rayCastDistance, 7))
+        if (_isJumping)
         {
-            Physics.Raycast(transform.position + new Vector3(1f, 0, -1.5f), -transform.up, out R2, rayCastDistance, 7);
-            Physics.Raycast(transform.position + new Vector3(-1f, 0, 1.5f), -transform.up, out R3, rayCastDistance, 7);
-            Physics.Raycast(transform.position + new Vector3(-1f, 0, -1.5f), -transform.up, out R4, rayCastDistance, 7);
-
-            Vector3 newAlignment = (R1.normal + R2.normal + R3.normal + R4.normal).normalized;
-            newAlignment.x = Mathf.Clamp(newAlignment.x, -18f, 18f);
-            newAlignment.z = Mathf.Clamp(newAlignment.z, -18f, 18f);
-
-            transform.up = newAlignment;
-            return true;
+            return false;
         }
 
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, CC.height / 2 * slopeRaycastDistance))
+        {
+            if (hit.normal != Vector3.up)
+            {
+                Debug.Log("On Slope");
+                return true;
+            }             
+        }
         return false;
     }
 
+    // Rotate Rover to align with current ground
+    private void AlignToGround()
+    {
+        RaycastHit hit = new RaycastHit();
+        Ray raycast = new Ray(transform.position, Vector3.down);
+
+        if (CC.Raycast(raycast, out hit, slopeRaycastDistance))
+        {
+            Vector3 slope = hit.normal;
+
+            if(hit.normal != Vector3.up)
+            {
+                onSlope = true;
+            }
+
+            transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+        }
+    }
+
+    // Modify RigidBody rotation and position constraint. For the purpose of aligning Rover to ground slope. 
+    // When the player is grounded, rotation x and z are unlocked so that the OnSlope() code may function. While in mid-air, all rotations are locked.
     private void RBCustomConstraints(bool grounded)
     {
         switch (grounded)
         {
             case true:
-                RB.constraints = RigidbodyConstraints.None;
                 RB.constraints = RigidbodyConstraints.FreezePositionX;
                 RB.constraints = RigidbodyConstraints.FreezePositionY;
                 RB.constraints = RigidbodyConstraints.FreezePositionZ;
                 RB.constraints = RigidbodyConstraints.FreezeRotationY;
-
                 break;
             case false:
                 RB.constraints = RigidbodyConstraints.FreezeAll;
