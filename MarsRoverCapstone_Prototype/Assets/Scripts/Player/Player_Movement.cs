@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent (typeof(CharacterController))]
 [RequireComponent (typeof(Rigidbody))]
-[RequireComponent (typeof(CapsuleCollider))]
+[RequireComponent (typeof(BoxCollider))]
 
 public class Player_Movement : MonoBehaviour
 {
@@ -23,8 +23,8 @@ public class Player_Movement : MonoBehaviour
     BoxCollider coll => GetComponent<BoxCollider>();
 
     public static bool grounded;
-    public bool alignToGround = false;
-    public static bool staticAlign;
+    public bool _alignToGround = false;
+    public static bool alignToGround;
     public bool tankControls = true;
 
     // Character Controller variables
@@ -68,7 +68,7 @@ public class Player_Movement : MonoBehaviour
     void Update()
     {
         // Set if Rover should align to ground
-        staticAlign = alignToGround;
+        alignToGround = _alignToGround;
 
         // Movement inputs for WASD and Arrow keys
         _acceleration = Input.GetAxis("Vertical") * driveSpeed;
@@ -207,5 +207,19 @@ public class Player_Movement : MonoBehaviour
     private void StandardRotationDirection(float horizontalAxis)
     {
 
+    }
+
+    // Modify RigidBody rotation and position constraint.  
+    private void RBCustomConstraints(bool lockRotation)
+    {
+        switch (grounded)
+        {
+            case true:
+                RB.constraints = RigidbodyConstraints.FreezeAll;
+                break;
+            case false:
+                RB.constraints = RigidbodyConstraints.FreezePosition;
+                break;
+        }
     }
 }

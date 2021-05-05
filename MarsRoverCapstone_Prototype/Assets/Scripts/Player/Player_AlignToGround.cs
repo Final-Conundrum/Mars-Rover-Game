@@ -11,8 +11,7 @@ public class Player_AlignToGround : MonoBehaviour
      * AlignToGround: 
      * Add this script to the child (Body) of the parent Player object so that it aligns the aesthetic Rover body to ground.
      */
-    CapsuleCollider coll => GetComponent<CapsuleCollider>();
-    Rigidbody RB => GetComponent<Rigidbody>();
+
     public float slopeRaycastDistance = 1.5f;
 
     private void Update()
@@ -23,38 +22,34 @@ public class Player_AlignToGround : MonoBehaviour
 
         if (transform.rotation.x > 50f)
         {
-            transform.rotation = new Quaternion(50f, transform.parent.rotation.y, transform.rotation.z, transform.rotation.w);
+            transform.rotation = new Quaternion(50f, transform.parent.rotation.y, 0, transform.rotation.w);
         }
 
         if (transform.rotation.x > 50f)
         {
-            transform.rotation = new Quaternion(-50f, transform.parent.rotation.y, transform.rotation.z, transform.rotation.w);
+            transform.rotation = new Quaternion(-50f, transform.parent.rotation.y, 0, transform.rotation.w);
         }
 
         if (transform.rotation.z > 50f)
         {
-            transform.rotation = new Quaternion(transform.rotation.x, transform.parent.rotation.y, 50f, transform.rotation.w);
+            transform.rotation = new Quaternion(0, transform.parent.rotation.y, 50f, transform.rotation.w);
         }
 
         if (transform.rotation.z > 50f)
         {
-            transform.rotation = new Quaternion(transform.rotation.x, transform.parent.rotation.y, -50f, transform.rotation.w);
+            transform.rotation = new Quaternion(0, transform.parent.rotation.y, -50f, transform.rotation.w);
+        }
+
+        // Finalize and rotate to Grounds Normal vector
+        if(Player_Movement.alignToGround)
+        {
+            AlignToGround();
         }
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
-        switch(Player_Movement.grounded)
-        {
-            case true:
-                AlignToGround();
-                RBCustomConstraints(true);
-                break;
-            case false:
-                RBCustomConstraints(false);
-                break;
-        }     
+        
     }
 
     // Rotate Rover to align with current ground
@@ -66,25 +61,14 @@ public class Player_AlignToGround : MonoBehaviour
         if (Physics.Raycast(raycast, out hit, slopeRaycastDistance))
         {
             Vector3 slope = hit.normal;
-            Debug.DrawRay(transform.position, slope, Color.green);
 
-            transform.rotation = Quaternion.FromToRotation(transform.up, slope.normalized) * transform.rotation;
-        }
-    }
+            // Check if slopes normal vector is too steep
+            if (!(slope.x > 70f || slope.x < -70f || slope.z > 70f || slope.z < -70f))
+            {
+                // Rotate to normals vector
+                transform.rotation = Quaternion.FromToRotation(transform.up, slope.normalized) * transform.rotation;
+            }
 
-    // Modify RigidBody rotation and position constraint. For the purpose of aligning Rover to ground slope. 
-    // When the player is grounded, rotation x and z are unlocked so that the AlignToGround() code may function.
-    // While in mid-air, all rotations are locked.
-    private void RBCustomConstraints(bool grounded)
-    {
-        switch (grounded)
-        {
-            case true:
-                RB.constraints = RigidbodyConstraints.FreezePosition;
-                break;
-            case false:
-                RB.constraints = RigidbodyConstraints.FreezeAll;
-                break;
         }
     }
 }
