@@ -17,13 +17,14 @@ public class Player_Movement : MonoBehaviour
      * The movement is designed after 'tank' controls, where players can accelerate, reverse 
      * and rotate their vehicle to drive in a different direction.
      */
-    Camera mainCamera => Camera.main;    
+
     Rigidbody RB => GetComponent<Rigidbody>();
     CharacterController CC => GetComponent<CharacterController>();
-    CapsuleCollider coll => GetComponent<CapsuleCollider>();
+    BoxCollider coll => GetComponent<BoxCollider>();
 
     public static bool grounded;
     public bool alignToGround = false;
+    public static bool staticAlign;
     public bool tankControls = true;
 
     // Character Controller variables
@@ -49,6 +50,8 @@ public class Player_Movement : MonoBehaviour
     public bool onSlope = false;
     public float slopeRaycastDistance;
     public float slopeGravityMuliplier;
+    public float slopeMaxX = 20f;
+    public float slopeMaxZ = 20f;
 
     // Input variables
     private float _acceleration;
@@ -64,6 +67,9 @@ public class Player_Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Set if Rover should align to ground
+        staticAlign = alignToGround;
+
         // Movement inputs for WASD and Arrow keys
         _acceleration = Input.GetAxis("Vertical") * driveSpeed;
         _rotation = Input.GetAxis("Horizontal") * rotateSpeed;
@@ -89,17 +95,6 @@ public class Player_Movement : MonoBehaviour
                     case true:
                         _CCMovement.y = 0f;
 
-                        // Methods for aligning character to ground
-                        if (alignToGround)
-                        {
-                            // Modify rotation constraints
-                            RBCustomConstraints(true);
-                            if((Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) && OnSlope())
-                            {
-                                AlignToGround();
-                            }
-                        }
-
                         // Input and AddForce for JUMP
                         if (Input.GetKey(KeyCode.Space))
                         {
@@ -118,12 +113,6 @@ public class Player_Movement : MonoBehaviour
                     case false:
                         // CC Gravity
                         _CCMovement.y -= gravity * Time.deltaTime;
-
-                        // Halt ground alignment code while mid-air
-                        if (alignToGround)
-                        {
-                            RBCustomConstraints(false);
-                        }
 
                         // Stop jump velocity after letting go jump button, giving it weighted feeling
                         if (_CCMovement.y > (jumpHeight / 2) && !Input.GetKey(KeyCode.Space))
@@ -145,7 +134,14 @@ public class Player_Movement : MonoBehaviour
                         transform.Rotate(0, _rotation * airSpeedDivision, 0);
 
                         // Finalize Movement
-                        CCMovementControl(driveSpeed * airSpeedDivision);
+                        if(Input.GetAxis("Vertical") >= 0)
+                        {
+                            CCMovementControl(driveSpeed * airSpeedDivision);
+                        }
+                        else
+                        {
+                            CCMovementControl(0.5f);
+                        }
                         break;
                 }                
                 break;
@@ -190,57 +186,15 @@ public class Player_Movement : MonoBehaviour
     // Return if positioned on a slope
     private bool OnSlope()
     {
-        if (_isJumping)
-        {
-            return false;
-        }
-
         if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, CC.height / 2 * slopeRaycastDistance))
         {
             if (hit.normal != Vector3.up)
             {
-                Debug.Log("On Slope");
+                onSlope = true;
                 return true;
             }             
         }
         return false;
-    }
-
-    // Rotate Rover to align with current ground
-    private void AlignToGround()
-    {
-        RaycastHit hit = new RaycastHit();
-        Ray raycast = new Ray(transform.position, Vector3.down);
-
-        if (CC.Raycast(raycast, out hit, slopeRaycastDistance))
-        {
-            Vector3 slope = hit.normal;
-
-            if(hit.normal != Vector3.up)
-            {
-                onSlope = true;
-            }
-
-            transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
-        }
-    }
-
-    // Modify RigidBody rotation and position constraint. For the purpose of aligning Rover to ground slope. 
-    // When the player is grounded, rotation x and z are unlocked so that the OnSlope() code may function. While in mid-air, all rotations are locked.
-    private void RBCustomConstraints(bool grounded)
-    {
-        switch (grounded)
-        {
-            case true:
-                RB.constraints = RigidbodyConstraints.FreezePositionX;
-                RB.constraints = RigidbodyConstraints.FreezePositionY;
-                RB.constraints = RigidbodyConstraints.FreezePositionZ;
-                RB.constraints = RigidbodyConstraints.FreezeRotationY;
-                break;
-            case false:
-                RB.constraints = RigidbodyConstraints.FreezeAll;
-                break;
-        }
     }
 
     // NON-TANK CONTROLS: Transform Rover in Right Axis direction based on camera angle.

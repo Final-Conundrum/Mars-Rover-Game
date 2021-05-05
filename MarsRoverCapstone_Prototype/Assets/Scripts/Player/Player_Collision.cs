@@ -17,6 +17,9 @@ public class Player_Collision : MonoBehaviour
     {
         if (c.gameObject.tag == "Ground")
         {
+            //RB.constraints = RigidbodyConstraints.FreezePosition;
+            //RB.constraints = RigidbodyConstraints.FreezeRotationY;
+
             Player_Movement.grounded = true;
         }
     }
