@@ -33,9 +33,11 @@ public class Player_Movement : MonoBehaviour
     public float gravity = 2f;
 
     // Speed variables, the range between min and max speed is -1 to 1
-    public float driveSpeed = 0.1f;
+    public float minDriveSpeed = 10f;
+    public float maxDriveSpeed = 15;
     public float airSpeedDivision = 0.5f;
     public float rotateSpeed = 1f;
+    private float _currentSpeed;
 
     // Jump variables, the Fall variables modify the speed in which the rover drops after the jump to give it weight
     [SerializeField] private bool _isJumping = false;
@@ -48,10 +50,7 @@ public class Player_Movement : MonoBehaviour
 
     // Slope variables
     public bool onSlope = false;
-    public float slopeRaycastDistance;
     public float slopeGravityMuliplier;
-    public float slopeMaxX = 20f;
-    public float slopeMaxZ = 20f;
 
     // Input variables
     private float _acceleration;
@@ -62,6 +61,8 @@ public class Player_Movement : MonoBehaviour
     {
         // Freeze constraints so that Character Controller overrides phyhsics
         RB.constraints = RigidbodyConstraints.FreezeAll;
+
+        _currentSpeed = minDriveSpeed;
     }
 
     // Update is called once per frame
@@ -70,8 +71,7 @@ public class Player_Movement : MonoBehaviour
         // Set if Rover should align to ground
         alignToGround = _alignToGround;
 
-        // Movement inputs for WASD and Arrow keys
-        _acceleration = Input.GetAxis("Vertical") * driveSpeed;
+        // Rotation inputs for WASD and Arrow keys
         _rotation = Input.GetAxis("Horizontal") * rotateSpeed;
 
         
@@ -85,6 +85,19 @@ public class Player_Movement : MonoBehaviour
     // FixedUpdate reserved for modifying physics
     private void FixedUpdate()
     {
+        // Momentum: increase and decrease speed between min and max speeds
+        if (Input.GetAxis("Vertical") == 1 && (_currentSpeed < maxDriveSpeed))
+        {
+            _currentSpeed += 0.01f;
+        }
+        else if (Input.GetAxis("Vertical") == 0 && _currentSpeed > minDriveSpeed)
+        {
+            _currentSpeed = minDriveSpeed;
+        }
+
+        Debug.Log(_currentSpeed);
+
+        // Movement Setup and modifiers while on/off ground
         switch (tankControls)
         {
             // The Rover is controlled by Tank controls (Forward/Back = Acceleration/Deceleration, Left/Right = Rotate Rover)
@@ -106,7 +119,7 @@ public class Player_Movement : MonoBehaviour
                         transform.Rotate(0, _rotation, 0);
 
                         // Finalize Movement
-                        CCMovementControl(driveSpeed);
+                        CCMovementControl(_currentSpeed);
                         break;
 
                     // Player is Mid-air
@@ -136,7 +149,7 @@ public class Player_Movement : MonoBehaviour
                         // Finalize Movement
                         if(Input.GetAxis("Vertical") >= 0)
                         {
-                            CCMovementControl(driveSpeed * airSpeedDivision);
+                            CCMovementControl(_currentSpeed * airSpeedDivision);
                         }
                         else
                         {
@@ -186,7 +199,7 @@ public class Player_Movement : MonoBehaviour
     // Return if positioned on a slope
     private bool OnSlope()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, CC.height / 2 * slopeRaycastDistance))
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, CC.height / 2 * 1.5f))
         {
             if (hit.normal != Vector3.up)
             {
