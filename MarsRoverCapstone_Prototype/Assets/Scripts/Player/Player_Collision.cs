@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player_Collision : MonoBehaviour
 {
+    Player_Movement _Player_Movement => GetComponent<Player_Movement>();
     Rigidbody RB => GetComponent<Rigidbody>();
 
     private void Update()
@@ -18,17 +19,15 @@ public class Player_Collision : MonoBehaviour
     // COLLISION Detection 
     private void OnCollisionEnter(Collision c)
     {
-        if (c.gameObject.tag == "Ground")
-        {
-        }
+
     }
+
     private void OnCollisionStay(Collision c)
     {
         if (c.gameObject.tag == "Ground")
         {
             // Handle Coyote time
-            Player_Movement.coyoteTime = Time.time + 0.3f;
-
+            Player_Movement.coyoteTime = Time.time + _Player_Movement._coyoteTime;
             Player_Movement.grounded = true;
         }
     }

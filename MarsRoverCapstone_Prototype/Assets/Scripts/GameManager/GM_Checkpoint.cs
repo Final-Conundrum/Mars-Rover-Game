@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GM_Checkpoint : MonoBehaviour
 {
- 
+    public Transform lastCheckpoint;
 
     // Start is called before the first frame update
     void Start()

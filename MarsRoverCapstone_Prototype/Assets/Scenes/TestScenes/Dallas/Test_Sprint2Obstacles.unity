@@ -1408,8 +1408,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9f44960f3ccecb44b613b02b8516c67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  untriggeredCheckpoint: {fileID: 0}
-  triggeredCheckedPoint: {fileID: 0}
+  untriggeredCheckpoint: {fileID: 2100000, guid: f8ecfe8d4d8e8df44a4359634afaeddf,
+    type: 2}
+  triggeredCheckedPoint: {fileID: 2100000, guid: d6851dc97831c6543bc958314acc06e5,
+    type: 2}
 --- !u!1 &232161958
 GameObject:
   m_ObjectHideFlags: 0
@@ -6571,11 +6573,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 526907337, guid: 7ce582195f6627b45b4df04f08150d13, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00895156
+      value: -0.008951552
       objectReference: {fileID: 0}
     - target: {fileID: 526907337, guid: 7ce582195f6627b45b4df04f08150d13, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0010150964
+      value: 0.0010150952
       objectReference: {fileID: 0}
     - target: {fileID: 625124240, guid: 7ce582195f6627b45b4df04f08150d13, type: 3}
       propertyPath: m_YDamping
@@ -6603,11 +6605,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 712092113, guid: 7ce582195f6627b45b4df04f08150d13, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.008951567
+      value: -0.008951545
       objectReference: {fileID: 0}
     - target: {fileID: 712092113, guid: 7ce582195f6627b45b4df04f08150d13, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0010150978
+      value: 0.0010150938
       objectReference: {fileID: 0}
     - target: {fileID: 1212121538, guid: 7ce582195f6627b45b4df04f08150d13, type: 3}
       propertyPath: m_ScreenY
@@ -6635,11 +6637,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1298773759, guid: 7ce582195f6627b45b4df04f08150d13, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.00895156
+      value: -0.008951552
       objectReference: {fileID: 0}
     - target: {fileID: 1298773759, guid: 7ce582195f6627b45b4df04f08150d13, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0010150964
+      value: 0.0010150952
       objectReference: {fileID: 0}
     - target: {fileID: 1437325833, guid: 7ce582195f6627b45b4df04f08150d13, type: 3}
       propertyPath: m_YDamping
@@ -6671,7 +6673,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1784397014, guid: 7ce582195f6627b45b4df04f08150d13, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.0000002505796
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1784397014, guid: 7ce582195f6627b45b4df04f08150d13, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6727,12 +6729,12 @@ PrefabInstance:
     - target: {fileID: 9002754286291531195, guid: 7ce582195f6627b45b4df04f08150d13,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.000000007566682
       objectReference: {fileID: 0}
     - target: {fileID: 9002754286291531195, guid: 7ce582195f6627b45b4df04f08150d13,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.0000000011084309
       objectReference: {fileID: 0}
     - target: {fileID: 9002754286291531195, guid: 7ce582195f6627b45b4df04f08150d13,
         type: 3}
@@ -9639,6 +9641,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1551347220}
+  - component: {fileID: 1551347222}
   - component: {fileID: 1551347221}
   - component: {fileID: 1551347219}
   m_Layer: 0
@@ -9684,6 +9687,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8c98877c33803140b0bac343fa658ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lastCheckpoint: {fileID: 0}
+--- !u!114 &1551347222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1551347218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89c8359b2d2274b45aa8908d470a7985, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1611391820

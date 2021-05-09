@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SafeZone : MonoBehaviour
+public class CheckpointObject : MonoBehaviour
 {
+    private GM_Checkpoint GM => GameObject.FindObjectOfType<GameManager>().GetComponent<GM_Checkpoint>();
+
     public Material untriggeredCheckpoint;
     public Material triggeredCheckedPoint;
     private MeshRenderer mesh => GetComponent<MeshRenderer>();
@@ -12,7 +14,6 @@ public class SafeZone : MonoBehaviour
     void Start()
     {
         mesh.material = untriggeredCheckpoint;
-
     }
 
     // Update is called once per frame
@@ -21,11 +22,14 @@ public class SafeZone : MonoBehaviour
         
     }
 
-    public void OnTriggerEnter(Collision collision)
+    public void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             mesh.material = triggeredCheckedPoint;
+            GM.lastCheckpoint = collision.transform;
+
+            Debug.Log(gameObject.name + ": Set Checkpoint to " + GM.lastCheckpoint.position);
         }
     }
 }

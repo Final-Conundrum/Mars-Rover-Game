@@ -20,7 +20,6 @@ public class Player_Movement : MonoBehaviour
 
     Rigidbody RB => GetComponent<Rigidbody>();
     CharacterController CC => GetComponent<CharacterController>();
-    BoxCollider coll => GetComponent<BoxCollider>();
 
     public static bool grounded;
     public bool _alignToGround = false;
@@ -29,7 +28,6 @@ public class Player_Movement : MonoBehaviour
 
     // Character Controller variables
     private Vector3 _CCMovement;
-    private Vector3 _currentGround;
     public float gravity = 2f;
 
     // Speed variables, the range between min and max speed is -1 to 1
@@ -44,11 +42,9 @@ public class Player_Movement : MonoBehaviour
     // Jump variables, the Fall variables modify the speed in which the rover drops after the jump to give it weight
     [SerializeField] private bool _isJumping = false;
     public float jumpHeight = 4f;
-    public static float coyoteTime = 0.5f;
-    private float _currentJump;
-    private float _jumpRotation;
+    public float _coyoteTime = 0.2f;
+    public static float coyoteTime;
 
-    private string _diffInY;
     private float _lastYPos;
 
     // Slope variables
@@ -56,7 +52,6 @@ public class Player_Movement : MonoBehaviour
     public float slopeGravityMuliplier;
 
     // Input variables
-    private float _acceleration;
     private float _rotation;
 
     // Start is called before the first frame update
@@ -94,7 +89,7 @@ public class Player_Movement : MonoBehaviour
         // Momentum: increase and decrease speed between min and max speeds
         if (Input.GetAxis("Vertical") == 1 && (_currentSpeed < maxDriveSpeed))
         {
-            _currentSpeed += 0.02f;
+            _currentSpeed += momentumIncrease;
         }
         else if (Input.GetAxis("Vertical") == 0 && _currentSpeed > minDriveSpeed)
         {
@@ -128,6 +123,7 @@ public class Player_Movement : MonoBehaviour
                         {
                             _CCMovement.y = jumpHeight;
                             _isJumping = true;
+                            grounded = false;
                         }
 
                         // Rotate Rover direction with input
@@ -138,9 +134,7 @@ public class Player_Movement : MonoBehaviour
                         break;
 
                     // Player is Mid-air
-                    case false:
-                        
-
+                    case false:                                           
                         // Stop jump velocity after letting go jump button, giving it weighted feeling
                         if (_CCMovement.y > (jumpHeight / 2) && !Input.GetKey(KeyCode.Space))
                         {
