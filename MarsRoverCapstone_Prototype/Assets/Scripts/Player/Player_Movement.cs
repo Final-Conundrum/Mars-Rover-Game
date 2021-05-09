@@ -35,13 +35,16 @@ public class Player_Movement : MonoBehaviour
     // Speed variables, the range between min and max speed is -1 to 1
     public float minDriveSpeed = 10f;
     public float maxDriveSpeed = 15;
+    public float momentumIncrease = 0.02f;
     public float airSpeedDivision = 0.5f;
     public float rotateSpeed = 1f;
+    private float _rotateSpeed;
     private float _currentSpeed;
 
     // Jump variables, the Fall variables modify the speed in which the rover drops after the jump to give it weight
     [SerializeField] private bool _isJumping = false;
     public float jumpHeight = 4f;
+    public static float coyoteTime = 0.5f;
     private float _currentJump;
     private float _jumpRotation;
 
@@ -63,6 +66,7 @@ public class Player_Movement : MonoBehaviour
         RB.constraints = RigidbodyConstraints.FreezeAll;
 
         _currentSpeed = minDriveSpeed;
+        _rotateSpeed = rotateSpeed;
     }
 
     // Update is called once per frame
@@ -72,9 +76,8 @@ public class Player_Movement : MonoBehaviour
         alignToGround = _alignToGround;
 
         // Rotation inputs for WASD and Arrow keys
-        _rotation = Input.GetAxis("Horizontal") * rotateSpeed;
-
-        
+        _rotation = Input.GetAxis("Horizontal") * _rotateSpeed;
+       
         // Increase gravity while moving down slope for smooth incline 
         if ((Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) && OnSlope())
         {
@@ -85,17 +88,29 @@ public class Player_Movement : MonoBehaviour
     // FixedUpdate reserved for modifying physics
     private void FixedUpdate()
     {
+        // CC Gravity
+        _CCMovement.y -= gravity * Time.deltaTime;
+
         // Momentum: increase and decrease speed between min and max speeds
         if (Input.GetAxis("Vertical") == 1 && (_currentSpeed < maxDriveSpeed))
         {
-            _currentSpeed += 0.01f;
+            _currentSpeed += 0.02f;
         }
         else if (Input.GetAxis("Vertical") == 0 && _currentSpeed > minDriveSpeed)
         {
             _currentSpeed = minDriveSpeed;
         }
 
-        Debug.Log(_currentSpeed);
+        /*
+        //Speed boost
+        if (Input.GetAxis("Vertical") == 1 && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
+        {
+            _currentSpeed = maxDriveSpeed;
+        }
+        else
+        {
+            _currentSpeed = minDriveSpeed;
+        }*/
 
         // Movement Setup and modifiers while on/off ground
         switch (tankControls)
@@ -124,8 +139,7 @@ public class Player_Movement : MonoBehaviour
 
                     // Player is Mid-air
                     case false:
-                        // CC Gravity
-                        _CCMovement.y -= gravity * Time.deltaTime;
+                        
 
                         // Stop jump velocity after letting go jump button, giving it weighted feeling
                         if (_CCMovement.y > (jumpHeight / 2) && !Input.GetKey(KeyCode.Space))
@@ -222,17 +236,4 @@ public class Player_Movement : MonoBehaviour
 
     }
 
-    // Modify RigidBody rotation and position constraint.  
-    private void RBCustomConstraints(bool lockRotation)
-    {
-        switch (grounded)
-        {
-            case true:
-                RB.constraints = RigidbodyConstraints.FreezeAll;
-                break;
-            case false:
-                RB.constraints = RigidbodyConstraints.FreezePosition;
-                break;
-        }
-    }
 }

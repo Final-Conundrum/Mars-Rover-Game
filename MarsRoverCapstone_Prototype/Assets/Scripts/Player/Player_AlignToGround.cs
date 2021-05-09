@@ -62,8 +62,9 @@ public class Player_AlignToGround : MonoBehaviour
         {
             Vector3 slope = hit.normal;
 
+
             // Check if slopes normal vector is too steep
-            if (!(slope.x > 70f || slope.x < -70f || slope.z > 70f || slope.z < -70f))
+            if (!(slope.x > 0.7f || slope.x < -0.7f || slope.z > 0.7f || slope.z < -0.7f))
             {
                 // Rotate to normals vector
                 transform.rotation = Quaternion.FromToRotation(transform.up, slope.normalized) * transform.rotation;
