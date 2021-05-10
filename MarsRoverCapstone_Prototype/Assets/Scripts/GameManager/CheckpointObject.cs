@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class CheckpointObject : MonoBehaviour
 {
+    /* Edited by: Dallas
+     * 
+     * CheckpointObject: Attached to the trigger for the safe zone/checkpoint.
+     * This is called by GM_Checkpoint to set this safe zone with the appropriate data.
+     * 
+     * i.e: inventory storage locker. 
+     */
+
     private GM_Checkpoint GM => GameObject.FindObjectOfType<GameManager>().GetComponent<GM_Checkpoint>();
 
     public Material untriggeredCheckpoint;
@@ -27,9 +35,10 @@ public class CheckpointObject : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             mesh.material = triggeredCheckedPoint;
-            GM.lastCheckpoint = collision.transform;
+            GM.lastCheckpoint = collision.transform.position;
+            GM.savedAtCheckpoint = true;
 
-            Debug.Log(gameObject.name + ": Set Checkpoint to " + GM.lastCheckpoint.position);
+            Debug.Log(gameObject.name + ": Set Checkpoint to " + GM.lastCheckpoint);
         }
     }
 }

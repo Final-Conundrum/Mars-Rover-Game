@@ -12,20 +12,22 @@ public class GameManager : MonoBehaviour
      * 
      * GameManager:
      * Handles scenewide events for loading and readying elements for play.
-     * Interact with specified GM_ scripts.
+     * Interacts with specified GM_ scripts.
      * 
-     * 
+     * Will handle technical jobs and broader systems.
      */
 
     private static GameManager instance;
+
+    // Get GM_ scripts on object
     private GM_Checkpoint _GM_Checkpoint => GetComponent<GM_Checkpoint>();
     private GM_Time _GM_Time => GetComponent<GM_Time>();
 
-    private GameObject player => FindObjectOfType<Player_Movement>().gameObject;
+    public GameObject player;
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
         {
             instance = this;
             DontDestroyOnLoad(instance);
@@ -39,15 +41,34 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player.transform.position = _GM_Checkpoint.lastCheckpoint.position;
+        //Set Cursor to not be visible
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Return))
+
+        // Testing checkpoints
+        if (Input.GetKeyDown(KeyCode.Return))
         {
+
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
+    public void SceneSetup()
+    {
+        Debug.Log("GameManager: Setup scene.");
+
+        // Get Player
+        player = FindObjectOfType<Player_Movement>().gameObject;
+
+
+        if (_GM_Checkpoint.savedAtCheckpoint)
+        {
+            Debug.Log("GameManager: Setup scene with checkpoint");
+            player.transform.localPosition = new Vector3(_GM_Checkpoint.lastCheckpoint.x, _GM_Checkpoint.lastCheckpoint.y, _GM_Checkpoint.lastCheckpoint.z);
         }
     }
 }

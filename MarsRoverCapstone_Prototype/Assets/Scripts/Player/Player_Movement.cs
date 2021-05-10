@@ -54,6 +54,11 @@ public class Player_Movement : MonoBehaviour
     // Input variables
     private float _rotation;
 
+    private void Awake()
+    {
+       
+    }
+
     // Start is called before the first frame update
     void Start()
     {
