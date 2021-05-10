@@ -20,6 +20,7 @@ public class Player_Movement : MonoBehaviour
 
     Rigidbody RB => GetComponent<Rigidbody>();
     CharacterController CC => GetComponent<CharacterController>();
+    CapsuleCollider capsuleColl => GetComponent<CapsuleCollider>();
 
     public static bool grounded;
     public bool _alignToGround = false;
