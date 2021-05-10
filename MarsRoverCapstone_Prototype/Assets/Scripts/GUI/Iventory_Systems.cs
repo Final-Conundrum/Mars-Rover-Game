@@ -34,6 +34,12 @@ public class Iventory_Systems : MonoBehaviour
    void AddToInventory()
     {
         CurrentInventory.Add(Material);
+
+        //testing
+        if (gameObject.tag == "Material")
+        {
+            panelImages[0].SetActive(true);
+        }
     }
 
     //Deactivate all panel images and clear inventory list.
@@ -53,6 +59,9 @@ public class Iventory_Systems : MonoBehaviour
         {
             allMaterials.Add(material);
         }
+
         CurrentInventory.Clear();
+
+        Debug.Log(allMaterials.Count);
     }
 }
