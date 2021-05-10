@@ -33,18 +33,23 @@ public class Player_Movement : MonoBehaviour
     // Speed variables, the range between min and max speed is -1 to 1
     public float minDriveSpeed = 10f;
     public float maxDriveSpeed = 15;
+
     public float momentumIncrease = 0.02f;
     public float airSpeedDivision = 0.5f;
     public float rotateSpeed = 1f;
+
     private float _rotateSpeed;
     private float _currentSpeed;
 
     // Jump variables, the Fall variables modify the speed in which the rover drops after the jump to give it weight
     [SerializeField] private bool _isJumping = false;
     public float jumpHeight = 4f;
+
     public float _coyoteTime = 0.2f;
     public static float coyoteTime;
 
+    public float fallDamageHeight = 25f;
+    public bool takeFallDamage = false;
     private float _lastYPos;
 
     // Slope variables
@@ -122,6 +127,7 @@ public class Player_Movement : MonoBehaviour
                     // Player is Grounded
                     case true:
                         _CCMovement.y = 0f;
+                        takeFallDamage = false;
 
                         // Input and AddForce for JUMP
                         if (Input.GetKey(KeyCode.Space))
@@ -155,6 +161,9 @@ public class Player_Movement : MonoBehaviour
                         {
                             _isJumping = false;
                         }
+
+                        // Check for fall damage
+                        CheckFallDamage();
 
                         // Decrease Rotation and Movement speed
                         transform.Rotate(0, _rotation * airSpeedDivision, 0);
@@ -235,4 +244,25 @@ public class Player_Movement : MonoBehaviour
 
     }
 
+    public void SetStartPos(Vector3 pos)
+    {
+        transform.position = new Vector3(pos.x, pos.y, pos.z);
+        Debug.Log(gameObject.name + ": Set start Pos to " + pos);
+    }
+
+    public void CheckFallDamage()
+    {
+        RaycastHit hit = new RaycastHit();
+
+        if (Physics.Raycast(transform.position, -Vector3.up, out hit))
+        {
+            float distanceToGround = hit.distance;
+            Debug.Log("DistanceToGround: " + distanceToGround);
+
+            if(distanceToGround > fallDamageHeight)
+            {
+                takeFallDamage = true;
+            }
+        }
+    }
 }

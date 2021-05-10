@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player_Collision : MonoBehaviour
 {
     Player_Movement _Player_Movement => GetComponent<Player_Movement>();
+    Player_Stats _Player_Stats => GetComponent<Player_Stats>();
     Rigidbody RB => GetComponent<Rigidbody>();
 
     private void Update()
@@ -19,7 +20,11 @@ public class Player_Collision : MonoBehaviour
     // COLLISION Detection 
     private void OnCollisionEnter(Collision c)
     {
-
+        if(c.gameObject.tag == "Ground" && _Player_Movement.takeFallDamage)
+        {
+            _Player_Stats.health = _Player_Stats.health - 100;
+            Player_Movement.grounded = true;
+        }
     }
 
     private void OnCollisionStay(Collision c)
@@ -36,6 +41,7 @@ public class Player_Collision : MonoBehaviour
     {
         if (c.gameObject.tag == "Ground")
         {
+            Player_Movement.grounded = false;
 
         }
     }

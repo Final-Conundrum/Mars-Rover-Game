@@ -48,11 +48,9 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         // Testing checkpoints
         if (Input.GetKeyDown(KeyCode.Return))
         {
-
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }
@@ -64,11 +62,10 @@ public class GameManager : MonoBehaviour
         // Get Player
         player = FindObjectOfType<Player_Movement>().gameObject;
 
-
         if (_GM_Checkpoint.savedAtCheckpoint)
         {
             Debug.Log("GameManager: Setup scene with checkpoint");
-            player.transform.localPosition = new Vector3(_GM_Checkpoint.lastCheckpoint.x, _GM_Checkpoint.lastCheckpoint.y, _GM_Checkpoint.lastCheckpoint.z);
+            player.GetComponent<Player_Movement>().SetStartPos(_GM_Checkpoint.lastCheckpoint);
         }
     }
 }
