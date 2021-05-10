@@ -511,6 +511,7 @@ GameObject:
   - component: {fileID: 1441718923}
   - component: {fileID: 1441718922}
   - component: {fileID: 1441718924}
+  - component: {fileID: 1441718925}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -606,15 +607,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de5230f89cf6e534d91f2bf240e1253a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grounded: 0
+  _alignToGround: 0
   tankControls: 1
-  maxSpeed: 20
-  driveSpeed: 0.03
+  gravity: 2
+  minDriveSpeed: 10
+  maxDriveSpeed: 15
   airSpeedDivision: 0.5
   rotateSpeed: 1
-  jumpVelocity: 400
-  highJumpFall: 2
-  lowJumpFall: 1
+  _isJumping: 0
+  jumpHeight: 4
+  onSlope: 0
+  slopeGravityMuliplier: 0
 --- !u!54 &1441718923
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -645,6 +648,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   hazard: {fileID: 0}
+--- !u!143 &1441718925
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441718917}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1454236673
 GameObject:
   m_ObjectHideFlags: 0
@@ -1022,7 +1043,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1770887647}
   m_LocalRotation: {x: -0, y: -0.36920458, z: -0, w: 0.9293482}
-  m_LocalPosition: {x: 7.1, y: 10.6, z: -1.3}
+  m_LocalPosition: {x: 2.3, y: 10.5, z: -5.8}
   m_LocalScale: {x: 35, y: 5, z: 52}
   m_Children: []
   m_Father: {fileID: 0}

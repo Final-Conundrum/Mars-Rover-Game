@@ -16,18 +16,26 @@ public class Player_Stats : MonoBehaviour
         health = 100;
     }
 
+    
+    //testing collision method. doesn't need to be here once collision script is running.
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Hazard")
         {
-            health = health - damage;
-            Debug.Log("nono don't touch me there, this is my nono square");
-            healthCheck(health);
+            TakeDamage();
         }
         Debug.Log("You took a hit! your current Health is:  " + health);
     }
 
-    private void healthCheck(int health)
+    public void TakeDamage()
+    {
+        int newHealth = health - damage;
+        health = newHealth;
+
+        healthCheck(newHealth);
+    }
+
+   private void healthCheck(int health)
     {
         if (health == 0)
         {
@@ -35,6 +43,8 @@ public class Player_Stats : MonoBehaviour
         }
 
     }
+
+   
 
     // Update is called once per frame
     void Update()
