@@ -9,6 +9,9 @@ public class Hazard_Movement : MonoBehaviour
      * Rotate the object while moving it along a set path. 
      * 
      * Come back and randomise the spawn points for storm path and then iterate list to move from point to point. 
+     * 
+     * This Script was my first attempt at movement and has been replaced by the barely working lerp- FOR NOW.
+     * I will be coming back to this concept at a later date.
      */
 
 
@@ -38,6 +41,7 @@ public class Hazard_Movement : MonoBehaviour
         
     }
 
+    //Place gernerate points that were created.
     void PlacePoints()
     {
         for(int i = 0; i < pointsToSpawn; i++)
