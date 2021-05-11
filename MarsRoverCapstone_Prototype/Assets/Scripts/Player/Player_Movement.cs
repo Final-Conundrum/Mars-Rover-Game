@@ -250,6 +250,7 @@ public class Player_Movement : MonoBehaviour
         Debug.Log(gameObject.name + ": Set start Pos to " + pos);
     }
 
+    // Called by Player_Collision to apply Fall damage
     public void CheckFallDamage()
     {
         RaycastHit hit = new RaycastHit();

@@ -22,7 +22,7 @@ public class Player_Collision : MonoBehaviour
     {
         if(c.gameObject.tag == "Ground" && _Player_Movement.takeFallDamage)
         {
-            Player_Stats.health = Player_Stats.health - 100;
+            Player_Stats.TakeDamage();
             Player_Movement.grounded = true;
         }
     }

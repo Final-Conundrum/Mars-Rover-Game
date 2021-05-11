@@ -688,10 +688,10 @@ GameObject:
   m_Component:
   - component: {fileID: 82978926857982627}
   - component: {fileID: 82978926857982624}
+  - component: {fileID: 5872653511397692145}
   - component: {fileID: 227704063898548675}
   - component: {fileID: 227704063898548796}
   - component: {fileID: 82978926857982625}
-  - component: {fileID: 5872653511397692145}
   - component: {fileID: 5446497876372327775}
   m_Layer: 0
   m_Name: PlayerRover
@@ -742,6 +742,18 @@ MonoBehaviour:
   takeFallDamage: 0
   onSlope: 0
   slopeGravityMuliplier: 10
+--- !u!114 &5872653511397692145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 82978926857982639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47ef7e85d67230e4fb9e4a2e589f4e8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!143 &227704063898548675
 CharacterController:
   m_ObjectHideFlags: 0
@@ -789,18 +801,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 1.9, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5872653511397692145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 82978926857982639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47ef7e85d67230e4fb9e4a2e589f4e8e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &5446497876372327775
 CapsuleCollider:
   m_ObjectHideFlags: 0
