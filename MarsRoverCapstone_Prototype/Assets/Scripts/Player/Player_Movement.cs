@@ -19,6 +19,7 @@ public class Player_Movement : MonoBehaviour
      */
 
     Rigidbody RB => GetComponent<Rigidbody>();
+    Player_RigidbodyMovement RBclass => GetComponent<Player_RigidbodyMovement>();
     CharacterController CC => GetComponent<CharacterController>();
     CapsuleCollider capsuleColl => GetComponent<CapsuleCollider>();
 
@@ -32,7 +33,8 @@ public class Player_Movement : MonoBehaviour
     public float gravity = 2f;
 
     // Speed variables, the range between min and max speed is -1 to 1
-    public float minDriveSpeed = 10f;
+    public float minDriveSpeed = 4f;
+    public float midDriveSpeed = 9f;
     public float maxDriveSpeed = 15;
 
     public float momentumIncrease = 0.02f;
@@ -40,7 +42,7 @@ public class Player_Movement : MonoBehaviour
     public float rotateSpeed = 1f;
 
     private float _rotateSpeed;
-    private float _currentSpeed;
+    [SerializeField] private float _currentSpeed;
 
     // Jump variables, the Fall variables modify the speed in which the rover drops after the jump to give it weight
     [SerializeField] private bool _isJumping = false;
@@ -56,6 +58,8 @@ public class Player_Movement : MonoBehaviour
     // Slope variables
     public bool onSlope = false;
     public float slopeGravityMuliplier;
+    public float slopeCastRadius = 1f;
+    public float slopeCastDistance = 1f;
 
     // Input variables
     private float _rotation;
@@ -84,7 +88,7 @@ public class Player_Movement : MonoBehaviour
         _rotation = Input.GetAxis("Horizontal") * _rotateSpeed;
        
         // Increase gravity while moving down slope for smooth incline 
-        if ((Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) && OnSlope())
+        if ((Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) && OnSteepSlope())
         {
             CC.Move(Vector3.down * CC.height / 2 * slopeGravityMuliplier * Time.deltaTime);
         }
@@ -94,28 +98,35 @@ public class Player_Movement : MonoBehaviour
     private void FixedUpdate()
     {
         // CC Gravity
-        _CCMovement.y -= gravity * Time.deltaTime;
-
-        // Momentum: increase and decrease speed between min and max speeds
-        if (Input.GetAxis("Vertical") == 1 && (_currentSpeed < maxDriveSpeed))
+        _CCMovement.y -= gravity * Time.fixedDeltaTime;
+        
+        //Speed, Momentum and Shift speed boost
+        if ((Input.GetAxis("Vertical") == 1 || Input.GetAxis("Vertical") == -1) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && _currentSpeed < maxDriveSpeed)
         {
             _currentSpeed += momentumIncrease;
         }
-        else if (Input.GetAxis("Vertical") == 0 && _currentSpeed > minDriveSpeed)
+        else if((Input.GetAxis("Vertical") == 1 || Input.GetAxis("Vertical") == -1) && !(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && _currentSpeed > midDriveSpeed)
         {
-            _currentSpeed = minDriveSpeed;
+            _currentSpeed -= momentumIncrease;
+        }
+        else if((Input.GetAxis("Vertical") == 1 || Input.GetAxis("Vertical") == -1) && _currentSpeed < midDriveSpeed)
+        {
+            _currentSpeed += momentumIncrease;
+        }
+        else if(Input.GetAxis("Vertical") == 0 && _currentSpeed > minDriveSpeed)
+        {
+            _currentSpeed -= momentumIncrease;
         }
 
-        /*
-        //Speed boost
-        if (Input.GetAxis("Vertical") == 1 && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
+        // Steep Slope Movement
+        if (!OnSteepSlope())
         {
-            _currentSpeed = maxDriveSpeed;
+            LockConstraints(true);
         }
-        else
+        else if (OnSteepSlope())
         {
-            _currentSpeed = minDriveSpeed;
-        }*/
+            LockConstraints(false);
+        }
 
         // Movement Setup and modifiers while on/off ground
         switch (tankControls)
@@ -126,7 +137,7 @@ public class Player_Movement : MonoBehaviour
                 {
                     // Player is Grounded
                     case true:
-                        _CCMovement.y = 0f;
+                         _CCMovement.y = 0f;
                         takeFallDamage = false;
 
                         // Input and AddForce for JUMP
@@ -169,13 +180,14 @@ public class Player_Movement : MonoBehaviour
                         transform.Rotate(0, _rotation * airSpeedDivision, 0);
 
                         // Finalize Movement
-                        if(Input.GetAxis("Vertical") >= 0)
+                        if(!OnSteepSlope())
                         {
                             CCMovementControl(_currentSpeed * airSpeedDivision);
                         }
-                        else
+                        else if(OnSteepSlope())
                         {
-                            CCMovementControl(0.5f);
+                            LockConstraints(false);
+                            CC.enabled = false;
                         }
                         break;
                 }                
@@ -219,16 +231,22 @@ public class Player_Movement : MonoBehaviour
     }
 
     // Return if positioned on a slope
-    private bool OnSlope()
+    private bool OnSteepSlope()
     {
-        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, CC.height / 2 * 1.5f))
+        RaycastHit hit = new RaycastHit();
+        Ray raycast = new Ray(transform.position, -transform.up);
+
+        if (Physics.SphereCast(raycast, slopeCastRadius, out hit, slopeCastDistance ))
         {
-            if (hit.normal != Vector3.up)
+            Vector3 slope = hit.normal;
+
+            if (slope.x > 0.8f || slope.x < -0.8f || slope.z > 0.8f || slope.z < -0.8f)
             {
                 onSlope = true;
                 return true;
             }             
         }
+        onSlope = false;
         return false;
     }
 
@@ -258,12 +276,33 @@ public class Player_Movement : MonoBehaviour
         if (Physics.Raycast(transform.position, -Vector3.up, out hit))
         {
             float distanceToGround = hit.distance;
-            Debug.Log("DistanceToGround: " + distanceToGround);
+            //Debug.Log("DistanceToGround: " + distanceToGround);
 
             if(distanceToGround > fallDamageHeight)
             {
                 takeFallDamage = true;
             }
+        }
+    }
+
+    // Lock Rigidbody constraints while using Character Controller. Only turned false when sliding down slope.
+    private void LockConstraints(bool lockedConstraints)
+    {
+        switch(lockedConstraints) 
+        {
+            case true:
+                // Freeze constraints so that Character Controller overrides phyhsics
+                CC.enabled = true;
+                RBclass.enabled = false;
+                RB.constraints = RigidbodyConstraints.FreezeAll;
+                RB.useGravity = false;
+                break;
+            case false:
+                CC.enabled = false;
+                RBclass.enabled = true;
+                RB.constraints = RigidbodyConstraints.FreezeRotation;
+                RB.useGravity = true;
+                break;
         }
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player_Collision : MonoBehaviour
 {
+
     Player_Movement _Player_Movement => GetComponent<Player_Movement>();
     //Player_Stats _Player_Stats => GetComponent<Player_Stats>();
     Rigidbody RB => GetComponent<Rigidbody>();

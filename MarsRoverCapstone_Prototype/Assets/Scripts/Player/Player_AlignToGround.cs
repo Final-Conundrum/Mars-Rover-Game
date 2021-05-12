@@ -60,11 +60,8 @@ public class Player_AlignToGround : MonoBehaviour
         Ray raycast = new Ray(transform.position, -transform.up);
 
         if (Physics.SphereCast(raycast, sphereCastRadius, out hit, slopeRaycastDistance))
-        //if (Physics.Raycast(raycast, out hit, slopeRaycastDistance))
-
-            {
-                Vector3 slope = hit.normal;
-
+        {
+            Vector3 slope = hit.normal;
 
             // Check if slopes normal vector is too steep
             if (!(slope.x > 0.7f || slope.x < -0.7f || slope.z > 0.7f || slope.z < -0.7f))
