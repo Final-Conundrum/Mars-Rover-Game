@@ -25,6 +25,8 @@ public class Player_Collision : MonoBehaviour
         {
             Player_Stats.TakeDamage();
             Player_Movement.grounded = true;
+
+            Debug.Log(gameObject.name + ": Player_Collision, Player should take fall damage here...");
         }
     }
 
