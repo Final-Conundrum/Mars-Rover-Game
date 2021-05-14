@@ -52,6 +52,7 @@ public class Player_Movement : MonoBehaviour
     public static float coyoteTime;
 
     public float fallDamageHeight = 25f;
+    public static float elevation;
     public bool takeFallDamage = false;
     private float _lastYPos;
 
@@ -276,6 +277,7 @@ public class Player_Movement : MonoBehaviour
         if (Physics.Raycast(transform.position, -Vector3.up, out hit))
         {
             float distanceToGround = hit.distance;
+            elevation = distanceToGround;
             //Debug.Log("DistanceToGround: " + distanceToGround);
 
             if(distanceToGround > fallDamageHeight)
