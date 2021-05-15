@@ -13,9 +13,6 @@ public class Player_RigidbodyMovement : MonoBehaviour
  * The movement is designed after 'tank' controls, where players can accelerate, reverse 
  * and rotate their vehicle to drive in a different direction.
  */
-    [SerializeField] private Camera mainCamera => Camera.main;
-    [SerializeField] private bool grounded;
-
     Rigidbody body => GetComponent<Rigidbody>();
 
     public bool tankControls = true;
@@ -35,13 +32,10 @@ public class Player_RigidbodyMovement : MonoBehaviour
     private float _acceleration;
     private float _rotation;
 
-    // Character Controller variables
-    private Vector3 _CCMovement;
-
     // Start is called before the first frame update
     void Start()
     {
-
+        this.enabled = false;
     }
 
     // Update is called once per frame
@@ -55,122 +49,27 @@ public class Player_RigidbodyMovement : MonoBehaviour
     // FixedUpdate reserved for modifying physics
     private void FixedUpdate()
     {
-        switch (tankControls)
-        {
-            // The Rover is controlled by Tank controls (Forward/Back = Acceleration/Deceleration, Left/Right = Rotate Rover)
-            case true:
-                switch (grounded)
-                {
-                    case true:
-                        // Acceleration of Rover
-                        body.velocity += transform.forward * _acceleration;
+        // The Rover is controlled by Tank controls (Forward/Back = Acceleration/Deceleration, Left/Right = Rotate Rover)
+            switch (Player_Movement.grounded)
+            {
+                case true:
+                    // Acceleration of Rover
+                    body.velocity += transform.forward * _acceleration;
+                    break;
 
-                        // Rotate Rover
-                        transform.Rotate(0, _rotation, 0);
-
-                        // Input and AddForce for JUMP
-                        if (Input.GetKey(KeyCode.Space))
-                        {
-                            body.AddForce(transform.up * jumpVelocity);
-                        }
-                        break;
-
-                    case false:
-                        // Modify speed while mid-air, while mid-air, only forward inputs apply to speed
-                        if (_acceleration >= 0f)
-                        {
-                            body.velocity += transform.forward * (_acceleration * airSpeedDivision);
-                        }
-
-                        // Decrease Rotation speed
-                        transform.Rotate(0, _rotation * airSpeedDivision, 0);
-
-                        // Stop jump velocity after force, giving it weighted feeling
-                        if (body.velocity.y < 0)
-                        {
-                            body.velocity += transform.up * Physics.gravity.y * (highJumpFall - 1) * Time.deltaTime;
-                        }
-                        else if (body.velocity.y > 0 && !Input.GetKey(KeyCode.Space))
-                        {
-                            body.velocity += transform.up * Physics.gravity.y * (lowJumpFall - 1) * Time.deltaTime;
-                        }
-                        break;
-                }
-                break;
-
-            // Standard Character controls (Forward/Back = Transform Forward/Backward, Left/Right = Move Left, Move Right(
-            case false:
-                // RigidBody's velocity moves on axis based on angle of camera.
-                body.velocity += (transform.forward * _acceleration) + StandardMovementDirection(_acceleration, _rotation);
-
-                // Rotate the Rover automatically in direction of movement
-                StandardRotationDirection(_rotation);
-                break;
-        }
-
-
+                case false:
+                    // Modify speed while mid-air, while mid-air, only forward inputs apply to speed
+                    if (_acceleration >= 0f)
+                    {
+                        body.velocity += transform.forward * (_acceleration * airSpeedDivision);
+                    }
+                    break;
+            }
+        
         // Cap the speed at MaxSpeed
         if (body.velocity.magnitude > maxSpeed)
         {
             body.velocity = body.velocity.normalized * maxSpeed;
         }
     }
-
-    // NON-TANK CONTROLS: Transform Rover in Right Axis direction based on camera angle.
-    private Vector3 StandardMovementDirection(float verticalAxis, float horizontalAxis)
-    {
-        Vector3 direction;
-        Vector3 forward = mainCamera.transform.forward;
-        Vector3 right = mainCamera.transform.right;
-
-        forward.y = 0f;
-        right.y = 0f;
-
-        forward.Normalize();
-        right.Normalize();
-
-        return direction = forward * verticalAxis + right * horizontalAxis;
-    }
-
-    // NON-TANK CONTROLS: Rotate Rover in direction of movement automatically.
-    private void StandardRotationDirection(float horizontalAxis)
-    {
-        Vector3 right = mainCamera.transform.right;
-        right.y = 0f;
-        right.Normalize();
-
-        if (horizontalAxis > 0f)
-        {
-            Vector3 rotateTarget = right - transform.position;
-            Vector3 newDirection = Vector3.RotateTowards(transform.forward, rotateTarget, rotateSpeed / 2, 0f);
-            transform.rotation = Quaternion.LookRotation(newDirection);
-        }
-        else if (horizontalAxis < 1f)
-        {
-            Vector3 rotateTarget = right - transform.position;
-            Vector3 newDirection = Vector3.RotateTowards(transform.forward, rotateTarget, rotateSpeed / 2, 0f);
-            transform.rotation = Quaternion.LookRotation(newDirection);
-        }
-
-        //Quaternion newRotation = Quaternion.LookRotation(body.velocity + transform.forward * _acceleration);
-        //transform.rotation = Quaternion.RotateTowards(transform.rotation, newRotation, rotateSpeed);
-    }
-
-    // COLLISION Detection
-    private void OnCollisionStay(Collision c)
-    {
-        if (c.gameObject.tag == "Ground")
-        {
-            grounded = true;
-        }
-    }
-
-    private void OnCollisionExit(Collision c)
-    {
-        if (c.gameObject.tag == "Ground")
-        {
-            grounded = false;
-        }
-    }
-
 }
