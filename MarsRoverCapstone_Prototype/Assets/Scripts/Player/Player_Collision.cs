@@ -48,4 +48,13 @@ public class Player_Collision : MonoBehaviour
             Player_Movement.grounded = false;
         }
     }
+
+    public static void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Hazard")
+        {
+            Player_Stats.TakeDamage(10);
+        }
+        
+    }
 }

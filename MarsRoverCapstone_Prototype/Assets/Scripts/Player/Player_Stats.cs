@@ -12,7 +12,7 @@ public class Player_Stats : MonoBehaviour
     */
 
     public static int health;
-    public static int damage;
+    public static float damage;
     public static GameObject hazard;
     public static GameObject player;
     
@@ -20,17 +20,6 @@ public class Player_Stats : MonoBehaviour
     public static void Start()
     {
         health = 100;
-    }
-
-    
-    //testing collision method. doesn't need to be here once collision script is running.
-   public static void OnTriggerEnter(Collider other)
-    {
-        if(other.gameObject.tag == "Hazard")
-        {
-            TakeDamage(10);
-        }
-        Debug.Log("You took a hit! your current Health is:  " + health);
     }
 
     //Deals damage to the player based on the passed in damage amount. 
