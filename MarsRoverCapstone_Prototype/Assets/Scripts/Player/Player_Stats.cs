@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class Player_Stats 
+public class Player_Stats : MonoBehaviour
 {
     /*
      * collision stuff should be dealt with in it's own class but for testing purposes i'm writing it all here. 
@@ -12,7 +12,7 @@ public static class Player_Stats
     */
 
     public static int health;
-    public static int damage = 10;
+    public static int damage;
     public static GameObject hazard;
     public static GameObject player;
     
@@ -28,23 +28,27 @@ public static class Player_Stats
     {
         if(other.gameObject.tag == "Hazard")
         {
-            TakeDamage();
+            TakeDamage(10);
         }
         Debug.Log("You took a hit! your current Health is:  " + health);
     }
 
-    public static void TakeDamage()
+    //Deals damage to the player based on the passed in damage amount. 
+    public static void TakeDamage(int damage)
     {
         int newHealth = health - damage;
         health = newHealth;
 
-        healthCheck(newHealth);
+        healthCheck();
     }
 
-
-    private static void healthCheck(int health)
+    //Checks the players current health
+    private static void healthCheck()
     {
-        //this will need to go into the collision script, can't use Destroy() in static class
+        if (health == 0)
+        {
+            Destroy(player);
+        }
     }
 
     // Update is called once per frame
