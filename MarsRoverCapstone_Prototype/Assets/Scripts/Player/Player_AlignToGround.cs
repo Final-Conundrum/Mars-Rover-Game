@@ -13,6 +13,7 @@ public class Player_AlignToGround : MonoBehaviour
      */
 
     public float slopeRaycastDistance = 1.5f;
+    public float sphereCastRadius = 1f;
 
     private void Update()
     {
@@ -58,12 +59,12 @@ public class Player_AlignToGround : MonoBehaviour
         RaycastHit hit = new RaycastHit();
         Ray raycast = new Ray(transform.position, -transform.up);
 
-        if (Physics.Raycast(raycast, out hit, slopeRaycastDistance))
+        if (Physics.SphereCast(raycast, sphereCastRadius, out hit, slopeRaycastDistance))
         {
             Vector3 slope = hit.normal;
 
             // Check if slopes normal vector is too steep
-            if (!(slope.x > 70f || slope.x < -70f || slope.z > 70f || slope.z < -70f))
+            if (!(slope.x > 0.7f || slope.x < -0.7f || slope.z > 0.7f || slope.z < -0.7f))
             {
                 // Rotate to normals vector
                 transform.rotation = Quaternion.FromToRotation(transform.up, slope.normalized) * transform.rotation;
