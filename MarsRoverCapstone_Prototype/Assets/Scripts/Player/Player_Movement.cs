@@ -29,7 +29,7 @@ public class Player_Movement : MonoBehaviour
     public bool tankControls = true;
 
     // Character Controller variables
-    private Vector3 _CCMovement;
+    public Vector3 _CCMovement;
     public float gravity = 2f;
 
     // Speed variables, the range between min and max speed is -1 to 1
@@ -43,10 +43,12 @@ public class Player_Movement : MonoBehaviour
 
     private float _rotateSpeed;
     [SerializeField] private float _currentSpeed;
+    public static float roverSpeed;
 
     // Jump variables, the Fall variables modify the speed in which the rover drops after the jump to give it weight
     [SerializeField] private bool _isJumping = false;
-    public float jumpHeight = 4f;
+    public float jumpHeight = 0.5f;
+    public float geyserJumpHeight = 1f;
 
     public float _coyoteTime = 0.2f;
     public static float coyoteTime;
@@ -93,6 +95,8 @@ public class Player_Movement : MonoBehaviour
         {
             CC.Move(Vector3.down * CC.height / 2 * slopeGravityMuliplier * Time.deltaTime);
         }
+
+        roverSpeed = _currentSpeed;
     }
 
     // FixedUpdate reserved for modifying physics

@@ -28,6 +28,8 @@ public class Player_Collision : MonoBehaviour
 
             Debug.Log(gameObject.name + ": Player_Collision, Player should take fall damage here...");
         }
+
+        
     }
 
     private void OnCollisionStay(Collision c)
@@ -45,6 +47,14 @@ public class Player_Collision : MonoBehaviour
         if (c.gameObject.tag == "Ground")
         {
             Player_Movement.grounded = false;
+        }
+    }
+
+    private void OnTriggerEnter(Collider c)
+    {
+        if (c.gameObject.tag == "Geyser")
+        {
+            _Player_Movement._CCMovement.y = _Player_Movement.geyserJumpHeight;
         }
     }
 }
