@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MiniGame_... : MonoBehaviour
+public class MiniGame_Systems : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
