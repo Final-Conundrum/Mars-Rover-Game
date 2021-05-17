@@ -31,6 +31,7 @@ public class Player_ElevationIndicator : MonoBehaviour
         }
 
         // Modify colour
+        /*
         if(MovementScript.takeFallDamage)
         {
             positionIndicator.GetComponent<TextMeshPro>().color = new Color(200, 0, 0);
@@ -38,7 +39,7 @@ public class Player_ElevationIndicator : MonoBehaviour
         else
         {
             positionIndicator.GetComponent<TextMeshPro>().color = new Color(0, 200, 0);
-        }
+        }*/
     }
 
     public void PosIndicator(float Ypos)

@@ -25,6 +25,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject player;
 
+    private float timer = 1f;
+
     private void Awake()
     {
         if (instance == null)
@@ -55,12 +57,29 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Collect variables and set the scene upon scene reload
     public void SceneSetup()
     {
         Debug.Log("GameManager: Setup scene.");
 
+        timer = Time.time + 1f;
+
+        _GM_Checkpoint.checkpoints = FindObjectsOfType<CheckpointObject>();
+
         // Get Player
         player = FindObjectOfType<Player_Movement>().gameObject;
+        player.GetComponent<CharacterController>().enabled = false;
 
+        // Set player position to respawn point
+        if (_GM_Checkpoint.savedAtCheckpoint)
+        {
+            player.transform.position = _GM_Checkpoint.lastCheckpoint;
+        }
+
+        if (Time.time >= timer)
+        {
+            player.GetComponent<CharacterController>().enabled = true;
+
+        }
     }
 }

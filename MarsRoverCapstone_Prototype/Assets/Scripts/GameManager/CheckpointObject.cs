@@ -12,7 +12,7 @@ public class CheckpointObject : MonoBehaviour
      * i.e: inventory storage locker. 
      */
 
-    private GM_Checkpoint GM => GameObject.FindObjectOfType<GameManager>().GetComponent<GM_Checkpoint>();
+    private GM_Checkpoint GM => FindObjectOfType<GM_Checkpoint>();
 
     public Material untriggeredCheckpoint;
     public Material triggeredCheckedPoint;
@@ -35,10 +35,11 @@ public class CheckpointObject : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             mesh.material = triggeredCheckedPoint;
-            GM_Checkpoint.lastCheckpoint = collision.transform.position;
-            GM.savedAtCheckpoint = true;
+            GM.lastCheckpoint = transform.position;
 
-            Debug.Log(gameObject.name + ": Set Checkpoint to " + GM_Checkpoint.lastCheckpoint);
+            GM.savedAtCheckpoint = true;    
+
+            Debug.Log(gameObject.name + ": Set Checkpoint to " + GM.lastCheckpoint);
         }
     }
 }

@@ -232,7 +232,6 @@ public class Player_Movement : MonoBehaviour
         {
             Vector3 slope = hit.normal;
             _slopeCastHit = hit;
-            Debug.Log(slope);
 
             if (slope.x > 0.6f || slope.x < -0.6f || slope.z > 0.6f || slope.z < -0.6f)
             {
@@ -247,7 +246,6 @@ public class Player_Movement : MonoBehaviour
         {
             Vector3 slope = hit.normal;
             _slopeCastHit = hit;
-            Debug.Log(slope);
 
             if (slope.x > 0.6f || slope.x < -0.6f || slope.z > 0.6f || slope.z < -0.6f)
             {
