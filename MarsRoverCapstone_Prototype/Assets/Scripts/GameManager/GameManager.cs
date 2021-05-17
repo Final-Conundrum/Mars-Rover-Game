@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     private GM_Checkpoint _GM_Checkpoint => GetComponent<GM_Checkpoint>();
     private GM_Time _GM_Time => GetComponent<GM_Time>();
 
-    public GameObject player;
+    [SerializeField] private GameObject player;
 
     private float timer = 1f;
 
