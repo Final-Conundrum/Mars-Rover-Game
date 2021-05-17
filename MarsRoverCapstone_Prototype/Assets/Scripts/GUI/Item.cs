@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Sample_Item : ScriptableObject
+public class Item : ScriptableObject
 {
     //scriptable objects exist outside of the game world
 
