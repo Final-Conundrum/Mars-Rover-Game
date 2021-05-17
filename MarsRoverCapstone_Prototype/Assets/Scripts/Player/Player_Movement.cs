@@ -18,7 +18,7 @@ public class Player_Movement : MonoBehaviour
      * and rotate their vehicle to drive in a different direction.
      */
 
-    Rigidbody RB => GetComponent<Rigidbody>();
+    public Rigidbody RB => GetComponent<Rigidbody>();
     Player_RigidbodyMovement RBclass => GetComponent<Player_RigidbodyMovement>();
     CharacterController CC => GetComponent<CharacterController>();
     CapsuleCollider capsuleColl => GetComponent<CapsuleCollider>();
@@ -56,20 +56,17 @@ public class Player_Movement : MonoBehaviour
     public float fallDamageHeight = 25f;
     public static float elevation;
     public bool takeFallDamage = false;
-    private float _lastYPos;
 
     // Slope variables
-    public bool onSlope = false;
+    public bool onSteepSlope = false;
     public float slopeGravityMuliplier;
     public float slopeCastRadius = 1f;
     public float slopeCastDistance = 1f;
+    private Vector3 _slopeCastDirection;
+    private RaycastHit _slopeCastHit;
 
     // Input variables
     private float _rotation;
-
-    private void Awake()
-    {
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -133,16 +130,17 @@ public class Player_Movement : MonoBehaviour
             LockConstraints(false);
         }
 
-        // Movement Setup and modifiers while on/off ground
+        // The Rover is controlled by Tank controls (Forward/Back = Acceleration/Deceleration, Left/Right = Rotate Rover)
         switch (tankControls)
         {
-            // The Rover is controlled by Tank controls (Forward/Back = Acceleration/Deceleration, Left/Right = Rotate Rover)
+            // Movement Setup and modifiers while on/off ground
             case true:
                 switch (grounded)
                 {
                     // Player is Grounded
                     case true:
-                         _CCMovement.y = 0f;
+                        _CCMovement.y = 0f;
+                        
                         takeFallDamage = false;
 
                         // Input and AddForce for JUMP
@@ -184,16 +182,7 @@ public class Player_Movement : MonoBehaviour
                         // Decrease Rotation and Movement speed
                         transform.Rotate(0, _rotation * airSpeedDivision, 0);
 
-                        // Finalize Movement
-                        if(!OnSteepSlope())
-                        {
-                            CCMovementControl(_currentSpeed * airSpeedDivision);
-                        }
-                        else if(OnSteepSlope())
-                        {
-                            LockConstraints(false);
-                            CC.enabled = false;
-                        }
+                        CCMovementControl(_currentSpeed * airSpeedDivision);
                         break;
                 }                
                 break;
@@ -219,42 +208,6 @@ public class Player_Movement : MonoBehaviour
         CC.Move(_CCMovement);
     }
 
-    // Track if Y position changes
-    private string DifferenceInY()
-    {
-        if (transform.position.y < _lastYPos - 1f)
-        {
-            _lastYPos = transform.position.y;
-            return "Decreased";
-        }
-        else if (transform.position.y > _lastYPos + 1f)
-        {
-            _lastYPos = transform.position.y;
-            return "Increased";
-        }
-        return "None";
-    }
-
-    // Return if positioned on a slope
-    private bool OnSteepSlope()
-    {
-        RaycastHit hit = new RaycastHit();
-        Ray raycast = new Ray(transform.position, -transform.up);
-
-        if (Physics.SphereCast(raycast, slopeCastRadius, out hit, slopeCastDistance ))
-        {
-            Vector3 slope = hit.normal;
-
-            if (slope.x > 0.8f || slope.x < -0.8f || slope.z > 0.8f || slope.z < -0.8f)
-            {
-                onSlope = true;
-                return true;
-            }             
-        }
-        onSlope = false;
-        return false;
-    }
-
     // NON-TANK CONTROLS: Transform Rover in Right Axis direction based on camera angle.
     private void StandardMovementDirection(float verticalAxis, float horizontalAxis)
     {       
@@ -267,10 +220,52 @@ public class Player_Movement : MonoBehaviour
 
     }
 
-    public void SetStartPos(Vector3 pos)
+    // Return if positioned on a slope
+    private bool OnSteepSlope()
     {
-        transform.position = new Vector3(pos.x, pos.y, pos.z);
-        Debug.Log(gameObject.name + ": Set start Pos to " + pos);
+        _slopeCastDirection = transform.forward;
+
+        RaycastHit hit = new RaycastHit();
+        Ray raycast = new Ray(transform.position, _slopeCastDirection);
+
+        if (Physics.SphereCast(raycast, slopeCastRadius, out hit, slopeCastDistance))
+        {
+            Vector3 slope = hit.normal;
+            _slopeCastHit = hit;
+            Debug.Log(slope);
+
+            if (slope.x > 0.6f || slope.x < -0.6f || slope.z > 0.6f || slope.z < -0.6f)
+            {
+                onSteepSlope = true;
+                return true;
+            }
+        }
+
+        Ray raycast2 = new Ray(transform.position, -_slopeCastDirection);
+
+        if (Physics.SphereCast(raycast2, slopeCastRadius, out hit, slopeCastDistance))
+        {
+            Vector3 slope = hit.normal;
+            _slopeCastHit = hit;
+            Debug.Log(slope);
+
+            if (slope.x > 0.6f || slope.x < -0.6f || slope.z > 0.6f || slope.z < -0.6f)
+            {
+                onSteepSlope = true;
+                return true;
+            }
+        }
+
+        onSteepSlope = false;
+        return false;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Debug.DrawLine(transform.position, transform.position + _slopeCastDirection * _slopeCastHit.distance);
+        Gizmos.DrawWireSphere(transform.position + _slopeCastDirection * _slopeCastHit.distance, slopeCastRadius);
+        Gizmos.DrawWireSphere(transform.position + -_slopeCastDirection * _slopeCastHit.distance, slopeCastRadius);
     }
 
     // Called by Player_Collision to apply Fall damage
@@ -292,7 +287,7 @@ public class Player_Movement : MonoBehaviour
     }
 
     // Lock Rigidbody constraints while using Character Controller. Only turned false when sliding down slope.
-    private void LockConstraints(bool lockedConstraints)
+    public void LockConstraints(bool lockedConstraints)
     {
         switch(lockedConstraints) 
         {

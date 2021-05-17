@@ -35,10 +35,10 @@ public class CheckpointObject : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             mesh.material = triggeredCheckedPoint;
-            GM.lastCheckpoint = collision.transform.position;
+            GM_Checkpoint.lastCheckpoint = collision.transform.position;
             GM.savedAtCheckpoint = true;
 
-            Debug.Log(gameObject.name + ": Set Checkpoint to " + GM.lastCheckpoint);
+            Debug.Log(gameObject.name + ": Set Checkpoint to " + GM_Checkpoint.lastCheckpoint);
         }
     }
 }

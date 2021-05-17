@@ -62,10 +62,5 @@ public class GameManager : MonoBehaviour
         // Get Player
         player = FindObjectOfType<Player_Movement>().gameObject;
 
-        if (_GM_Checkpoint.savedAtCheckpoint)
-        {
-            Debug.Log("GameManager: Setup scene with checkpoint");
-            player.GetComponent<Player_Movement>().SetStartPos(_GM_Checkpoint.lastCheckpoint);
-        }
     }
 }
