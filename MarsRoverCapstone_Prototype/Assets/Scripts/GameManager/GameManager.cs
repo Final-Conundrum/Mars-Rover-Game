@@ -55,6 +55,18 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+
+        if(Input.GetKeyDown(KeyCode.Equals))
+        {
+            _GM_Checkpoint.savedAtCheckpoint = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     // Collect variables and set the scene upon scene reload

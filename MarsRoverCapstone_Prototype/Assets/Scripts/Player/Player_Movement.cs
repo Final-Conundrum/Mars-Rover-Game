@@ -21,7 +21,6 @@ public class Player_Movement : MonoBehaviour
     public Rigidbody RB => GetComponent<Rigidbody>();
     Player_RigidbodyMovement RBclass => GetComponent<Player_RigidbodyMovement>();
     CharacterController CC => GetComponent<CharacterController>();
-    CapsuleCollider capsuleColl => GetComponent<CapsuleCollider>();
 
     public static bool grounded;
     public bool _alignToGround = false;
@@ -233,7 +232,7 @@ public class Player_Movement : MonoBehaviour
             Vector3 slope = hit.normal;
             _slopeCastHit = hit;
 
-            if (slope.x > 0.6f || slope.x < -0.6f || slope.z > 0.6f || slope.z < -0.6f)
+            if ((slope.x > 0.6f || slope.x < -0.6f || slope.z > 0.6f || slope.z < -0.6f) && !hit.collider.isTrigger)
             {
                 onSteepSlope = true;
                 return true;
