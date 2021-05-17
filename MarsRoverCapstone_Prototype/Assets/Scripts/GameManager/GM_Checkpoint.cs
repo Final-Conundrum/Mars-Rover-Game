@@ -12,7 +12,7 @@ public class GM_Checkpoint : MonoBehaviour
      */
 
     public bool savedAtCheckpoint = false;
-    public Vector3 lastCheckpoint;
+    public static Vector3 lastCheckpoint;
 
     public GameObject[] checkpoints;
 
