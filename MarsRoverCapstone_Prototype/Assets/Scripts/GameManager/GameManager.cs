@@ -23,7 +23,9 @@ public class GameManager : MonoBehaviour
     private GM_Checkpoint _GM_Checkpoint => GetComponent<GM_Checkpoint>();
     private GM_Time _GM_Time => GetComponent<GM_Time>();
 
-    public GameObject player;
+    [SerializeField] private GameObject player;
+
+    private float timer = 1f;
 
     private void Awake()
     {
@@ -53,14 +55,43 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
+
+        if(Input.GetKeyDown(KeyCode.Equals))
+        {
+            _GM_Checkpoint.savedAtCheckpoint = false;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
+    // Collect variables and set the scene upon scene reload
     public void SceneSetup()
     {
         Debug.Log("GameManager: Setup scene.");
 
+        timer = Time.time + 1f;
+
+        _GM_Checkpoint.checkpoints = FindObjectsOfType<CheckpointObject>();
+
         // Get Player
         player = FindObjectOfType<Player_Movement>().gameObject;
+        player.GetComponent<CharacterController>().enabled = false;
 
+        // Set player position to respawn point
+        if (_GM_Checkpoint.savedAtCheckpoint)
+        {
+            player.transform.position = _GM_Checkpoint.lastCheckpoint;
+        }
+
+        if (Time.time >= timer)
+        {
+            player.GetComponent<CharacterController>().enabled = true;
+
+        }
     }
 }

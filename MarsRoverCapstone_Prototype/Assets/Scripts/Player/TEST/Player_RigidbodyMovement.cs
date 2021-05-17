@@ -19,12 +19,12 @@ public class Player_RigidbodyMovement : MonoBehaviour
     private float maxSpeed = 20f;
 
     // Speed variables, the range between min and max speed is -1 to 1
-    private float driveSpeed = 0.1f;
+    private float driveSpeed = 0.5f;
     private float airSpeedDivision = 0.5f;
     private float rotateSpeed = 1f;
 
     // Input variables
-    private float _acceleration = 1f;
+    private float _acceleration;
 
     // Start is called before the first frame update
     void Start()

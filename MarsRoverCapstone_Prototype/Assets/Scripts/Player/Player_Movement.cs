@@ -21,17 +21,20 @@ public class Player_Movement : MonoBehaviour
     public Rigidbody RB => GetComponent<Rigidbody>();
     Player_RigidbodyMovement RBclass => GetComponent<Player_RigidbodyMovement>();
     CharacterController CC => GetComponent<CharacterController>();
-    CapsuleCollider capsuleColl => GetComponent<CapsuleCollider>();
 
     public static bool grounded;
-    public bool _alignToGround = false;
+    private bool _alignToGround = true;
     public static bool alignToGround;
     public bool tankControls = true;
 
+    [Space]
+
     // Character Controller variables
-    public Vector3 _CCMovement;
+    [SerializeField] private Vector3 _CCMovement;
     public float gravity = 2f;
 
+    [Space]
+    [Header("Player Speed Values")]
     // Speed variables, the range between min and max speed is -1 to 1
     public float minDriveSpeed = 4f;
     public float midDriveSpeed = 9f;
@@ -45,6 +48,11 @@ public class Player_Movement : MonoBehaviour
     [SerializeField] private float _currentSpeed;
     public static float roverSpeed;
 
+    // Input variables
+    private float _rotation;
+
+    [Space]
+    [Header("Jump and Midair Values")]
     // Jump variables, the Fall variables modify the speed in which the rover drops after the jump to give it weight
     [SerializeField] private bool _isJumping = false;
     public float jumpHeight = 0.5f;
@@ -55,18 +63,20 @@ public class Player_Movement : MonoBehaviour
 
     public float fallDamageHeight = 25f;
     public static float elevation;
+    private float initialY;
+    private float lastElevationY;
     public bool takeFallDamage = false;
 
+    [Space]
+    [Header("On Slope Raycast values")]
     // Slope variables
-    public bool onSteepSlope = false;
+    [SerializeField] private bool onSteepSlope = false;
     public float slopeGravityMuliplier;
     public float slopeCastRadius = 1f;
     public float slopeCastDistance = 1f;
     private Vector3 _slopeCastDirection;
     private RaycastHit _slopeCastHit;
 
-    // Input variables
-    private float _rotation;
 
     // Start is called before the first frame update
     void Start()
@@ -76,6 +86,8 @@ public class Player_Movement : MonoBehaviour
 
         _currentSpeed = minDriveSpeed;
         _rotateSpeed = rotateSpeed;
+
+        initialY = transform.position.y;
     }
 
     // Update is called once per frame
@@ -86,13 +98,6 @@ public class Player_Movement : MonoBehaviour
 
         // Rotation inputs for WASD and Arrow keys
         _rotation = Input.GetAxis("Horizontal") * _rotateSpeed;
-       
-        // Increase gravity while moving down slope for smooth incline 
-        if ((Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0) && OnSteepSlope())
-        {
-            CC.Move(Vector3.down * CC.height / 2 * slopeGravityMuliplier * Time.deltaTime);
-        }
-
         roverSpeed = _currentSpeed;
     }
 
@@ -140,7 +145,7 @@ public class Player_Movement : MonoBehaviour
                     // Player is Grounded
                     case true:
                         _CCMovement.y = 0f;
-                        
+                        lastElevationY = transform.position.y;
                         takeFallDamage = false;
 
                         // Input and AddForce for JUMP
@@ -232,9 +237,8 @@ public class Player_Movement : MonoBehaviour
         {
             Vector3 slope = hit.normal;
             _slopeCastHit = hit;
-            Debug.Log(slope);
 
-            if (slope.x > 0.6f || slope.x < -0.6f || slope.z > 0.6f || slope.z < -0.6f)
+            if ((slope.x > 0.6f || slope.x < -0.6f || slope.z > 0.6f || slope.z < -0.6f) && !hit.collider.isTrigger)
             {
                 onSteepSlope = true;
                 return true;
@@ -247,7 +251,6 @@ public class Player_Movement : MonoBehaviour
         {
             Vector3 slope = hit.normal;
             _slopeCastHit = hit;
-            Debug.Log(slope);
 
             if (slope.x > 0.6f || slope.x < -0.6f || slope.z > 0.6f || slope.z < -0.6f)
             {
