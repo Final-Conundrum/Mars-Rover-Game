@@ -18,4 +18,11 @@ public class Test_Material : Item
     {
         
     }
+
+    //Override replaces the Use() method on the Item Script.
+    //This is useful if we plan to make different objects (items) to different things. 
+    public override void Use()
+    {
+        //something cool here
+    }
 }

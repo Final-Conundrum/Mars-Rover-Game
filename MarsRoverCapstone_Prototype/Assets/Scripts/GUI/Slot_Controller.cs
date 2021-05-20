@@ -27,22 +27,24 @@ public class Slot_Controller : MonoBehaviour
     public void UpdateInfo()
     {
         Text displayText = transform.Find("Text").GetComponent<Text>();
-        Image displayImage = transform.Find("Image").GetComponent<Image>();
+        Image displayImage = transform.Find("Icon").GetComponent<Image>();
 
         if (item)
         {
             displayText.text = item.itemName;
             displayImage.sprite = item.icon;
+            displayImage.color = Color.white;
         }else
         {
             displayText.text = "";
             displayImage.sprite = null;
+            displayImage.color = Color.clear;
         }
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+        UpdateInfo();
     }
 
     // Update is called once per frame

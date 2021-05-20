@@ -9,6 +9,8 @@ public class Player_Collision : MonoBehaviour
     //Player_Stats _Player_Stats => GetComponent<Player_Stats>();
     Rigidbody RB => GetComponent<Rigidbody>();
 
+   
+
     private void Update()
     {
         // Coyote Time: Allow player to press jump button a few frames after leaving ground
@@ -54,7 +56,13 @@ public class Player_Collision : MonoBehaviour
         if (other.gameObject.tag == "Hazard")
         {
             Player_Stats.TakeDamage(10);
+
+        }else if(other.gameObject.tag == "Item")
+        {
+            Inventory_Systems.instance.AddToInventory(other.GetComponent<Item>());  
         }
         
     }
+
+    
 }
