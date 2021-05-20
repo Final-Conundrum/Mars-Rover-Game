@@ -59,7 +59,11 @@ public class Player_Collision : MonoBehaviour
 
         }else if(other.gameObject.tag == "Item")
         {
-            Inventory_Systems.instance.AddToInventory(other.GetComponent<Item>());  
+            //Add the object to our inventory and update the GUI.
+            //REMINDER: Currently cant update Inventory, unsure if its because of other compile errors or if below code doesn't work.
+            Inventory_Systems.instance.AddToInventory(other.GetComponent<Item>());
+            Inventory_Systems.instance.UpdatePanelSlots();
+            Debug.Log("Added " + other + " to inventory!");  
         }
         
     }

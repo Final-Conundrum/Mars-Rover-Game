@@ -21,7 +21,7 @@ public class Inventory_Systems : MonoBehaviour
     void Start()
     {
         instance = this;
-        UpdatePanelSlots();
+        //UpdatePanelSlots();
     }
 
     // Update is called once per frame
@@ -63,6 +63,7 @@ public class Inventory_Systems : MonoBehaviour
         else
         {
             //Add pop-up telling player that inventory is full
+            Debug.Log("Inventory is full!");
         }
         UpdatePanelSlots();
     }
