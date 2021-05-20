@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Test_Material : Sample_Item
+//This is a class attirubute, allows us to create Test_Materials in the inspector.
+[CreateAssetMenu (fileName = "new Test_Material", menuName = "Items/Test_Material")]
+public class Test_Material : Item
 {
+    
     // Start is called before the first frame update
     void Start()
     {

@@ -27,6 +27,6 @@ public class Item : ScriptableObject
     //'using' items will enable the player to drop them off at the safe points.
     public void Use()
     {
-
+        
     }
 }
