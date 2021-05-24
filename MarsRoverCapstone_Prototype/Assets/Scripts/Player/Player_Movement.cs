@@ -103,6 +103,16 @@ public class Player_Movement : MonoBehaviour
             TankControlsActive.color = Color.cyan;
             TankControlsActive.text = "Tank Controls \n ON";
         }
+
+        if (Input.GetKeyDown(KeyCode.T) && tankControls)
+        {
+            tankControls = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.T) && !tankControls)
+        {
+            tankControls = true;
+        }
     }
 
     // FixedUpdate reserved for modifying physics

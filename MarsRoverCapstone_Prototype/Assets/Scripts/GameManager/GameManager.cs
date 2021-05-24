@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     private GM_Checkpoint _GM_Checkpoint => GetComponent<GM_Checkpoint>();
     private GM_Time _GM_Time => GetComponent<GM_Time>();
 
-    [SerializeField] private GameObject player;
+    [SerializeField] public GameObject player;
 
     private float timer = 1f;
 
@@ -67,21 +67,13 @@ public class GameManager : MonoBehaviour
             Application.Quit();
         }
 
-        if (Input.GetKeyDown(KeyCode.T) && player.GetComponent<Player_Movement>().tankControls) 
-        {
-            player.GetComponent<Player_Movement>().tankControls = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.T) && !player.GetComponent<Player_Movement>().tankControls)
-        {
-            player.GetComponent<Player_Movement>().tankControls = true;
-        }
+        
     }
 
     // Collect variables and set the scene upon scene reload
     public void SceneSetup()
     {
-        timer = Time.time + 1f;
+        timer = Time.time + 0.5f;
 
         Debug.Log("GameManager: Setup scene. CC Disabled Timer set to: " + timer);
 
@@ -98,14 +90,9 @@ public class GameManager : MonoBehaviour
 
             player.transform.position = _GM_Checkpoint.lastCheckpoint;
 
-            Debug.Log(Time.time);
+            player.GetComponent<CharacterController>().enabled = true;
 
-            // Reactivate CC
-            if (Time.time >= timer)
-            {
-                Debug.Log("GameManager: Reenabled Character Controller");
-                player.GetComponent<CharacterController>().enabled = true;
-            }
+            Debug.Log(Time.time);
         }       
     }
 }
