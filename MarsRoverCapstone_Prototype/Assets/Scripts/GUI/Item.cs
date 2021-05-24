@@ -28,6 +28,6 @@ public class Item : ScriptableObject
     //virtual means to use the extended class's version if one exists, otherwise use this.
     public virtual void Use()
     {
-        
+        //Drop off items
     }
 }

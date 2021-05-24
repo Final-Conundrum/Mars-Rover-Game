@@ -11,16 +11,25 @@ public class Mineral_Pick_Up : MonoBehaviour
    
     //Reference to the scriptable object (Item)
     public Item item;
+    Slot_Controller slotController;
+    public static Mineral_Pick_Up mineralPickUp;
 
     // Start is called before the first frame update
     void Start()
     {
-       
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+    }
+
+    public void SendToInventory()
+    {
+        Inventory_Systems.instance.AddToInventory(item);
+        slotController.UpdateInfo();
         
     }
 }

@@ -6,18 +6,31 @@ using UnityEngine.UI;
 public class Slot_Controller : MonoBehaviour
 {
     /*
-     * This script stires the item corresponding to the slot it is attached to.
+     * the item corresponding to the slot it is attached to.
      * Will display the items name and icon and allow the player to interact with the item by clicking the slot.
      */
 
     public Item item;
 
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        UpdateInfo();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
     public void Use()
     {
         if (item)
         {
             Debug.Log("You Clicked: " + item.itemName);
-        }else
+        }
+        else
         {
             Debug.Log("Uh oh, there's nothing here!");
         }
@@ -34,22 +47,12 @@ public class Slot_Controller : MonoBehaviour
             displayText.text = item.itemName;
             displayImage.sprite = item.icon;
             displayImage.color = Color.white;
-        }else
+        }
+        else
         {
             displayText.text = "";
             displayImage.sprite = null;
             displayImage.color = Color.clear;
         }
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        UpdateInfo();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
