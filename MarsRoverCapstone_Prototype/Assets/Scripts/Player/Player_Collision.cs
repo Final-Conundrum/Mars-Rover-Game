@@ -69,11 +69,12 @@ public class Player_Collision : MonoBehaviour
         {
             Player_Stats.TakeDamage(10);
 
-        }else if(other.gameObject.tag == "Item")
+        }else if(c.gameObject.tag == "Item")
         {
-            Mineral_Pick_Up.mineralPickUp.SendToInventory();
-            Destroy(other.gameObject);
-            Debug.Log("Added " + other + " to inventory!");  
+            Item item = c.GetComponent<Item>();
+            Mineral_Pick_Up.mineralPickUp.SendToInventory(item);
+            Destroy(c.gameObject);
+            Debug.Log("Added " + c + " to inventory!");  
         }
     }
 

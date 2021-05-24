@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class MiniGame_SHERLOC : MonoBehaviour
 {
     //This is to load the Scene for the Mini Game for the SHERLOC
-    private void OnTriggerEnter(BoxCollider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.name == gameObject.tag)
             if (gameObject.tag == "Player")
