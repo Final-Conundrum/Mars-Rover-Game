@@ -6,11 +6,15 @@ using UnityEngine.UI;
 
 public class Test_GUI_HUD : MonoBehaviour
 {
+    Player_Movement PM => FindObjectOfType<Player_Movement>();
+    
     public TMP_Text health;
     public TMP_Text elevation;
 
-    public static GameObject green_check;
-    public static GameObject red_check;
+    public GameObject green_check;
+    public GameObject red_check;
+    public GameObject info_panel;
+
 
     // Start is called before the first frame update
     void Start()
@@ -24,20 +28,28 @@ public class Test_GUI_HUD : MonoBehaviour
     {
         health.text = "Health: " + Player_Stats.health;
         elevation.text = "Elevation: " + Player_Movement.elevation;
+        FallDamageCheck();
     }
 
 
 
-    public static void Set_Green() 
+    public void FallDamageCheck() 
     {
-        green_check.SetActive(false);
-        
+        if (PM.takeFallDamage == false)
+        {
+            green_check.SetActive(true);
+            red_check.SetActive(false);
+        }
+        else
+        {
+            red_check.SetActive(true);
+            green_check.SetActive(false);
+        }
     }
-
-    public static void Set_Red()
+    public void ClosePanel()
     {
-        red_check.SetActive(true);
-
-
+        info_panel.SetActive(false);
     }
+   
+    
 }
