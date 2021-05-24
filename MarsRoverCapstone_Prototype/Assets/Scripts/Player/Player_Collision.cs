@@ -9,9 +9,6 @@ public class Player_Collision : MonoBehaviour
     //Player_Stats _Player_Stats => GetComponent<Player_Stats>();
     Rigidbody RB => GetComponent<Rigidbody>();
 
-   
-   
-
     private void Update()
     {
         // Coyote Time: Allow player to press jump button a few frames after leaving ground
@@ -69,14 +66,19 @@ public class Player_Collision : MonoBehaviour
         {
             Player_Stats.TakeDamage(10);
 
-        }else if(c.gameObject.tag == "Item")
-        {
-            Item item = c.GetComponent<Item>();
-            Mineral_Pick_Up.mineralPickUp.SendToInventory(item);
-            Destroy(c.gameObject);
-            Debug.Log("Added " + c + " to inventory!");  
         }
+        if (c.gameObject.tag == "Item")
+        {
+            Debug.Log("Bonk");
+            //var item = c.GetComponent<Item>();
+            //if (item)
+            //{
+            //    inventory.AddItem(item, 1);
+            //    Destroy(c.gameObject);
+            //}
+            
+        }
+   }
+
     }
 
-    
-}
