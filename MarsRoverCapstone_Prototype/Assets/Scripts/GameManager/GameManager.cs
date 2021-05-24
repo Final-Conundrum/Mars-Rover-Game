@@ -59,22 +59,31 @@ public class GameManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Equals))
         {
             _GM_Checkpoint.savedAtCheckpoint = false;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-            
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);            
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Application.Quit();
         }
+
+        if (Input.GetKeyDown(KeyCode.T) && player.GetComponent<Player_Movement>().tankControls) 
+        {
+            player.GetComponent<Player_Movement>().tankControls = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.T) && !player.GetComponent<Player_Movement>().tankControls)
+        {
+            player.GetComponent<Player_Movement>().tankControls = true;
+        }
     }
 
     // Collect variables and set the scene upon scene reload
     public void SceneSetup()
     {
-        Debug.Log("GameManager: Setup scene.");
-
         timer = Time.time + 1f;
+
+        Debug.Log("GameManager: Setup scene. CC Disabled Timer set to: " + timer);
 
         _GM_Checkpoint.checkpoints = FindObjectsOfType<CheckpointObject>();
 
@@ -89,14 +98,14 @@ public class GameManager : MonoBehaviour
 
             player.transform.position = _GM_Checkpoint.lastCheckpoint;
 
+            Debug.Log(Time.time);
+
             // Reactivate CC
             if (Time.time >= timer)
             {
+                Debug.Log("GameManager: Reenabled Character Controller");
                 player.GetComponent<CharacterController>().enabled = true;
-
             }
-        }
-
-       
+        }       
     }
 }

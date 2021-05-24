@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//[RequireComponent(typeof(Rigidbody))]
-
 public class Player_AlignToGround : MonoBehaviour
 {
     /* Edited by: Dallas
@@ -16,30 +14,42 @@ public class Player_AlignToGround : MonoBehaviour
     public float slopeRaycastDistance = 1.5f;
     public float sphereCastRadius = 1f;
 
+    public Vector3 _CameraForward;
+
+    public Transform rotateForward;
+    public Transform rotateRight;
+    public Transform rotateLeft;
+
     private void Update()
     {
+        _CameraForward = PM.playerCam.transform.forward;
+
         // Correct rotation if it rotates too far
-        transform.rotation = new Quaternion(transform.rotation.x, transform.parent.rotation.y, transform.rotation.z, transform.rotation.w);
+
+        if(PM.tankControls)
+        {
+            transform.rotation = new Quaternion(transform.rotation.x, transform.parent.rotation.y, transform.rotation.z, transform.rotation.w);
+        }
         transform.position = new Vector3(transform.parent.position.x, transform.parent.position.y, transform.parent.position.z);
 
-        if (transform.rotation.x > 50f)
-        {
-            transform.rotation = new Quaternion(50f, transform.parent.rotation.y, 0, transform.rotation.w);
-        }
 
         if (transform.rotation.x > 50f)
         {
-            transform.rotation = new Quaternion(-50f, transform.parent.rotation.y, 0, transform.rotation.w);
+            transform.rotation = new Quaternion(50f, transform.rotation.y, 0, transform.rotation.w);
+        }
+        if (transform.rotation.x > 50f)
+        {
+            transform.rotation = new Quaternion(-50f, transform.rotation.y, 0, transform.rotation.w);
         }
 
         if (transform.rotation.z > 50f)
         {
-            transform.rotation = new Quaternion(0, transform.parent.rotation.y, 50f, transform.rotation.w);
+            transform.rotation = new Quaternion(0, transform.rotation.y, 50f, transform.rotation.w);
         }
 
         if (transform.rotation.z > 50f)
         {
-            transform.rotation = new Quaternion(0, transform.parent.rotation.y, -50f, transform.rotation.w);
+            transform.rotation = new Quaternion(0, transform.rotation.y, -50f, transform.rotation.w);
         }
 
         // Finalize and rotate to Grounds Normal vector
@@ -50,7 +60,35 @@ public class Player_AlignToGround : MonoBehaviour
 
         if(!PM.tankControls)
         {
-            transform.rotation = Quaternion.LookRotation(new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")));
+            //Quaternion target = new Quaternion(0,0,0,0); 
+            Transform target;
+
+            if(Input.GetAxis("Vertical") > 0)
+            {
+                target = rotateForward;
+
+                Vector3 lookAtPos = target.position - transform.position;
+                Quaternion newRotation = Quaternion.LookRotation(lookAtPos, transform.up);
+                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 3);
+            }
+
+            if(Input.GetAxis("Horizontal") < 0)
+            {
+                target = rotateLeft;
+                Vector3 lookAtPos = target.position - transform.position;
+                Quaternion newRotation = Quaternion.LookRotation(lookAtPos, transform.up);
+                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 8);
+
+            }
+
+            if (Input.GetAxis("Horizontal") > 0)
+            {
+                target = rotateRight;
+
+                Vector3 lookAtPos = target.position - transform.position;
+                Quaternion newRotation = Quaternion.LookRotation(lookAtPos, transform.up);
+                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 8);
+            }
         }
     }
 

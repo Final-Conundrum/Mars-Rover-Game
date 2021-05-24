@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent (typeof(CharacterController))]
 [RequireComponent (typeof(Rigidbody))]
@@ -72,6 +73,9 @@ public class Player_Movement : MonoBehaviour
     public float slideFriction = 0.3f;
     public float slideMuliplier = 0.3f;
 
+    public Text TankControlsActive;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -88,6 +92,17 @@ public class Player_Movement : MonoBehaviour
         // Rotation inputs for WASD and Arrow keys
         _rotation = Input.GetAxis("Horizontal") * _rotateSpeed;
         roverSpeed = _currentSpeed;
+
+        if (!tankControls)
+        {
+            TankControlsActive.color = Color.red;
+            TankControlsActive.text = "Tank Controls \n OFF";
+        }
+        else
+        {
+            TankControlsActive.color = Color.cyan;
+            TankControlsActive.text = "Tank Controls \n ON";
+        }
     }
 
     // FixedUpdate reserved for modifying physics
@@ -134,6 +149,10 @@ public class Player_Movement : MonoBehaviour
                 {
                     // Rotate Rover direction with input
                     transform.Rotate(0, _rotation, 0);
+                }
+                else
+                {
+                    transform.rotation = new Quaternion(0, 0, 0, 0);
                 }
 
                 // Finalize Movement
@@ -193,12 +212,21 @@ public class Player_Movement : MonoBehaviour
         Vector3 flatMovement = movementSpeed * Time.deltaTime * transformDirection;
 
         // Slide down slopes
-        onSteepSlope = Vector3.Angle(Vector3.up, hitNormal) > CC.slopeLimit;
+        if(Vector3.Angle(Vector3.up, hitNormal) > CC.slopeLimit)
+        {
+            onSteepSlope = true;
+        }
+        else if(Vector3.Angle(Vector3.down, hitNormal) > CC.slopeLimit)
+        {
+            onSteepSlope = false;
+        }
+        else
+        {
+            onSteepSlope = false;
+        }
 
         if (onSteepSlope)
         {
-            //Debug.Log(Vector3.Angle(Vector3.up, hitNormal));
-            //_CCMovement.y -= gravity * Time.fixedDeltaTime;
             _CCMovement.x += (1f - hitNormal.y) * hitNormal.x * (1f - slideFriction);
             _CCMovement.z += (1f - hitNormal.y) * hitNormal.z * (1f - slideFriction);
 
@@ -219,19 +247,6 @@ public class Player_Movement : MonoBehaviour
         CC.Move(_CCMovement);
     }
 
-    // NON-TANK CONTROLS: Transform Rover in Right Axis direction based on camera angle.
-    private void StandardMovementDirection(float verticalAxis, float horizontalAxis)
-    {       
-
-    }
-
-    // NON-TANK CONTROLS: Rotate Rover in direction of movement automatically.
-    private void StandardRotationDirection(float horizontalAxis)
-    {
-
-    }
-
-
     // Called by Player_Collision to apply Fall damage
     public void CheckFallDamage()
     {
@@ -241,7 +256,6 @@ public class Player_Movement : MonoBehaviour
         {
             float distanceToGround = hit.distance;
             elevation = distanceToGround;
-            //Debug.Log("DistanceToGround: " + distanceToGround);
 
             if(distanceToGround > fallDamageHeight)
             {
