@@ -10,12 +10,12 @@ using UnityEngine.UI;
 public class Player_Movement : MonoBehaviour
 {
     /* EDITED BY: Dallas.
-     * 
+     *
      * PLAYER MOVEMENT:
      * Attach to Player object.
      * Recieves inputs to transform the position/rotation of the object it is attached to.
-     * 
-     * The movement is designed after 'tank' controls, where players can accelerate, reverse 
+     *
+     * The movement is designed after 'tank' controls, where players can accelerate, reverse
      * and rotate their vehicle to drive in a different direction.
      */
 
@@ -110,7 +110,7 @@ public class Player_Movement : MonoBehaviour
     {
         // CC Gravity
         _CCMovement.y -= gravity * Time.fixedDeltaTime;
-        
+
         //Speed, Momentum and Shift speed boost
         if ((Input.GetAxis("Vertical") == 1 || Input.GetAxis("Vertical") == -1) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && _currentSpeed < maxDriveSpeed)
         {
@@ -127,7 +127,7 @@ public class Player_Movement : MonoBehaviour
         else if(Input.GetAxis("Vertical") == 0 && _currentSpeed > minDriveSpeed)
         {
             _currentSpeed -= momentumIncrease;
-        }            
+        }
 
         // Movement Setup and modifiers while on/off ground
         switch (grounded)
@@ -160,7 +160,7 @@ public class Player_Movement : MonoBehaviour
                 break;
 
             // Player is Mid-air
-            case false:                                           
+            case false:
                 // Stop jump velocity after letting go jump button, giving it weighted feeling
                 if (_CCMovement.y > (jumpHeight / 2) && !Input.GetKey(KeyCode.Space))
                 {
@@ -188,7 +188,7 @@ public class Player_Movement : MonoBehaviour
 
                 CCMovementControl(_currentSpeed * airSpeedDivision);
                 break;
-        }                
+        }
     }
 
     // Method to encompass getting input and using CC to move object
@@ -197,7 +197,7 @@ public class Player_Movement : MonoBehaviour
         Vector3 inputDirection;
 
         // Control movement and direction
-        switch (tankControls) 
+        switch (tankControls)
         {
             case true:
                 inputDirection = new Vector3(0, 0, Input.GetAxis("Vertical"));
@@ -316,23 +316,23 @@ public class Player_Movement : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position + -_slopeCastDirection * _slopeCastHit.distance, slopeCastRadius);
     }
 
-    
+
     // Lock Rigidbody constraints while using Character Controller. Only turned false when sliding down slope.
     public void LockConstraints(bool lockedConstraints)
     {
-        switch(lockedConstraints) 
+        switch(lockedConstraints)
         {
             case true:
                 // Freeze constraints so that Character Controller overrides phyhsics
-                
+
                 CC.enabled = true;
                 RBclass.enabled = false;
                 RB.constraints = RigidbodyConstraints.FreezeAll;
                 RB.useGravity = false;
-                
+
                 break;
             case false:
-                
+
                 CC.enabled = false;
                 RBclass.enabled = true;
                 RB.constraints = RigidbodyConstraints.FreezeRotation;
