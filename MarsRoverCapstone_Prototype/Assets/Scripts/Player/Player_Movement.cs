@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent (typeof(CharacterController))]
 [RequireComponent (typeof(Rigidbody))]
-[RequireComponent (typeof(BoxCollider))]
+[RequireComponent (typeof(CapsuleCollider))]
 
 public class Player_Movement : MonoBehaviour
 {
@@ -19,7 +19,6 @@ public class Player_Movement : MonoBehaviour
      */
 
     public Rigidbody RB => GetComponent<Rigidbody>();
-    Player_RigidbodyMovement RBclass => GetComponent<Player_RigidbodyMovement>();
     CharacterController CC => GetComponent<CharacterController>();
 
     public static bool grounded;
@@ -63,8 +62,6 @@ public class Player_Movement : MonoBehaviour
 
     public float fallDamageHeight = 25f;
     public static float elevation;
-    private float initialY;
-    private float lastElevationY;
     public bool takeFallDamage = false;
 
     [Space]
@@ -77,6 +74,9 @@ public class Player_Movement : MonoBehaviour
     private Vector3 _slopeCastDirection;
     private RaycastHit _slopeCastHit;
 
+    [SerializeField] private Vector3 hitNormal;
+    public float slideFriction = 0.3f;
+    public float slideMuliplier = 0.3f;
 
     // Start is called before the first frame update
     void Start()
@@ -86,8 +86,6 @@ public class Player_Movement : MonoBehaviour
 
         _currentSpeed = minDriveSpeed;
         _rotateSpeed = rotateSpeed;
-
-        initialY = transform.position.y;
     }
 
     // Update is called once per frame
@@ -123,17 +121,7 @@ public class Player_Movement : MonoBehaviour
         else if(Input.GetAxis("Vertical") == 0 && _currentSpeed > minDriveSpeed)
         {
             _currentSpeed -= momentumIncrease;
-        }
-
-        // Steep Slope Movement
-        if (!OnSteepSlope())
-        {
-            LockConstraints(true);
-        }
-        else if (OnSteepSlope())
-        {
-            LockConstraints(false);
-        }
+        }            
 
         // The Rover is controlled by Tank controls (Forward/Back = Acceleration/Deceleration, Left/Right = Rotate Rover)
         switch (tankControls)
@@ -145,11 +133,10 @@ public class Player_Movement : MonoBehaviour
                     // Player is Grounded
                     case true:
                         _CCMovement.y = 0f;
-                        lastElevationY = transform.position.y;
                         takeFallDamage = false;
 
                         // Input and AddForce for JUMP
-                        if (Input.GetKey(KeyCode.Space))
+                        if (Input.GetKey(KeyCode.Space) && !onSteepSlope)
                         {
                             _CCMovement.y = jumpHeight;
                             _isJumping = true;
@@ -208,8 +195,30 @@ public class Player_Movement : MonoBehaviour
 
         Vector3 flatMovement = movementSpeed * Time.deltaTime * transformDirection;
 
-        _CCMovement = new Vector3(flatMovement.x, _CCMovement.y, flatMovement.z);
+        // Slide down slopes
+        onSteepSlope = Vector3.Angle(Vector3.up, hitNormal) > CC.slopeLimit;
 
+        if (onSteepSlope)
+        {
+            //Debug.Log(Vector3.Angle(Vector3.up, hitNormal));
+            //_CCMovement.y -= gravity * Time.fixedDeltaTime;
+            _CCMovement.x += (1f - hitNormal.y) * hitNormal.x * (1f - slideFriction);
+            _CCMovement.z += (1f - hitNormal.y) * hitNormal.z * (1f - slideFriction);
+
+            _CCMovement.x *= slideMuliplier;
+            _CCMovement.z *= slideMuliplier;
+            flatMovement.x *= slideMuliplier;
+            flatMovement.z *= slideMuliplier;
+
+            _CCMovement = new Vector3(flatMovement.x + _CCMovement.x, _CCMovement.y, flatMovement.z + _CCMovement.z);
+        }
+        else
+        {
+            _CCMovement.x = 0f;
+            _CCMovement.z = 0f;
+
+            _CCMovement = new Vector3(flatMovement.x, _CCMovement.y, flatMovement.z);
+        }
         CC.Move(_CCMovement);
     }
 
@@ -225,51 +234,6 @@ public class Player_Movement : MonoBehaviour
 
     }
 
-    // Return if positioned on a slope
-    private bool OnSteepSlope()
-    {
-        _slopeCastDirection = transform.forward;
-
-        RaycastHit hit = new RaycastHit();
-        Ray raycast = new Ray(transform.position, _slopeCastDirection);
-
-        if (Physics.SphereCast(raycast, slopeCastRadius, out hit, slopeCastDistance))
-        {
-            Vector3 slope = hit.normal;
-            _slopeCastHit = hit;
-
-            if ((slope.x > 0.6f || slope.x < -0.6f || slope.z > 0.6f || slope.z < -0.6f) && !hit.collider.isTrigger)
-            {
-                onSteepSlope = true;
-                return true;
-            }
-        }
-
-        Ray raycast2 = new Ray(transform.position, -_slopeCastDirection);
-
-        if (Physics.SphereCast(raycast2, slopeCastRadius, out hit, slopeCastDistance))
-        {
-            Vector3 slope = hit.normal;
-            _slopeCastHit = hit;
-
-            if (slope.x > 0.6f || slope.x < -0.6f || slope.z > 0.6f || slope.z < -0.6f)
-            {
-                onSteepSlope = true;
-                return true;
-            }
-        }
-
-        onSteepSlope = false;
-        return false;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Debug.DrawLine(transform.position, transform.position + _slopeCastDirection * _slopeCastHit.distance);
-        Gizmos.DrawWireSphere(transform.position + _slopeCastDirection * _slopeCastHit.distance, slopeCastRadius);
-        Gizmos.DrawWireSphere(transform.position + -_slopeCastDirection * _slopeCastHit.distance, slopeCastRadius);
-    }
 
     // Called by Player_Collision to apply Fall damage
     public void CheckFallDamage()
@@ -289,6 +253,59 @@ public class Player_Movement : MonoBehaviour
         }
     }
 
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        hitNormal = hit.normal;
+    }
+
+    // CODE ON HAITUS
+
+    /*
+    // Return if positioned on a slope
+    private bool OnSteepSlope()
+    {
+        _slopeCastDirection = transform.forward;
+
+        RaycastHit hit = new RaycastHit();
+        Ray raycastForward = new Ray(transform.position, _slopeCastDirection);
+        Ray raycastBack = new Ray(transform.position, -_slopeCastDirection);
+
+        if (Physics.SphereCast(raycastForward, slopeCastRadius, out hit, slopeCastDistance))
+        {
+            Vector3 slope = hit.normal;
+            _slopeCastHit = hit;
+
+            if ((slope.x > 0.6f || slope.x < -0.6f || slope.z > 0.6f || slope.z < -0.6f) && !hit.collider.isTrigger)
+            {
+                //onSteepSlope = true;
+                return true;
+            }
+        }
+        else if (Physics.SphereCast(raycastBack, slopeCastRadius, out hit, slopeCastDistance))
+        {
+            Vector3 slope = hit.normal;
+            _slopeCastHit = hit;
+
+            if (slope.x > 0.6f || slope.x < -0.6f || slope.z > 0.6f || slope.z < -0.6f)
+            {
+                //onSteepSlope = true;
+                return true;
+            }
+        }
+
+        //onSteepSlope = false;
+        return false;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Debug.DrawLine(transform.position, transform.position + _slopeCastDirection * _slopeCastHit.distance);
+        Gizmos.DrawWireSphere(transform.position + _slopeCastDirection * _slopeCastHit.distance, slopeCastRadius);
+        Gizmos.DrawWireSphere(transform.position + -_slopeCastDirection * _slopeCastHit.distance, slopeCastRadius);
+    }
+
+    
     // Lock Rigidbody constraints while using Character Controller. Only turned false when sliding down slope.
     public void LockConstraints(bool lockedConstraints)
     {
@@ -296,12 +313,15 @@ public class Player_Movement : MonoBehaviour
         {
             case true:
                 // Freeze constraints so that Character Controller overrides phyhsics
+                
                 CC.enabled = true;
                 RBclass.enabled = false;
                 RB.constraints = RigidbodyConstraints.FreezeAll;
                 RB.useGravity = false;
+                
                 break;
             case false:
+                
                 CC.enabled = false;
                 RBclass.enabled = true;
                 RB.constraints = RigidbodyConstraints.FreezeRotation;
@@ -309,4 +329,5 @@ public class Player_Movement : MonoBehaviour
                 break;
         }
     }
+    */
 }

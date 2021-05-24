@@ -927,9 +927,7 @@ GameObject:
   - component: {fileID: 1063019444091931315}
   - component: {fileID: 5872653511397692145}
   - component: {fileID: 227704063898548675}
-  - component: {fileID: 1063019444091931312}
   - component: {fileID: 227704063898548796}
-  - component: {fileID: 82978926857982625}
   - component: {fileID: 5446497876372327775}
   - component: {fileID: 1479620678}
   m_Layer: 0
@@ -987,6 +985,9 @@ MonoBehaviour:
   slopeGravityMuliplier: 10
   slopeCastRadius: 0.5
   slopeCastDistance: 2
+  hitNormal: {x: 0, y: 0, z: 0}
+  slideFriction: 0.3
+  slideMuliplier: 0.3
 --- !u!114 &922852862919868473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1041,18 +1042,6 @@ CharacterController:
   m_SkinWidth: 0.01
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1063019444091931312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 82978926857982639}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc90c5d80be029748849b6ba8b8793ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &227704063898548796
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1069,19 +1058,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!65 &82978926857982625
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 82978926857982639}
-  m_Material: {fileID: 13400000, guid: 7356e3dae625e5e4aaf34057af34ff4e, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 3, y: 1.9, z: 3}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &5446497876372327775
 CapsuleCollider:
   m_ObjectHideFlags: 0
