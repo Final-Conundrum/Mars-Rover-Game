@@ -14,7 +14,7 @@ public class GM_Checkpoint : MonoBehaviour
     public bool savedAtCheckpoint = false;
     public Vector3 lastCheckpoint;
 
-    public GameObject[] checkpoints;
+    public CheckpointObject[] checkpoints;
 
     // Start is called before the first frame update
     void Start()

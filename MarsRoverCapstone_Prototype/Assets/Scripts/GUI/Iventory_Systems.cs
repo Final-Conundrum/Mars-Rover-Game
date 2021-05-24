@@ -10,10 +10,10 @@ public class Iventory_Systems : MonoBehaviour
      */
 
     //public variables
-    public List<GameObject> panelImages;
-    public List<GameObject> CurrentInventory;
-    public List<GameObject> allMaterials;
-    public GameObject Material;
+   
+    public List<GameObject> currentInventory;
+    public List<GameObject> savedInventory;
+    public GameObject item;
     
 
  
@@ -29,39 +29,38 @@ public class Iventory_Systems : MonoBehaviour
         
     }
 
-    //setting the object active could probably be done in the collision detection script.
+    void UpdatePanelSlots()
+    {
+
+    }
+
+   
 
    void AddToInventory()
     {
-        CurrentInventory.Add(Material);
-
-        //testing
-        if (gameObject.tag == "Material")
-        {
-            panelImages[0].SetActive(true);
-        }
+        //adding material gameobject to the current inventory list
+        currentInventory.Add(item);
+ 
     }
 
-    //Deactivate all panel images and clear inventory list.
-    void ClearInventory()
+//clear inventory upon death 
+    public void ClearInventory()
     {
-        foreach(GameObject panel in panelImages)
-        {
-            panel.SetActive(false);
-        }
+       
+        currentInventory.Clear();
 
-        CurrentInventory.Clear();
+        //remove images from buttons
     }
 
     void SaveInventory()
     {
-        foreach(GameObject material in CurrentInventory)
+        foreach(GameObject item in currentInventory)
         {
-            allMaterials.Add(material);
+            savedInventory.Add(item);
         }
 
-        CurrentInventory.Clear();
+        currentInventory.Clear();
 
-        Debug.Log(allMaterials.Count);
+        Debug.Log(savedInventory.Count);
     }
 }

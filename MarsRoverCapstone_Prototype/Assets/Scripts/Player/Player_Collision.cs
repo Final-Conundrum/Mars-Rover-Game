@@ -12,21 +12,27 @@ public class Player_Collision : MonoBehaviour
     private void Update()
     {
         // Coyote Time: Allow player to press jump button a few frames after leaving ground
-        if(Time.time > Player_Movement.coyoteTime)
+        if (Time.time > Player_Movement.coyoteTime)
         {
             Player_Movement.grounded = false;
         }
     }
 
-    // COLLISION Detection 
+    // COLLISION Detection
     private void OnCollisionEnter(Collision c)
     {
-        if(c.gameObject.tag == "Ground" && _Player_Movement.takeFallDamage)
+        if (c.gameObject.tag == "Ground" && _Player_Movement.takeFallDamage)
         {
-            Player_Stats.TakeDamage();
+            //I put 10 here as I changed the TakeDamage method to take in a damage value and no fall damage amount has been set. :)
+            Player_Stats.TakeDamage(10);
             Player_Movement.grounded = true;
 
             Debug.Log(gameObject.name + ": Player_Collision, Player should take fall damage here...");
+        }
+
+        if (c.gameObject.tag == "Hazard")
+        {
+            Player_Stats.TakeDamage(10);
         }
     }
 
@@ -45,6 +51,20 @@ public class Player_Collision : MonoBehaviour
         if (c.gameObject.tag == "Ground")
         {
             Player_Movement.grounded = false;
+        }
+    }
+
+    private void OnTriggerEnter(Collider c)
+    {
+        if (c.gameObject.tag == "Geyser")
+        {
+            _Player_Movement.LockConstraints(false);
+            _Player_Movement.RB.velocity += transform.up * _Player_Movement.geyserJumpHeight;
+        }
+
+        if (c.gameObject.tag == "Hazard")
+        {
+            Player_Stats.TakeDamage(10);
         }
     }
 }
