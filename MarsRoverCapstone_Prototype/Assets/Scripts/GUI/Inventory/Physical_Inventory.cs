@@ -5,6 +5,7 @@ using UnityEngine;
 public class Physical_Inventory : MonoBehaviour
 {
     public Inventory_Systems inventory;
+    public Display_Inventory displayInventory;
 
    public void OnTriggerEnter(Collider other)
     {
@@ -14,12 +15,14 @@ public class Physical_Inventory : MonoBehaviour
         {
             inventory.AddItem(item.item, 1);
             Destroy(other.gameObject);
+            displayInventory.UpdateDisplay();
+
         }
     }
 
     //reset inventory to 0 when exiting play mode. 
     private void OnApplicationQuit()
     {
-        //inventory.itemContainer.Clear();
+        inventory.itemContainer.Clear();
     }
 }

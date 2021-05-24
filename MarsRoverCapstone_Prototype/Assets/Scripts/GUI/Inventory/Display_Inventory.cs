@@ -48,6 +48,9 @@ public class Display_Inventory : MonoBehaviour
 
             //Get the TM Pro component and set it's value to amount of an item.
             obj.GetComponentInChildren <TextMeshProUGUI>().text = inventory.itemContainer[i].amount.ToString("n0");
+
+            //Add to the dictionary
+            itemsDisplayed.Add(inventory.itemContainer[i], obj);
         }
     }
 
@@ -55,5 +58,23 @@ public class Display_Inventory : MonoBehaviour
     public Vector3 GetPosition(int i)
     {
         return new Vector3(x_Start + (x_Space_Between_Items * (i % number_Of_Colums)), y_Start + (-y_Space_Between_Items * (i/number_Of_Colums)), 0f);
+    }
+
+    public void UpdateDisplay()
+    {
+        for(int i = 0; i < inventory.itemContainer.Count; i++)
+        {
+            if (itemsDisplayed.ContainsKey(inventory.itemContainer[i]))
+            {
+                //if the item is in the inventory:
+                itemsDisplayed[inventory.itemContainer[i]].GetComponentInChildren<TextMeshProUGUI>().text = inventory.itemContainer[i].amount.ToString("n0");
+            }else
+            {
+                var obj = Instantiate(inventory.itemContainer[i].item.prefab, Vector3.zero, Quaternion.identity, transform);
+                obj.GetComponent<RectTransform>().localPosition = GetPosition(i);
+                obj.GetComponentInChildren<TextMeshProUGUI>().text = inventory.itemContainer[i].amount.ToString("n0");
+                itemsDisplayed.Add(inventory.itemContainer[i], obj);
+            }
+        }
     }
 }
