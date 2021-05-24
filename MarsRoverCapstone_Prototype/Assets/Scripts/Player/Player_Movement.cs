@@ -68,12 +68,6 @@ public class Player_Movement : MonoBehaviour
     [Header("On Slope Raycast values")]
     // Slope variables
     [SerializeField] private bool onSteepSlope = false;
-    public float slopeGravityMuliplier;
-    public float slopeCastRadius = 1f;
-    public float slopeCastDistance = 1f;
-    private Vector3 _slopeCastDirection;
-    private RaycastHit _slopeCastHit;
-
     [SerializeField] private Vector3 hitNormal;
     public float slideFriction = 0.3f;
     public float slideMuliplier = 0.3f;
@@ -123,76 +117,85 @@ public class Player_Movement : MonoBehaviour
             _currentSpeed -= momentumIncrease;
         }            
 
-        // The Rover is controlled by Tank controls (Forward/Back = Acceleration/Deceleration, Left/Right = Rotate Rover)
-        switch (tankControls)
+        // Movement Setup and modifiers while on/off ground
+        switch (grounded)
         {
-            // Movement Setup and modifiers while on/off ground
+            // Player is Grounded
             case true:
-                switch (grounded)
+                _CCMovement.y = 0f;
+                takeFallDamage = false;
+
+                // Input and AddForce for JUMP
+                if (Input.GetKey(KeyCode.Space) && !onSteepSlope)
                 {
-                    // Player is Grounded
+                    _CCMovement.y = jumpHeight;
+                    _isJumping = true;
+                    grounded = false;
+                }
+
+                switch(tankControls)
+                {
+                    // The Rover is controlled by Tank controls (Forward/Back = Acceleration/Deceleration, Left/Right = Rotate Rover)
                     case true:
-                        _CCMovement.y = 0f;
-                        takeFallDamage = false;
-
-                        // Input and AddForce for JUMP
-                        if (Input.GetKey(KeyCode.Space) && !onSteepSlope)
-                        {
-                            _CCMovement.y = jumpHeight;
-                            _isJumping = true;
-                            grounded = false;
-                        }
-
                         // Rotate Rover direction with input
                         transform.Rotate(0, _rotation, 0);
-
-                        // Finalize Movement
-                        CCMovementControl(_currentSpeed);
                         break;
-
-                    // Player is Mid-air
-                    case false:                                           
-                        // Stop jump velocity after letting go jump button, giving it weighted feeling
-                        if (_CCMovement.y > (jumpHeight / 2) && !Input.GetKey(KeyCode.Space))
-                        {
-                            _CCMovement.y = 0f;
-                            _isJumping = false;
-
-                        }
-                        else if(!Input.GetKey(KeyCode.Space))
-                        {
-                            _isJumping = false;
-                        }
-                        else if(_CCMovement.y == jumpHeight)
-                        {
-                            _isJumping = false;
-                        }
-
-                        // Check for fall damage
-                        CheckFallDamage();
-
-                        // Decrease Rotation and Movement speed
-                        transform.Rotate(0, _rotation * airSpeedDivision, 0);
-
-                        CCMovementControl(_currentSpeed * airSpeedDivision);
+                    // Standard Character controls (Forward/Back = Transform Forward/Backward, Left/Right = Move Left, Move Right)
+                    case false:
+                        //Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
+                        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), 0.15f);
                         break;
-                }                
+                }
+
+                // Finalize Movement
+                CCMovementControl(_currentSpeed);
                 break;
 
-            // Standard Character controls (Forward/Back = Transform Forward/Backward, Left/Right = Move Left, Move Right)
-            case false:
+            // Player is Mid-air
+            case false:                                           
+                // Stop jump velocity after letting go jump button, giving it weighted feeling
+                if (_CCMovement.y > (jumpHeight / 2) && !Input.GetKey(KeyCode.Space))
+                {
+                    _CCMovement.y = 0f;
+                    _isJumping = false;
 
+                }
+                else if(!Input.GetKey(KeyCode.Space))
+                {
+                    _isJumping = false;
+                }
+                else if(_CCMovement.y == jumpHeight)
+                {
+                    _isJumping = false;
+                }
+
+                // Check for fall damage
+                CheckFallDamage();
+
+                // Decrease Rotation and Movement speed
+                transform.Rotate(0, _rotation * airSpeedDivision, 0);
+
+                CCMovementControl(_currentSpeed * airSpeedDivision);
                 break;
-        }
+        }                
     }
 
     // Method to encompass getting input and using CC to move object
     private void CCMovementControl(float movementSpeed)
     {
-        // Control movement and direction
-        Vector3 inputDirection = new Vector3(0, 0, Input.GetAxis("Vertical"));
-        Vector3 transformDirection = transform.TransformDirection(inputDirection);
+        Vector3 inputDirection;
 
+        // Control movement and direction
+        switch (tankControls) 
+        {
+            case true:
+                inputDirection = new Vector3(0, 0, Input.GetAxis("Vertical"));
+                break;
+            case false:
+                inputDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+                break;
+        }
+        Vector3 transformDirection = transform.TransformDirection(inputDirection); ;
         Vector3 flatMovement = movementSpeed * Time.deltaTime * transformDirection;
 
         // Slide down slopes
