@@ -58,7 +58,6 @@ public class Player_Collision : MonoBehaviour
     {
         if (c.gameObject.tag == "Geyser")
         {
-            _Player_Movement.LockConstraints(false);
             _Player_Movement.RB.velocity += transform.up * _Player_Movement.geyserJumpHeight;
         }
 
