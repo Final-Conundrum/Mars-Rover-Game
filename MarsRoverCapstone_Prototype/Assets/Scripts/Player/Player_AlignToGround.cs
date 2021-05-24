@@ -11,6 +11,7 @@ public class Player_AlignToGround : MonoBehaviour
      * AlignToGround: 
      * Add this script to the child (Body) of the parent Player object so that it aligns the aesthetic Rover body to ground.
      */
+    Player_Movement PM => GetComponentInParent<Player_Movement>();
 
     public float slopeRaycastDistance = 1.5f;
     public float sphereCastRadius = 1f;
@@ -42,9 +43,14 @@ public class Player_AlignToGround : MonoBehaviour
         }
 
         // Finalize and rotate to Grounds Normal vector
-        if(Player_Movement.alignToGround)
+        if(PM._alignToGround)
         {
             AlignToGround();
+        }
+
+        if(!PM.tankControls)
+        {
+            transform.rotation = Quaternion.LookRotation(new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")));
         }
     }
 

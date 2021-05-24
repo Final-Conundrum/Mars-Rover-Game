@@ -22,9 +22,9 @@ public class Player_Movement : MonoBehaviour
     CharacterController CC => GetComponent<CharacterController>();
 
     public static bool grounded;
-    private bool _alignToGround = true;
-    public static bool alignToGround;
+    public bool _alignToGround = true;
     public bool tankControls = true;
+    public Camera playerCam;
 
     [Space]
 
@@ -85,9 +85,6 @@ public class Player_Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Set if Rover should align to ground
-        alignToGround = _alignToGround;
-
         // Rotation inputs for WASD and Arrow keys
         _rotation = Input.GetAxis("Horizontal") * _rotateSpeed;
         roverSpeed = _currentSpeed;
@@ -133,18 +130,10 @@ public class Player_Movement : MonoBehaviour
                     grounded = false;
                 }
 
-                switch(tankControls)
+                if(tankControls)
                 {
-                    // The Rover is controlled by Tank controls (Forward/Back = Acceleration/Deceleration, Left/Right = Rotate Rover)
-                    case true:
-                        // Rotate Rover direction with input
-                        transform.Rotate(0, _rotation, 0);
-                        break;
-                    // Standard Character controls (Forward/Back = Transform Forward/Backward, Left/Right = Move Left, Move Right)
-                    case false:
-                        //Vector3 movement = new Vector3(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
-                        //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), 0.15f);
-                        break;
+                    // Rotate Rover direction with input
+                    transform.Rotate(0, _rotation, 0);
                 }
 
                 // Finalize Movement
@@ -172,8 +161,11 @@ public class Player_Movement : MonoBehaviour
                 // Check for fall damage
                 CheckFallDamage();
 
-                // Decrease Rotation and Movement speed
-                transform.Rotate(0, _rotation * airSpeedDivision, 0);
+                if(tankControls)
+                {
+                    // Decrease Rotation and Movement speed
+                    transform.Rotate(0, _rotation * airSpeedDivision, 0);
+                }
 
                 CCMovementControl(_currentSpeed * airSpeedDivision);
                 break;
@@ -193,6 +185,8 @@ public class Player_Movement : MonoBehaviour
                 break;
             case false:
                 inputDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+                inputDirection = playerCam.transform.TransformDirection(inputDirection);
+                inputDirection.y = 0.0f;
                 break;
         }
         Vector3 transformDirection = transform.TransformDirection(inputDirection); ;
