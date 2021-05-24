@@ -19,7 +19,7 @@ public class Player_RigidbodyMovement : MonoBehaviour
     private float maxSpeed = 20f;
 
     // Speed variables, the range between min and max speed is -1 to 1
-    private float driveSpeed = 0.5f;
+    public float tempSpeed = 0.5f;
     private float airSpeedDivision = 0.5f;
     private float rotateSpeed = 1f;
 
@@ -36,7 +36,7 @@ public class Player_RigidbodyMovement : MonoBehaviour
     void Update()
     {
         // Movement inputs for WASD and Arrow keys trigger continuous translation
-        _acceleration = Input.GetAxis("Vertical") * driveSpeed;
+        _acceleration = Input.GetAxis("Vertical") * tempSpeed;
     }
 
     // FixedUpdate reserved for modifying physics
