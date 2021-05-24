@@ -285,6 +285,7 @@ public class Player_Movement : MonoBehaviour
             if(distanceToGround > fallDamageHeight)
             {
                 takeFallDamage = true;
+
             }
         }
     }
