@@ -19,7 +19,7 @@ public class GUI_MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene();
+        SceneManager.LoadScene("Test_Sprint2Obstacles");
     }
 
 

@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //Set Cursor to not be visible
-        Cursor.visible = false;
+        //Cursor.visible = false;
     }
 
     // Update is called once per frame
