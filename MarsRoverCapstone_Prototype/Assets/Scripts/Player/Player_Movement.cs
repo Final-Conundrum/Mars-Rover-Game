@@ -104,15 +104,17 @@ public class Player_Movement : MonoBehaviour
             TankControlsActive.text = "Tank Controls \n ON";
         }
 
-        if (Input.GetKeyDown(KeyCode.T) && tankControls)
+        if(Input.GetKeyDown(KeyCode.T))
         {
-            tankControls = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.T) && !tankControls)
-        {
-            tankControls = true;
-        }
+            if (!tankControls)
+            {
+                tankControls = true;
+            }
+            else if (tankControls)
+            {
+                tankControls = false;
+            }
+        }      
     }
 
     // FixedUpdate reserved for modifying physics
@@ -221,12 +223,15 @@ public class Player_Movement : MonoBehaviour
         Vector3 transformDirection = transform.TransformDirection(inputDirection); ;
         Vector3 flatMovement = movementSpeed * Time.deltaTime * transformDirection;
 
+        RaycastHit hit = new RaycastHit();
+        Ray raycastDown = new Ray(transform.position, -transform.up);
+
         // Slide down slopes
-        if(Vector3.Angle(Vector3.up, hitNormal) > CC.slopeLimit)
+        if (Vector3.Angle(Vector3.up, hitNormal) > CC.slopeLimit + 10)
         {
             onSteepSlope = true;
         }
-        else if(Vector3.Angle(Vector3.down, hitNormal) > CC.slopeLimit)
+        else if (hitNormal.y > 0.5f)
         {
             onSteepSlope = false;
         }

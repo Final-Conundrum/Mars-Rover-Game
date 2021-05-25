@@ -17,7 +17,7 @@ public class Player_Stats : MonoBehaviour
     public static GameObject player;
     
     // Start is called before the first frame update
-    public static void Start()
+    public void Start()
     {
         health = 100;
     }
