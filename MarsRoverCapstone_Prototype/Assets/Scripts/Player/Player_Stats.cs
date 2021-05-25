@@ -10,6 +10,7 @@ public class Player_Stats : MonoBehaviour
      * damage is being taken twice, thinking its because TakeDamage() gets called in the collision check
      * and then again right after.
     */
+    public static GUI_DeathScreen DeathScreen => FindObjectOfType<GUI_DeathScreen>();
 
     public static int health;
     public static float damage;
@@ -20,6 +21,7 @@ public class Player_Stats : MonoBehaviour
     public void Start()
     {
         health = 100;
+        player = this.gameObject;
     }
 
     //Deals damage to the player based on the passed in damage amount. 
@@ -37,6 +39,7 @@ public class Player_Stats : MonoBehaviour
         if (health == 0)
         {
             Destroy(player);
+            DeathScreen.Display();
         }
     }
 

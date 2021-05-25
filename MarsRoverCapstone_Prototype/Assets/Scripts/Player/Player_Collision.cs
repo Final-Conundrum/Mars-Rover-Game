@@ -27,7 +27,7 @@ public class Player_Collision : MonoBehaviour
             if(transform.position.y <= exitPosY - _Player_Movement.fallDamageHeight)
             {
                 //I put 10 here as I changed the TakeDamage method to take in a damage value and no fall damage amount has been set. :)
-                Player_Stats.TakeDamage(10);
+                Player_Stats.TakeDamage(30);
                 Player_Movement.grounded = true;
 
                 Debug.Log(gameObject.name + ": Player_Collision, Player should take fall damage here...");
