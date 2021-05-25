@@ -8,6 +8,8 @@ public class Player_Collision : MonoBehaviour
     //Player_Stats _Player_Stats => GetComponent<Player_Stats>();
     Rigidbody RB => GetComponent<Rigidbody>();
 
+    [SerializeField] private float exitPosY;
+
     private void Update()
     {
         // Coyote Time: Allow player to press jump button a few frames after leaving ground
@@ -22,11 +24,14 @@ public class Player_Collision : MonoBehaviour
     {
         if (c.gameObject.tag == "Ground" && _Player_Movement.takeFallDamage)
         {
-            //I put 10 here as I changed the TakeDamage method to take in a damage value and no fall damage amount has been set. :)
-            Player_Stats.TakeDamage(10);
-            Player_Movement.grounded = true;
+            if(transform.position.y <= exitPosY - _Player_Movement.fallDamageHeight)
+            {
+                //I put 10 here as I changed the TakeDamage method to take in a damage value and no fall damage amount has been set. :)
+                Player_Stats.TakeDamage(10);
+                Player_Movement.grounded = true;
 
-            Debug.Log(gameObject.name + ": Player_Collision, Player should take fall damage here...");
+                Debug.Log(gameObject.name + ": Player_Collision, Player should take fall damage here...");
+            }
         }
 
         if (c.gameObject.tag == "Hazard")
@@ -50,6 +55,7 @@ public class Player_Collision : MonoBehaviour
         if (c.gameObject.tag == "Ground")
         {
             Player_Movement.grounded = false;
+            exitPosY = transform.position.y;
         }
     }
 
