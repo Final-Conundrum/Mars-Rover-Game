@@ -9,30 +9,6 @@ public class Mineral_Pick_Up : MonoBehaviour
     //The game object our item will represent
     public Item item;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //    /*This can be thought of as the 'physical' version of the scriptable object (Item.cs)
 //     * This will be the item that players interact with in the scene.
 //     * 

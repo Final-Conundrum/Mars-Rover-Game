@@ -65,6 +65,11 @@ public class Player_Collision : MonoBehaviour
             Player_Stats.TakeDamage(10);
 
         }
+
+        if(c.gameObject.tag == "Aragonite")
+        {
+            MiniGame_Systems.MiniGame_PIXL();
+        }
         
    }
 
