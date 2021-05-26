@@ -56,7 +56,7 @@ public class Player_Movement : MonoBehaviour
     // Jump variables, the Fall variables modify the speed in which the rover drops after the jump to give it weight
     [SerializeField] private bool _isJumping = false;
     public float jumpHeight = 0.5f;
-    public float geyserJumpHeight = 1f;
+    public float geyserJumpHeight = 20f;
 
     public float _coyoteTime = 0.2f;
     public static float coyoteTime;
@@ -168,6 +168,7 @@ public class Player_Movement : MonoBehaviour
                 if (Input.GetKey(KeyCode.Space) && !onSteepSlope)
                 {
                     _CCMovement.y = jumpHeight;
+                    
                     _isJumping = true;
                     grounded = false;
                 }
