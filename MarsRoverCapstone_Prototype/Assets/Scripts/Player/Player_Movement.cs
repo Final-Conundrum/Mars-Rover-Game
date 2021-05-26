@@ -66,13 +66,14 @@ public class Player_Movement : MonoBehaviour
     public bool takeFallDamage = false;
 
     [Space]
-    [Header("On Slope Raycast values")]
+    [Header("On Slope Hit values")]
     // Slope variables
     [SerializeField] private bool onSteepSlope = false;
     [SerializeField] private Vector3 hitNormal;
     public float slideFriction = 0.3f;
     public float slideMuliplier = 0.3f;
-
+    public float slideTimer = 0.9f;
+    private float newSlideTimer;
     public Text TankControlsActive;
 
 
@@ -139,6 +140,20 @@ public class Player_Movement : MonoBehaviour
         else if(Input.GetAxis("Vertical") == 0 && _currentSpeed > minDriveSpeed)
         {
             _currentSpeed -= momentumIncrease;
+        }
+
+        RaycastHit hit = new RaycastHit();
+        Ray raycastDown = new Ray(transform.position, -transform.up);
+
+        if (Physics.SphereCast(raycastDown, 0.6f, out hit, transform.localScale.y / 2))
+        {
+            if(hit.collider.gameObject.tag == "Ground")
+            {
+                onSteepSlope = false;
+                hitNormal = new Vector3(0, 1, 0);
+                grounded = true;
+
+            }
         }
 
         // Movement Setup and modifiers while on/off ground
@@ -223,17 +238,12 @@ public class Player_Movement : MonoBehaviour
         Vector3 transformDirection = transform.TransformDirection(inputDirection); ;
         Vector3 flatMovement = movementSpeed * Time.deltaTime * transformDirection;
 
-        RaycastHit hit = new RaycastHit();
-        Ray raycastDown = new Ray(transform.position, -transform.up);
-
         // Slide down slopes
+        
         if (Vector3.Angle(Vector3.up, hitNormal) > CC.slopeLimit + 10)
         {
+            newSlideTimer = Time.time + slideTimer;
             onSteepSlope = true;
-        }
-        else if (hitNormal.y > 0.5f)
-        {
-            onSteepSlope = false;
         }
         else
         {
@@ -284,6 +294,11 @@ public class Player_Movement : MonoBehaviour
         hitNormal = hit.normal;
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position -transform.up * 2f, 1f);
+    }
     // CODE ON HAITUS
 
     /*
