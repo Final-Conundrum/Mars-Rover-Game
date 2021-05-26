@@ -70,7 +70,7 @@ public class Player_AlignToGround : MonoBehaviour
 
                 Vector3 lookAtPos = target.position - transform.position;
                 Quaternion newRotation = Quaternion.LookRotation(lookAtPos, transform.up);
-                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 3);
+                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 2);
             }
 
             if (Input.GetAxis("Horizontal") < 0)
@@ -78,7 +78,7 @@ public class Player_AlignToGround : MonoBehaviour
                 target = rotateLeft;
                 Vector3 lookAtPos = target.position - transform.position;
                 Quaternion newRotation = Quaternion.LookRotation(lookAtPos, transform.up);
-                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 8);
+                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 2);
 
             }
 
@@ -88,7 +88,7 @@ public class Player_AlignToGround : MonoBehaviour
 
                 Vector3 lookAtPos = target.position - transform.position;
                 Quaternion newRotation = Quaternion.LookRotation(lookAtPos, transform.up);
-                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 8);
+                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 2);
             }
         }
     }
@@ -108,14 +108,12 @@ public class Player_AlignToGround : MonoBehaviour
         {
             Vector3 slope = hit.normal;
 
-
             // Check if slopes normal vector is too steep
             if (!(slope.x > 0.7f || slope.x < -0.7f || slope.z > 0.7f || slope.z < -0.7f))
             {
                 // Rotate to normals vector
                 transform.rotation = Quaternion.FromToRotation(transform.up, slope.normalized) * transform.rotation;
             }
-
         }
     }
 

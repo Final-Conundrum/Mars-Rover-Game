@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 [RequireComponent (typeof(CharacterController))]
 [RequireComponent (typeof(Rigidbody))]
@@ -74,7 +75,7 @@ public class Player_Movement : MonoBehaviour
     public float slideMuliplier = 0.3f;
     public float slideTimer = 0.9f;
     private float newSlideTimer;
-    public Text TankControlsActive;
+    public TMP_Text TankControlsActive;
 
 
     // Start is called before the first frame update
