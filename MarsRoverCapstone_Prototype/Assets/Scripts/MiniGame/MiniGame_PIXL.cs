@@ -12,6 +12,7 @@ public class MiniGame_PIXL : MonoBehaviour
     void Start()
     {
         Cursor.visible = true;
+        Completed = false;
     }
 
     // Update is called once per frame
@@ -23,7 +24,7 @@ public class MiniGame_PIXL : MonoBehaviour
     public void Exit()
     {
         Completed = true;
-        Cursor.visible = false;
         Destroy(this.gameObject);
+        GUI_MineralAnalysis.Display(true);
     }
 }

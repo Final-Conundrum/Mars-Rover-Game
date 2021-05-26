@@ -72,8 +72,9 @@ public class Player_Collision : MonoBehaviour
 
         }
 
-        if(c.gameObject.tag == "Aragonite")
+        if(c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar")
         {
+            GUI_MineralAnalysis.currentMineral = c.gameObject.tag;
             MiniGame_Systems.MiniGame_PIXL();
         }
         
