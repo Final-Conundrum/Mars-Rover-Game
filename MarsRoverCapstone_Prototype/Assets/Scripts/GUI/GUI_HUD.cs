@@ -22,14 +22,14 @@ public class GUI_HUD : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-       
-
         if(GM.savedAtCheckpoint)
         {
             ClosePanel();
         }
         else
         {
+            GUI_PauseMenu.pausedGame = true;
+
             Cursor.visible = true;
             Time.timeScale = 0;
 
@@ -69,6 +69,8 @@ public class GUI_HUD : MonoBehaviour
         Time.timeScale = 1;
 
         Cursor.visible = false;
+
+        GUI_PauseMenu.pausedGame = false;
 
         info_panel.SetActive(false);
 

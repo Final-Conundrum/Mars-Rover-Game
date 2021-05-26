@@ -10,7 +10,7 @@ public class GUI_PauseMenu : MonoBehaviour
 
     public GameObject PauseMenu;
     public GameObject EndOfLevelMenu;
-    private bool pausedGame = false;
+    public static bool pausedGame = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,9 +22,9 @@ public class GUI_PauseMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !pausedGame )
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(!pausedGame)
+            if(!pausedGame && !GUI_DeathScreen.dead)
             {
                 Cursor.visible = true;
                 Time.timeScale = 0;
@@ -34,8 +34,8 @@ public class GUI_PauseMenu : MonoBehaviour
             else if(pausedGame)
             {
                 Cursor.visible = false;
-
                 ResumeGame();
+            
             }
 
         }

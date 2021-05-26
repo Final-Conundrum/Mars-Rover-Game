@@ -20,19 +20,25 @@ public class Spawner_ObjectOnTimer : MonoBehaviour
     public float timer = 5f;
     private float _timerAdd;
 
+
     // Start is called before the first frame update
     void Start()
     {
         _timerAdd = timer;
 
         spawnPoint = new Vector3(0f, 1.62f, 0f);
+
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         // Spawn golf ball every timer check
-        if (Time.time > timer)
+        if (Time.timeSinceLevelLoad > timer)
         {
             GameObject newObj = Instantiate(spawnObjectPrefab);
             
@@ -42,7 +48,7 @@ public class Spawner_ObjectOnTimer : MonoBehaviour
             }
 
             newObj.transform.parent = gameObject.transform;
-            newObj.transform.localPosition = spawnPoint;           
+            newObj.transform.localPosition = spawnPoint;                    
         }
     }
 }
