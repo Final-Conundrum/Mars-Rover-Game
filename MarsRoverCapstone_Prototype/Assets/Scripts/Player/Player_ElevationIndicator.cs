@@ -18,10 +18,13 @@ public class Player_ElevationIndicator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        RaycastHit hit = new RaycastHit();
+        Ray raycastDown = new Ray(transform.position, -transform.up);
+        
         PosIndicator(Player_Movement.elevation - 1);
 
         // Modify Visibility
-        if (Player_Movement.grounded == true)
+        if (Player_Movement.grounded == true || Physics.SphereCast(raycastDown, 0.6f, out hit, transform.localScale.y / 2))
         {
             positionIndicator.SetActive(false);
         }
@@ -29,17 +32,6 @@ public class Player_ElevationIndicator : MonoBehaviour
         {
             positionIndicator.SetActive(true);
         }
-
-        // Modify colour
-        /*
-        if(MovementScript.takeFallDamage)
-        {
-            positionIndicator.GetComponent<TextMeshPro>().color = new Color(200, 0, 0);
-        }
-        else
-        {
-            positionIndicator.GetComponent<TextMeshPro>().color = new Color(0, 200, 0);
-        }*/
     }
 
     public void PosIndicator(float Ypos)
