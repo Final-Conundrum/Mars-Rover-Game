@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] public GameObject player;
 
-    public static float passTime = 1;
+    public static float passTime = 0f;
 
     private void Awake()
     {
@@ -80,22 +80,23 @@ public class GameManager : MonoBehaviour
             player.transform.position = _GM_Checkpoint.lastCheckpoint;
 
             player.GetComponent<CharacterController>().enabled = true;
-        }
 
-        // Set time of day
-        if(passTime == 1)
-        {
-            passTime++;
-        }
-        else if(passTime == 2)
-        {
-            passTime++;
-        }
-        else if(passTime == 3)
-        {
-            passTime = 1;
-        }
+            // Set time of day
+            if (passTime == 1)
+            {
+                passTime++;
+            }
+            else if (passTime == 2)
+            {
+                passTime++;
+            }
+            else if (passTime == 3 || passTime == 0)
+            {
+                passTime = 1;
+            }
 
-        _GM_Time.SetSceneLights(passTime);
+            _GM_Time.SetSceneLights(passTime);
+
+        }
     }
 }

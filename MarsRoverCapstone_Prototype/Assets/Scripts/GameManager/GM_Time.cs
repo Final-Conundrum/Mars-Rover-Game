@@ -5,19 +5,19 @@ using UnityEngine;
 public class GM_Time : MonoBehaviour
 {
     public GameObject lightDAY;
-    public Cubemap skyboxDAY;
+    public Material skyboxDAY;
 
     public GameObject lightEVENING;
-    public Cubemap skyboxEVENING;
+    public Material skyboxEVENING;
 
     public GameObject lightNIGHT;
-    public Cubemap skyboxNIGHT;
+    public Material skyboxNIGHT;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        SetSceneLights(1f);
     }
 
     // Update is called once per frame
@@ -34,17 +34,19 @@ public class GM_Time : MonoBehaviour
             case 1:
                 lightDAY.SetActive(true);
                 lightNIGHT.SetActive(false);
-
+                RenderSettings.skybox = skyboxDAY;
                 
                 break;
             case 2:
                 lightEVENING.SetActive(true);
                 lightDAY.SetActive(false);
+                RenderSettings.skybox = skyboxEVENING;
 
                 break;
             case 3:
                 lightNIGHT.SetActive(true);
                 lightEVENING.SetActive(false);
+                RenderSettings.skybox = skyboxNIGHT;
 
                 break;
         }
