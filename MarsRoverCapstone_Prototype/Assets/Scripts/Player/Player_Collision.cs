@@ -7,6 +7,7 @@ public class Player_Collision : MonoBehaviour
     Player_Movement _Player_Movement => GetComponent<Player_Movement>();
     //Player_Stats _Player_Stats => GetComponent<Player_Stats>();
     Rigidbody RB => GetComponent<Rigidbody>();
+    MiniGame_Systems MiniGame => FindObjectOfType<MiniGame_Systems>();
 
     [SerializeField] private float exitPosY;
 
@@ -78,7 +79,7 @@ public class Player_Collision : MonoBehaviour
         if(c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar")
         {
             GUI_MineralAnalysis.currentMineral = c.gameObject.tag;
-            MiniGame_Systems.MiniGame_PIXL();
+            MiniGame.MiniGame_PIXL();
         }
         
    }

@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] public GameObject player;
 
-    private float timer = 1f;
+    public static float passTime = 1;
 
     private void Awake()
     {
@@ -70,10 +70,6 @@ public class GameManager : MonoBehaviour
     // Collect variables and set the scene upon scene reload
     public void SceneSetup()
     {
-        timer = Time.time + 0.5f;
-
-        Debug.Log("GameManager: Setup scene. CC Disabled Timer set to: " + timer);
-
         _GM_Checkpoint.checkpoints = FindObjectsOfType<CheckpointObject>();
 
         // Get Player
@@ -88,8 +84,22 @@ public class GameManager : MonoBehaviour
             player.transform.position = _GM_Checkpoint.lastCheckpoint;
 
             player.GetComponent<CharacterController>().enabled = true;
+        }
 
-            Debug.Log(Time.time);
-        }       
+        // Set time of day
+        if(passTime == 1)
+        {
+            passTime++;
+        }
+        else if(passTime == 2)
+        {
+            passTime++;
+        }
+        else if(passTime == 3)
+        {
+            passTime = 1;
+        }
+
+        _GM_Time.SetSceneLights(passTime);
     }
 }

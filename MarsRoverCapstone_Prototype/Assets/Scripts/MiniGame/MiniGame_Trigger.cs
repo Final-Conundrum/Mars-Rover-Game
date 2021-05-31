@@ -19,10 +19,11 @@ public class MiniGame_Trigger : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        /*
         if(collision.gameObject.tag == "Player")
         {
             MiniGame_Systems.MiniGame_PIXL();
 
-        }
+        }*/
     }
 }

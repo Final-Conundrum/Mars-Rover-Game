@@ -10,7 +10,10 @@ public class GUI_HUD : MonoBehaviour
     GM_Checkpoint GM => FindObjectOfType<GM_Checkpoint>();
 
     public TMP_Text health;
+    public Slider healthSlider;
     public TMP_Text elevation;
+    public Slider elevationSlider;
+    public Image elevationSliderHandle;
 
     public GameObject green_check;
     public GameObject red_check;
@@ -22,6 +25,7 @@ public class GUI_HUD : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Set appropriate elements when starting scene
         if(GM.savedAtCheckpoint)
         {
             ClosePanel();
@@ -46,8 +50,23 @@ public class GUI_HUD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        health.text = "Health: " + Player_Stats.health;
+        // Set HUD elements
+        health.text = " >> INTEGRITY: " + Player_Stats.health + "%";
+        healthSlider.value = Player_Stats.health;
+
         elevation.text = "Elevation: " + Player_Movement.elevation;
+        elevationSlider.value = Player_Movement.elevation;
+
+        if(elevationSlider.value < PM.fallDamageHeight)
+        {
+            elevationSliderHandle.color = Color.green;
+        }
+        else
+        {
+            elevationSliderHandle.color = Color.red;
+
+        }
+
         FallDamageCheck();
     }
 

@@ -10,6 +10,7 @@ public class Test_GUI_HUD : MonoBehaviour
     
     public TMP_Text health;
     public TMP_Text elevation;
+    public Slider elevationSlider;
 
     public GameObject green_check;
     public GameObject red_check;
@@ -26,8 +27,11 @@ public class Test_GUI_HUD : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        health.text = "Health: " + Player_Stats.health;
+        health.text = "Integrity: " + Player_Stats.health + "%";
         elevation.text = "Elevation: " + Player_Movement.elevation;
+        elevationSlider.value = Player_Movement.elevation;
+
+
         FallDamageCheck();
     }
 

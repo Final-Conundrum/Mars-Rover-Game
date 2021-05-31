@@ -17,8 +17,7 @@ public class MiniGame_Systems : MonoBehaviour
     {
 
     }
-    public static void MiniGame_PIXL(){
+    public void MiniGame_PIXL(){
         Instantiate(Static_PIXL);
-}
-
+    }
 }

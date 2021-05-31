@@ -18,9 +18,6 @@ public class GM_SetupAndDestroy : MonoBehaviour
     void Update()
     {
         GM.SceneSetup();
-        if(Time.time > timer)
-        {
-            Destroy(this.gameObject);
-        }
+        Destroy(this.gameObject);
     }
 }
