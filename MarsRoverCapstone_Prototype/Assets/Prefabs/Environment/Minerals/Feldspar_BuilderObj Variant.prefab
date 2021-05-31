@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 172363699}
   - component: {fileID: 172363701}
   - component: {fileID: 172363700}
+  - component: {fileID: 681822028700905574}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -25,7 +26,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 172363698}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0.025235696, y: 0.8668907, z: -0.044114668, w: 0.49590075}
   m_LocalPosition: {x: 0, y: 0, z: -11.7}
   m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_Children: []
@@ -137,6 +138,25 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1183024399 &681822028700905574
+LookAtConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 172363698}
+  m_Enabled: 1
+  m_Weight: 1
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_RotationOffset: {x: 0, y: 180, z: 0}
+  m_Roll: 0
+  m_WorldUpObject: {fileID: 0}
+  m_UseUpObject: 0
+  m_IsContraintActive: 1
+  m_IsLocked: 0
+  m_Sources:
+  - sourceTransform: {fileID: 0}
+    weight: 1
 --- !u!1 &855785239
 GameObject:
   m_ObjectHideFlags: 0
@@ -244,6 +264,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 278068157, guid: 4783ba070d7186741964db438e0ba09c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 278068158, guid: 4783ba070d7186741964db438e0ba09c, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1569845841, guid: 4783ba070d7186741964db438e0ba09c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1569845841, guid: 4783ba070d7186741964db438e0ba09c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1569845841, guid: 4783ba070d7186741964db438e0ba09c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1569845841, guid: 4783ba070d7186741964db438e0ba09c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1810551017047831712, guid: 4783ba070d7186741964db438e0ba09c,
         type: 3}
       propertyPath: item

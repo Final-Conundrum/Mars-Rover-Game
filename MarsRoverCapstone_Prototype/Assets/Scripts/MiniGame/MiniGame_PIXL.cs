@@ -48,6 +48,11 @@ public class MiniGame_PIXL : MonoBehaviour
         timer = Time.time + failTextTimer;
 
         failText.SetActive(true);
+
+        if (Time.time > timer)
+        {
+            failText.SetActive(false);
+        }
     }
 
 

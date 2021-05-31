@@ -54,7 +54,7 @@ public class GUI_HUD : MonoBehaviour
         health.text = " >> INTEGRITY: " + Player_Stats.health + "%";
         healthSlider.value = Player_Stats.health;
 
-        elevation.text = "Elevation: " + Player_Movement.elevation;
+        elevation.text = "Ground Dist.: " + Player_Movement.elevation;
         elevationSlider.value = Player_Movement.elevation;
 
         if(elevationSlider.value < PM.fallDamageHeight)

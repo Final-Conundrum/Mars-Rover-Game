@@ -22,10 +22,11 @@ public class GameManager : MonoBehaviour
     // Get other GM_ scripts on object
     private GM_Checkpoint _GM_Checkpoint => GetComponent<GM_Checkpoint>();
     private GM_Time _GM_Time => GetComponent<GM_Time>();
+    private GM_Popup _GM_Popup => GetComponent<GM_Popup>();
 
     [SerializeField] public GameObject player;
 
-    public static float passTime = 0f;
+    public static float passTime = 1;
 
     private void Awake()
     {
@@ -45,6 +46,22 @@ public class GameManager : MonoBehaviour
     {
         //Set Cursor to not be visible
         //Cursor.visible = false;
+
+        // Set time of day
+        if (passTime == 1)
+        {
+            _GM_Popup.FadingPopup("Mars > Jezero Crater \n 16500 hours ", 3f);
+        }
+        else if (passTime == 2)
+        {
+            _GM_Popup.FadingPopup("Mars > Jezero Crater \n 2000 hours ", 3f);
+
+        }
+        else if (passTime == 3 || passTime == 0)
+        {
+            _GM_Popup.FadingPopup("Mars > Jezero Crater \n 1000 hours ", 3f);
+
+        }
     }
 
     // Update is called once per frame
@@ -61,6 +78,8 @@ public class GameManager : MonoBehaviour
             _GM_Checkpoint.savedAtCheckpoint = false;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);            
         }
+
+        
     }
 
     // Collect variables and set the scene upon scene reload
@@ -96,7 +115,6 @@ public class GameManager : MonoBehaviour
             }
 
             _GM_Time.SetSceneLights(passTime);
-
         }
     }
 }
