@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MiniGame_PIXL_VirtualCursor : MonoBehaviour
 {
+    // Script added to the UI cursor object within the MiniGame_PIXL prefab
     MiniGame_PIXL parent => FindObjectOfType<MiniGame_PIXL>();
 
     public Vector3 StartPos;
@@ -29,7 +30,6 @@ public class MiniGame_PIXL_VirtualCursor : MonoBehaviour
         if (collision.gameObject.tag == "MazeWall")
         {
             parent.Fail();
-            //StartPos = Input.mousePosition - parent.MazeStart.transform.position;
             transform.position = StartPos;
 
             Debug.Log("VirtualCursor: Hit Maze Wall");

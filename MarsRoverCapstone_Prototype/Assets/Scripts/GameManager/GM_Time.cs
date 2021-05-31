@@ -26,6 +26,7 @@ public class GM_Time : MonoBehaviour
         
     }
 
+    // Set lights in scene depending on given number associated with time of day
     public void SetSceneLights(float counter)
     {
         switch(counter)

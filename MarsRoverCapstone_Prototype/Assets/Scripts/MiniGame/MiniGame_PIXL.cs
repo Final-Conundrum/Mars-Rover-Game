@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class MiniGame_PIXL : MonoBehaviour
 {
+    // Script that runs the PIXL minigame.
+    // VirtualCursor contains the MiniGame_PIXL_VirtualCursor script that is also required to function
+
     public static bool Completed = false;
 
     public MiniGame_PIXL_VirtualCursor VirtualCursor;
@@ -12,12 +15,22 @@ public class MiniGame_PIXL : MonoBehaviour
     public GameObject MazeEnd;
     
     public GameObject failText;
+    public float failTextTimer;
+    private float timer;
 
     // Start is called before the first frame update
     void Start()
     {
-
         StartMiniGame();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if(Time.time > timer)
+        {
+            failText.SetActive(false);
+        }
     }
 
     public void StartMiniGame()
@@ -26,20 +39,18 @@ public class MiniGame_PIXL : MonoBehaviour
 
         Cursor.visible = false;
         Completed = false;
+
+        failText.SetActive(false);
     }
 
     public void Fail()
     {
-        GameObject text = Instantiate(failText, new Vector3(0, -135f, 0), new Quaternion(0,0,0,0));
-        Destroy(text, 2f);
+        timer = Time.time + failTextTimer;
 
+        failText.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
 
-    }
 
     public void Exit()
     {
@@ -49,6 +60,4 @@ public class MiniGame_PIXL : MonoBehaviour
 
         Destroy(this.gameObject);
     }
-
-
 }

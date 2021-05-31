@@ -61,10 +61,6 @@ public class GameManager : MonoBehaviour
             _GM_Checkpoint.savedAtCheckpoint = false;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);            
         }
-
-        
-
-        
     }
 
     // Collect variables and set the scene upon scene reload

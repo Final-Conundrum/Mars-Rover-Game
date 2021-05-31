@@ -25,6 +25,7 @@ public class Player_Collision : MonoBehaviour
     // COLLISION Detection
     private void OnCollisionEnter(Collision c)
     {
+        // Checks for ground collision and whether to damage player with fall damage
         if (c.gameObject.tag == "Ground" && _Player_Movement.takeFallDamage && !jumpingFromGeyser)
         {
             if(transform.position.y <= exitPosY - _Player_Movement.fallDamageHeight)
