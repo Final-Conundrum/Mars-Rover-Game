@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] public GameObject player;
 
+    public bool usePassageOfTime = true;
     public static float passTime = 1;
 
     private void Awake()
@@ -46,22 +47,6 @@ public class GameManager : MonoBehaviour
     {
         //Set Cursor to not be visible
         //Cursor.visible = false;
-
-        // Set time of day
-        if (passTime == 1)
-        {
-            _GM_Popup.FadingPopup("Mars > Jezero Crater \n 16500 hours ", 3f);
-        }
-        else if (passTime == 2)
-        {
-            _GM_Popup.FadingPopup("Mars > Jezero Crater \n 2000 hours ", 3f);
-
-        }
-        else if (passTime == 3 || passTime == 0)
-        {
-            _GM_Popup.FadingPopup("Mars > Jezero Crater \n 1000 hours ", 3f);
-
-        }
     }
 
     // Update is called once per frame
@@ -101,20 +86,34 @@ public class GameManager : MonoBehaviour
             player.GetComponent<CharacterController>().enabled = true;
 
             // Set time of day
-            if (passTime == 1)
+            if (usePassageOfTime)
             {
-                passTime++;
-            }
-            else if (passTime == 2)
-            {
-                passTime++;
-            }
-            else if (passTime == 3 || passTime == 0)
-            {
-                passTime = 1;
-            }
+                if (passTime == 1)
+                {
+                    passTime++;
+                    _GM_Popup.FadingPopup("Mars > Jezero Crater \n 1650 hours ", 6f);
 
-            _GM_Time.SetSceneLights(passTime);
+                }
+                else if (passTime == 2)
+                {
+                    passTime++;
+                    _GM_Popup.FadingPopup("Mars > Jezero Crater \n 2200 hours ", 6f);
+
+                }
+                else if (passTime == 3 || passTime == 0)
+                {
+                    passTime++;
+                    _GM_Popup.FadingPopup("Mars > Jezero Crater \n 1200 hours ", 6f);
+                }
+                else if(passTime == 4)
+                {
+                    passTime = 1;
+                    _GM_Popup.FadingPopup("Mars > Jezero Crater \n 700 hours ", 6f);
+
+                }
+
+                _GM_Time.SetSceneLights(passTime);
+            }
         }
     }
 }

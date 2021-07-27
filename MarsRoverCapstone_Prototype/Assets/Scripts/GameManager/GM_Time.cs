@@ -13,6 +13,8 @@ public class GM_Time : MonoBehaviour
     public GameObject lightNIGHT;
     public Material skyboxNIGHT;
 
+    public GameObject lightMORNING;
+    public Material skyboxMORNING;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +35,7 @@ public class GM_Time : MonoBehaviour
         {
             case 1:
                 lightDAY.SetActive(true);
-                lightNIGHT.SetActive(false);
+                lightMORNING.SetActive(false);
                 RenderSettings.skybox = skyboxDAY;
                 
                 break;
@@ -47,7 +49,11 @@ public class GM_Time : MonoBehaviour
                 lightNIGHT.SetActive(true);
                 lightEVENING.SetActive(false);
                 RenderSettings.skybox = skyboxNIGHT;
-
+                break;
+            case 4:
+                lightMORNING.SetActive(true);
+                lightNIGHT.SetActive(false);
+                RenderSettings.skybox = skyboxMORNING;
                 break;
         }
     }
