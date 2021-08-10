@@ -21,6 +21,8 @@ public class Player_AlignToGround : MonoBehaviour
     public Transform rotateRight;
     public Transform rotateLeft;
 
+    public int turningSpeed = 3;
+
     private void Update()
     {
         _CameraForward = PM.playerCam.transform.forward;
@@ -70,7 +72,7 @@ public class Player_AlignToGround : MonoBehaviour
 
                 Vector3 lookAtPos = target.position - transform.position;
                 Quaternion newRotation = Quaternion.LookRotation(lookAtPos, transform.up);
-                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 2);
+                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * turningSpeed);
             }
 
             if (Input.GetAxis("Horizontal") < 0)
@@ -78,7 +80,7 @@ public class Player_AlignToGround : MonoBehaviour
                 target = rotateLeft;
                 Vector3 lookAtPos = target.position - transform.position;
                 Quaternion newRotation = Quaternion.LookRotation(lookAtPos, transform.up);
-                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 2);
+                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * (turningSpeed / 2));
 
             }
 
@@ -88,7 +90,7 @@ public class Player_AlignToGround : MonoBehaviour
 
                 Vector3 lookAtPos = target.position - transform.position;
                 Quaternion newRotation = Quaternion.LookRotation(lookAtPos, transform.up);
-                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * 2);
+                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * (turningSpeed / 2));
             }
         }
     }

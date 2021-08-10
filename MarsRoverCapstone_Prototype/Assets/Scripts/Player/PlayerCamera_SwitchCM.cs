@@ -5,6 +5,9 @@ using Cinemachine;
 
 public class PlayerCamera_SwitchCM : MonoBehaviour
 {
+    /* Swap Camera type whether player is playing with Tank controls enabled.
+     * This allows for the camera to work more smoothly between two different playstyles.
+     */
     Player_Movement PM => FindObjectOfType<Player_Movement>();
     public CinemachineFreeLook CameraTank;
     public CinemachineFreeLook CameraStandard;

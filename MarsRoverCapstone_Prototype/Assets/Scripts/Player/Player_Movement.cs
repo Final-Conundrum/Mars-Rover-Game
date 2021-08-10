@@ -225,13 +225,15 @@ public class Player_Movement : MonoBehaviour
     {
         Vector3 inputDirection;
 
-        // Control movement and direction
+        // Control movement and direction depending on tank controls or not
         switch (tankControls)
         {
             case true:
+                // Acceleration/deceleration of forward/back keys
                 inputDirection = new Vector3(0, 0, Input.GetAxis("Vertical"));
                 break;
             case false:
+                // Allowing control from all four direction keys with Axis based on camera direction.
                 inputDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
                 inputDirection = playerCam.transform.TransformDirection(inputDirection);
                 inputDirection.y = 0.0f;
@@ -240,8 +242,7 @@ public class Player_Movement : MonoBehaviour
         Vector3 transformDirection = transform.TransformDirection(inputDirection); ;
         Vector3 flatMovement = movementSpeed * Time.deltaTime * transformDirection;
 
-        // Slide down slopes
-        
+        // Slide down slopes        
         if (Vector3.Angle(Vector3.up, hitNormal) > CC.slopeLimit + 10)
         {
             newSlideTimer = Time.time + slideTimer;
@@ -271,6 +272,8 @@ public class Player_Movement : MonoBehaviour
 
             _CCMovement = new Vector3(flatMovement.x, _CCMovement.y, flatMovement.z);
         }
+
+        // Finalize Movement directions
         CC.Move(_CCMovement);
     }
 
@@ -291,11 +294,13 @@ public class Player_Movement : MonoBehaviour
         }
     }
 
+    // Get Normal vector of colliding surface
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
         hitNormal = hit.normal;
     }
 
+    // Debugging collision gizmo
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
