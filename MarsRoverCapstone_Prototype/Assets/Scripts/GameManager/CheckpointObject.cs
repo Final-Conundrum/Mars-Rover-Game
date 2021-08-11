@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class CheckpointObject : MonoBehaviour
 {
@@ -12,11 +14,15 @@ public class CheckpointObject : MonoBehaviour
      * i.e: inventory storage locker. 
      */
 
+    // Find GameManager of checkpoints
     private GM_Checkpoint GM => FindObjectOfType<GM_Checkpoint>();
 
+    // Aesthetics of checkpoints
     public Material untriggeredCheckpoint;
     public Material triggeredCheckedPoint;
     private MeshRenderer mesh => GetComponent<MeshRenderer>();
+
+    public TMP_Text safeZoneInfo;
 
     // Start is called before the first frame update
     void Start()
@@ -24,22 +30,16 @@ public class CheckpointObject : MonoBehaviour
         mesh.material = untriggeredCheckpoint;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             mesh.material = triggeredCheckedPoint;
-            GM.lastCheckpoint = transform.position;
+            GM.currentSafeZone = this;
+            GM.currentSafeZonePosition = this.transform.position;
+            GM.savedAtSafeZone = true;    
 
-            GM.savedAtCheckpoint = true;    
-
-            Debug.Log(gameObject.name + ": Set Checkpoint to " + GM.lastCheckpoint);
+            Debug.Log(gameObject.name + ": Set Checkpoint to " + GM.currentSafeZone);
         }
     }
 }

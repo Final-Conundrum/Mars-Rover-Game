@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GM_Checkpoint : MonoBehaviour
 {
@@ -11,18 +12,22 @@ public class GM_Checkpoint : MonoBehaviour
      *  
      */
 
-    public bool savedAtCheckpoint = false;
-    public Vector3 lastCheckpoint;
+    public bool savedAtSafeZone = false;
+    public CheckpointObject currentSafeZone;
+    public Vector3 currentSafeZonePosition;
 
-    public CheckpointObject[] checkpoints;
+    public CheckpointObject[] safeZones;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
+       foreach(CheckpointObject i in safeZones)
+        {
+            i.safeZoneInfo.text = "Potential \n > SAFE ZONE <";
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void RebootSafeZone()
     {
+        currentSafeZone.safeZoneInfo.text = "REBOOT SUCCESSFUL \n >> Be careful out there << \n";
     }
 }

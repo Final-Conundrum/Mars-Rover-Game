@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Equals))
         {
-            _GM_Checkpoint.savedAtCheckpoint = false;
+            _GM_Checkpoint.savedAtSafeZone = false;
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);            
         }
 
@@ -70,20 +70,23 @@ public class GameManager : MonoBehaviour
     // Collect variables and set the scene upon scene reload
     public void SceneSetup()
     {
-        _GM_Checkpoint.checkpoints = FindObjectsOfType<CheckpointObject>();
+        _GM_Checkpoint.safeZones = FindObjectsOfType<CheckpointObject>();
 
         // Get Player
         player = FindObjectOfType<Player_Movement>().gameObject;
 
         // Set player position to respawn point
-        if (_GM_Checkpoint.savedAtCheckpoint)
+        if (_GM_Checkpoint.savedAtSafeZone)
         {
             // Disable CC so that checkpoint position may be set
             player.GetComponent<CharacterController>().enabled = false;
 
-            player.transform.position = _GM_Checkpoint.lastCheckpoint;
+            player.transform.position = _GM_Checkpoint.currentSafeZonePosition;
 
             player.GetComponent<CharacterController>().enabled = true;
+
+            // Set Safezone reboot screen
+            _GM_Checkpoint.RebootSafeZone();
 
             // Set time of day
             if (usePassageOfTime)

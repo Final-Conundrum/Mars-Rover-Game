@@ -8,7 +8,6 @@ public class Player_LookDirections : MonoBehaviour
      * Simulates the Rover turning in different directions.
      */
     Player_Movement PM => GetComponentInParent<Player_Movement>();
-    int i = 0;
 
     // Start is called before the first frame update
     void Start()

@@ -26,7 +26,7 @@ public class GUI_HUD : MonoBehaviour
     void Start()
     {
         // Set appropriate elements when starting scene
-        if(GM.savedAtCheckpoint)
+        if(GM.savedAtSafeZone)
         {
             ClosePanel();
         }

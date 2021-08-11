@@ -57,7 +57,7 @@ public class GUI_PauseMenu : MonoBehaviour
 
     public void RestartGame()
     {
-        _GM_Checkpoint.savedAtCheckpoint = false;
+        _GM_Checkpoint.savedAtSafeZone = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1;
 
