@@ -8,6 +8,7 @@ public class Player_Collision : MonoBehaviour
     //Player_Stats _Player_Stats => GetComponent<Player_Stats>();
     Rigidbody RB => GetComponent<Rigidbody>();
     MiniGame_Systems MiniGame => FindObjectOfType<MiniGame_Systems>();
+    GUI_infoPanel InfoPanel => FindObjectOfType<GUI_infoPanel>();
 
     [SerializeField] private float exitPosY;
 
@@ -80,7 +81,13 @@ public class Player_Collision : MonoBehaviour
         if(c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar")
         {
             GUI_MineralAnalysis.currentMineral = c.gameObject.tag;
-            MiniGame.MiniGame_PIXL();
+            InfoPanel.AragoniteText(); 
+           // MiniGame.MiniGame_PIXL();
+        }
+        if(c.gameObject.tag == "SafeZone")
+        {
+            InfoPanel.infoPanel.SetActive(true);
+            InfoPanel.CheckPointText();
         }
         
    }

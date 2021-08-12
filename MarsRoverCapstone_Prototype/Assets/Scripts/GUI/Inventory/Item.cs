@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public enum MineralType
 {
     Aragonite,
+    Feldspar,
     Other,
     Default
 }
