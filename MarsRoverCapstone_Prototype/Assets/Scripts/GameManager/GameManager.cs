@@ -40,6 +40,9 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        // Get Player
+        player = FindObjectOfType<Player_Movement>().gameObject;
     }
 
     // Start is called before the first frame update
@@ -47,6 +50,9 @@ public class GameManager : MonoBehaviour
     {
         //Set Cursor to not be visible
         //Cursor.visible = false;
+
+
+        _GM_Checkpoint.RebootSafeZone();
     }
 
     // Update is called once per frame
@@ -56,15 +62,7 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-
-        if(Input.GetKeyDown(KeyCode.Equals))
-        {
-            _GM_Checkpoint.savedAtSafeZone = false;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);            
-        }
-
-        
+        }       
     }
 
     // Collect variables and set the scene upon scene reload

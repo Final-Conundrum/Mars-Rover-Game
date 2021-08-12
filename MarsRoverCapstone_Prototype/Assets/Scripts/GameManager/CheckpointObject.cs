@@ -18,23 +18,37 @@ public class CheckpointObject : MonoBehaviour
     private GM_Checkpoint GM => FindObjectOfType<GM_Checkpoint>();
 
     // Aesthetics of checkpoints
-    public Material untriggeredCheckpoint;
-    public Material triggeredCheckedPoint;
-    private MeshRenderer mesh => GetComponent<MeshRenderer>();
+    public Image icon;
+
+    public Sprite untriggeredCheckpoint;
+    public Sprite triggeredCheckedPoint;
 
     public TMP_Text safeZoneInfo;
+    public float distanceToDisplay = 10f;
 
     // Start is called before the first frame update
     void Start()
     {
-        mesh.material = untriggeredCheckpoint;
+        icon.sprite = untriggeredCheckpoint;
+    }
+
+    private void Update()
+    {
+        if (Vector3.Distance(transform.position, GM.player.transform.position) > distanceToDisplay)
+        {
+            safeZoneInfo.enabled = false;
+        }
+        else
+        {
+            safeZoneInfo.enabled = true;
+        }
     }
 
     public void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            mesh.material = triggeredCheckedPoint;
+            icon.sprite = triggeredCheckedPoint;
             GM.currentSafeZone = this;
             GM.currentSafeZonePosition = this.transform.position;
             GM.savedAtSafeZone = true;    

@@ -11,23 +11,33 @@ public class GM_Checkpoint : MonoBehaviour
      * the specific safe zone/checkpoint the player loads to.
      *  
      */
+    private GameManager GM => GetComponent<GameManager>();
 
     public bool savedAtSafeZone = false;
+
     public CheckpointObject currentSafeZone;
     public Vector3 currentSafeZonePosition;
+    public string SZintroText = "Potential \n > SAFE ZONE <";
+    public string SZrebootText = "REBOOT SUCCESSFUL \n >> Be careful out there << \n";
 
     public CheckpointObject[] safeZones;
 
+    public GameObject player;
+
     private void Start()
-    {
+    { 
        foreach(CheckpointObject i in safeZones)
         {
-            i.safeZoneInfo.text = "Potential \n > SAFE ZONE <";
+            i.safeZoneInfo.text = SZintroText;
         }
+
+        player = GM.player;
     }
 
+    // Checkpoint conditions are set upon reboot/respawn here
     public void RebootSafeZone()
     {
-        currentSafeZone.safeZoneInfo.text = "REBOOT SUCCESSFUL \n >> Be careful out there << \n";
+        player = GM.player;
+        currentSafeZone.safeZoneInfo.text = SZrebootText;
     }
 }
