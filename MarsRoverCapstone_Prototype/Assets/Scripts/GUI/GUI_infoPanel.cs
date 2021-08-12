@@ -11,15 +11,18 @@ using TMPro;
  **/
 public class GUI_infoPanel : MonoBehaviour
 {
+    
     public GameObject infoPanel;
    public TMP_Text infoText;
-    //public Text infoText;
+   
+
 
     // Start is called before the first frame update
     void Start()
     {
-        infoText.text = "We have started the game! "; //this is for testing atm
-        //infoPanel.SetActive(false);
+        //infoText.text = "We have started the game! "; //this is for testing atm
+        infoPanel.SetActive(false);
+       
     }
 
     // Update is called once per frame
@@ -29,25 +32,27 @@ public class GUI_infoPanel : MonoBehaviour
     }
 
   
-    public void checkPointText()
+    public void CheckPointText()
     {
         infoPanel.SetActive(true);
+        infoPanel.GetComponent<Image>().color = new Color(0f, 144f, 123f, 121);
         infoText.text = "Attention! Checkpoint Reached.";
-        
-        
+        StartCoroutine("FadeOut");
+
     }
 
-    public void aragoniteText()
+    public void AragoniteText()
     {
         infoPanel.SetActive(true);
         infoText.text = "Attention! You have collected: Aragonite";
-       // StartCoroutine("Fade");
+        infoPanel.GetComponent<Image>().color = new Color(1f,0f,0f,121);
+        StartCoroutine("FadeOut");
     }
 
-    public void elevationWarning()
+    public void ElevationWarning()
     {
         infoPanel.SetActive(true);
-        infoText.text = "Attention! Checkpoint Reached.";
+        infoText.text = "Elevation warning";
         
     }
 
@@ -55,13 +60,17 @@ public class GUI_infoPanel : MonoBehaviour
     {
         infoPanel.SetActive(true);
         infoText.text = "Attention! You have collected: Feldspar";
-        
+       
+    }
+
+    public void DamageWarning()
+    {
 
     }
 
-    IEnumerator Fade()
+    IEnumerator FadeOut()//eventually set Opacity value to 0 bit by bit, will be able to do this for fade in also.
     {
+        yield return new WaitForSeconds(5f);
         infoPanel.SetActive(false);
-        yield return new WaitForSeconds(1f);
     }
 }
