@@ -24,6 +24,7 @@ public class CheckpointObject : MonoBehaviour
     public Sprite triggeredCheckedPoint;
 
     public TMP_Text safeZoneInfo;
+    public Image background;
     public float distanceToDisplay = 10f;
 
     // Start is called before the first frame update
@@ -37,10 +38,12 @@ public class CheckpointObject : MonoBehaviour
         if (Vector3.Distance(transform.position, GM.player.transform.position) > distanceToDisplay)
         {
             safeZoneInfo.enabled = false;
+            background.enabled = false;
         }
         else
         {
             safeZoneInfo.enabled = true;
+            background.enabled = true;
         }
     }
 

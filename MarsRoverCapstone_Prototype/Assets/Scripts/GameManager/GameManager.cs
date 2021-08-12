@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     private GM_Checkpoint _GM_Checkpoint => GetComponent<GM_Checkpoint>();
     private GM_Time _GM_Time => GetComponent<GM_Time>();
     private GM_Popup _GM_Popup => GetComponent<GM_Popup>();
+    private GM_Audio _GM_Audio => GetComponent<GM_Audio>();
 
     [SerializeField] public GameObject player;
 
@@ -50,9 +51,7 @@ public class GameManager : MonoBehaviour
     {
         //Set Cursor to not be visible
         //Cursor.visible = false;
-
-
-        _GM_Checkpoint.RebootSafeZone();
+        
     }
 
     // Update is called once per frame
@@ -70,8 +69,10 @@ public class GameManager : MonoBehaviour
     {
         _GM_Checkpoint.safeZones = FindObjectsOfType<CheckpointObject>();
 
-        // Get Player
+        // Get Player and set
         player = FindObjectOfType<Player_Movement>().gameObject;
+        _GM_Audio.player = player;
+        _GM_Audio.playerSource = player.GetComponent<AudioSource>();
 
         // Set player position to respawn point
         if (_GM_Checkpoint.savedAtSafeZone)

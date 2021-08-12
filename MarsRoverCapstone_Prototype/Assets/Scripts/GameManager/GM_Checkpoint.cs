@@ -31,7 +31,7 @@ public class GM_Checkpoint : MonoBehaviour
             i.safeZoneInfo.text = SZintroText;
         }
 
-        player = GM.player;
+        RebootSafeZone();
     }
 
     // Checkpoint conditions are set upon reboot/respawn here
