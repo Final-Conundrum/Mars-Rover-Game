@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] public GameObject player;
 
+    // Passage of Time variables
     public bool usePassageOfTime = true;
     public static float passTime = 1;
 
@@ -51,7 +52,6 @@ public class GameManager : MonoBehaviour
     {
         //Set Cursor to not be visible
         //Cursor.visible = false;
-        
     }
 
     // Update is called once per frame

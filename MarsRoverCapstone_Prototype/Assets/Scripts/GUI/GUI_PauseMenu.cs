@@ -34,10 +34,8 @@ public class GUI_PauseMenu : MonoBehaviour
             else if(pausedGame)
             {
                 Cursor.visible = false;
-                ResumeGame();
-            
+                ResumeGame();          
             }
-
         }
     }
 

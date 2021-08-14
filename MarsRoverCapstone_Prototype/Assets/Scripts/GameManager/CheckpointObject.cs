@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Animations;
 
 public class CheckpointObject : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class CheckpointObject : MonoBehaviour
      * 
      * i.e: inventory storage locker. 
      */
+
+    private static CheckpointObject instance;
 
     // Find GameManager of checkpoints
     private GM_Checkpoint GM => FindObjectOfType<GM_Checkpoint>();
@@ -27,14 +30,28 @@ public class CheckpointObject : MonoBehaviour
     public Image background;
     public float distanceToDisplay = 10f;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(instance);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
+        // Reset SZ icon
         icon.sprite = untriggeredCheckpoint;
     }
 
     private void Update()
     {
+        // Choose to display SZ Panel depending on player distance
         if (Vector3.Distance(transform.position, GM.player.transform.position) > distanceToDisplay)
         {
             safeZoneInfo.enabled = false;
@@ -47,16 +64,25 @@ public class CheckpointObject : MonoBehaviour
         }
     }
 
-    public void OnTriggerEnter(Collider collision)
+    public void OnTriggerStay(Collider collision)
+    {
+        // Prompt player to set safe zone
+        if (collision.gameObject.tag == "Player") 
+        {
+            GUI_HUD.DisplayPrompt(true, "Set your current 'Safe Zone'");
+            if(Input.GetKeyDown(KeyCode.E))
+            {
+                icon.sprite = triggeredCheckedPoint;
+                GM.SetSafeZone(this);
+            }
+        }
+    }
+
+    public void OnTriggerExit(Collider collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            icon.sprite = triggeredCheckedPoint;
-            GM.currentSafeZone = this;
-            GM.currentSafeZonePosition = this.transform.position;
-            GM.savedAtSafeZone = true;    
-
-            Debug.Log(gameObject.name + ": Set Checkpoint to " + GM.currentSafeZone);
+            GUI_HUD.DisplayPrompt(false, "Set your current 'Safe Zone'");
         }
     }
 }
