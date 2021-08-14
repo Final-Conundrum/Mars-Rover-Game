@@ -55,7 +55,6 @@ public class Player_Movement : MonoBehaviour
     [Space]
     [Header("Jump and Midair Values")]
     // Jump variables, the Fall variables modify the speed in which the rover drops after the jump to give it weight
-    [SerializeField] private bool _isJumping = false;
     public float jumpHeight = 0.5f;
     public float geyserJumpHeight = 20f;
 
@@ -169,8 +168,7 @@ public class Player_Movement : MonoBehaviour
                 if (Input.GetKey(KeyCode.Space) && !onSteepSlope)
                 {
                     _CCMovement.y = jumpHeight;
-                    
-                    _isJumping = true;
+
                     grounded = false;
                 }
 
@@ -194,16 +192,7 @@ public class Player_Movement : MonoBehaviour
                 if (_CCMovement.y > (jumpHeight / 2) && !Input.GetKey(KeyCode.Space))
                 {
                     _CCMovement.y = 0f;
-                    _isJumping = false;
 
-                }
-                else if(!Input.GetKey(KeyCode.Space))
-                {
-                    _isJumping = false;
-                }
-                else if(_CCMovement.y == jumpHeight)
-                {
-                    _isJumping = false;
                 }
 
                 // Check for fall damage
