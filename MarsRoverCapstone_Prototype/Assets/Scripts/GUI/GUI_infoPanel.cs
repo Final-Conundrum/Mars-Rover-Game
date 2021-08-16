@@ -12,8 +12,8 @@ using TMPro;
 public class GUI_infoPanel : MonoBehaviour
 {
     
-    public GameObject infoPanel;
-   public TMP_Text infoText;
+    public static GameObject infoPanel;
+   public static TMP_Text infoText;
    
 
 
@@ -52,7 +52,7 @@ public class GUI_infoPanel : MonoBehaviour
     public void ElevationWarning()
     {
         infoPanel.SetActive(true);
-        infoText.text = "Elevation warning";
+        infoText.text = "Warning! You may take damage if you fall from this height. n Be careful!";
         
     }
 

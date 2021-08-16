@@ -86,7 +86,6 @@ public class Player_Collision : MonoBehaviour
         }
         if(c.gameObject.tag == "SafeZone")
         {
-            InfoPanel.infoPanel.SetActive(true);
             InfoPanel.CheckPointText();
         }
         
