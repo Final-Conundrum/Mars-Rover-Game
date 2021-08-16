@@ -8,6 +8,9 @@ public class Player_AlignToGround : MonoBehaviour
      * 
      * AlignToGround: 
      * Add this script to the child (Body) of the parent Player object so that it aligns the aesthetic Rover body to ground.
+     * 
+     * Secondary Purpose:
+     * Turns the Rover model toward different axis while Tank controls are disabled to emphasise simulate direction of movement
      */
     Player_Movement PM => GetComponentInParent<Player_Movement>();
 
@@ -20,6 +23,7 @@ public class Player_AlignToGround : MonoBehaviour
     public Transform rotateForward;
     public Transform rotateRight;
     public Transform rotateLeft;
+    public Transform rotateBackward;
 
     public int turningSpeed = 3;
 
@@ -27,14 +31,12 @@ public class Player_AlignToGround : MonoBehaviour
     {
         _CameraForward = PM.playerCam.transform.forward;
 
-        // Correct rotation if it rotates too far
-
+        // Correct rotation of object if it rotates too far
         if (PM.tankControls)
         {
             transform.rotation = new Quaternion(transform.rotation.x, transform.parent.rotation.y, transform.rotation.z, transform.rotation.w);
         }
         transform.position = new Vector3(transform.parent.position.x, transform.parent.position.y, transform.parent.position.z);
-
 
         if (transform.rotation.x > 50f)
         {
@@ -63,9 +65,9 @@ public class Player_AlignToGround : MonoBehaviour
 
         if (!PM.tankControls)
         {
-            //Quaternion target = new Quaternion(0,0,0,0); 
             Transform target;
 
+            // Rotate Rover toward the Cameras forward axis
             if (Input.GetAxis("Vertical") > 0)
             {
                 target = rotateForward;
@@ -75,6 +77,7 @@ public class Player_AlignToGround : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * turningSpeed);
             }
 
+            // Rotate Rover toward the Cameras left axis
             if (Input.GetAxis("Horizontal") < 0)
             {
                 target = rotateLeft;
@@ -84,6 +87,7 @@ public class Player_AlignToGround : MonoBehaviour
 
             }
 
+            // Rotate Rover toward the Cameras right axis
             if (Input.GetAxis("Horizontal") > 0)
             {
                 target = rotateRight;
@@ -92,15 +96,20 @@ public class Player_AlignToGround : MonoBehaviour
                 Quaternion newRotation = Quaternion.LookRotation(lookAtPos, transform.up);
                 transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * (turningSpeed / 2));
             }
+
+            // Rotate Rover toward the Cameras bakward axis
+            if (Input.GetAxis("Vertical") < 0)
+            {
+                target = rotateBackward;
+
+                Vector3 lookAtPos = target.position - transform.position;
+                Quaternion newRotation = Quaternion.LookRotation(lookAtPos, transform.up);
+                transform.rotation = Quaternion.Slerp(transform.rotation, newRotation, Time.deltaTime * (turningSpeed / 2));
+            }
         }
     }
 
-    void FixedUpdate()
-    {
-
-    }
-
-    // Rotate Rover to align with current ground
+    // Rotate Rover to align with current ground using Raycast
     private void AlignToGround()
     {
         RaycastHit hit = new RaycastHit();
@@ -117,11 +126,5 @@ public class Player_AlignToGround : MonoBehaviour
                 transform.rotation = Quaternion.FromToRotation(transform.up, slope.normalized) * transform.rotation;
             }
         }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position + -transform.up * _slopeCastHit.distance, sphereCastRadius);
     }
 }
