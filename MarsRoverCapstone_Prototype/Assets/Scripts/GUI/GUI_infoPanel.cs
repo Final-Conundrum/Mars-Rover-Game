@@ -12,17 +12,19 @@ using TMPro;
 public class GUI_infoPanel : MonoBehaviour
 {
     
-    public static GameObject infoPanel;
-   public static TMP_Text infoText;
+    public static GameObject INFO_PANEL;
+   public static TMP_Text INFO_TEXT;
+    public GameObject infoPanel;
+    public TMP_Text infoText;
    
 
 
     // Start is called before the first frame update
     void Start()
     {
-        //infoText.text = "We have started the game! "; //this is for testing atm
+        INFO_PANEL = infoPanel;
+        INFO_TEXT = infoText;
         infoPanel.SetActive(false);
-       
     }
 
     // Update is called once per frame
