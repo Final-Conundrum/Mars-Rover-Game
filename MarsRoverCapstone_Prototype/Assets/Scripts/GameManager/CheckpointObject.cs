@@ -15,7 +15,7 @@ public class CheckpointObject : MonoBehaviour
      * i.e: inventory storage locker. 
      */
 
-    private static CheckpointObject instance;
+    private static GameObject instance;
 
     // Find GameManager of checkpoints
     private GM_Checkpoint GM => FindObjectOfType<GM_Checkpoint>();
@@ -32,15 +32,7 @@ public class CheckpointObject : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(instance);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        
     }
 
     void Start()
@@ -69,7 +61,8 @@ public class CheckpointObject : MonoBehaviour
         // Prompt player to set safe zone
         if (collision.gameObject.tag == "Player") 
         {
-            GUI_HUD.DisplayPrompt(true, "Set your current 'Safe Zone'");
+            // Display prompt
+            // GUI_infoPrompt.CheckPointText()
             if(Input.GetKeyDown(KeyCode.E))
             {
                 icon.sprite = triggeredCheckedPoint;
@@ -80,9 +73,7 @@ public class CheckpointObject : MonoBehaviour
 
     public void OnTriggerExit(Collider collision)
     {
-        if (collision.gameObject.tag == "Player")
-        {
-            GUI_HUD.DisplayPrompt(false, "Set your current 'Safe Zone'");
-        }
+        
+
     }
 }

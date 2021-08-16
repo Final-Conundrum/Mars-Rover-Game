@@ -17,14 +17,17 @@ public class GM_Checkpoint : MonoBehaviour
 
     public bool savedAtSafeZone = false;
 
+    // Relevent Safe zone objects
     public CheckpointObject currentSafeZone;
     public Vector3 currentSafeZonePosition;
-    public string SZintroText = "Potential \n > SAFE ZONE <";
-    public string SZrebootText = "REBOOT SUCCESSFUL \n >> Be careful out there << \n";
-
+    
     public CheckpointObject[] safeZones;
 
     public GameObject player;
+
+    // Safe zone variables for setting the environment upon player respawn
+    public string SZintroText = "Potential \n > SAFE ZONE <";
+    public string SZrebootText = "REBOOT SUCCESSFUL \n >> Be careful out there << \n";
 
     private void Start()
     { 
