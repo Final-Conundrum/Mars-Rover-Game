@@ -49,8 +49,9 @@ public class GM_Checkpoint : MonoBehaviour
     // Checkpoint conditions are set upon reboot/respawn here
     public void RebootSafeZone()
     {
-        player = GM.player;
         currentSafeZone.safeZoneInfo.text = SZrebootText;
+
+        player = GM.player;
 
         // Reset the checkpoint panels camera constraint
         //currentSafeZone.GetComponentInChildren<LookAtConstraint>().SetSource(0, FindObjectOfType<CinemachineBrain>().gameObject);
