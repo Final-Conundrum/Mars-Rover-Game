@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6099614317159918826}
   - component: {fileID: 1126944309372439427}
   - component: {fileID: 936204787107315522}
-  - component: {fileID: 8406646182855817546}
   m_Layer: 5
   m_Name: BG
   m_TagString: Untagged
@@ -77,25 +76,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1183024399 &8406646182855817546
-LookAtConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5267223905248532727}
-  m_Enabled: 1
-  m_Weight: 1
-  m_RotationAtRest: {x: 0, y: 0, z: 0}
-  m_RotationOffset: {x: 0, y: 180, z: 0}
-  m_Roll: 0
-  m_WorldUpObject: {fileID: 0}
-  m_UseUpObject: 0
-  m_IsContraintActive: 1
-  m_IsLocked: 0
-  m_Sources:
-  - sourceTransform: {fileID: 0}
-    weight: 1
 --- !u!1 &6488826751035145806
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,6 +88,7 @@ GameObject:
   - component: {fileID: 6488826751035145802}
   - component: {fileID: 6488826751035145805}
   - component: {fileID: 6488826751035145804}
+  - component: {fileID: 8603675114617949231}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -197,6 +178,23 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1183024399 &8603675114617949231
+LookAtConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6488826751035145806}
+  m_Enabled: 1
+  m_Weight: 1
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_RotationOffset: {x: 0, y: 180, z: 0}
+  m_Roll: 0
+  m_WorldUpObject: {fileID: 0}
+  m_UseUpObject: 0
+  m_IsContraintActive: 1
+  m_IsLocked: 0
+  m_Sources: []
 --- !u!1 &6488826751265738725
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,7 +360,6 @@ GameObject:
   - component: {fileID: 6488826752849692333}
   - component: {fileID: 6488826752849692331}
   - component: {fileID: 6488826752849692330}
-  - component: {fileID: 6488826752849692328}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -427,25 +424,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1183024399 &6488826752849692328
-LookAtConstraint:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6488826752849692332}
-  m_Enabled: 1
-  m_Weight: 1
-  m_RotationAtRest: {x: 0, y: 0, z: 0}
-  m_RotationOffset: {x: 0, y: 180, z: 0}
-  m_Roll: 0
-  m_WorldUpObject: {fileID: 0}
-  m_UseUpObject: 0
-  m_IsContraintActive: 1
-  m_IsLocked: 0
-  m_Sources:
-  - sourceTransform: {fileID: 0}
-    weight: 1
 --- !u!1 &6488826752972918492
 GameObject:
   m_ObjectHideFlags: 0

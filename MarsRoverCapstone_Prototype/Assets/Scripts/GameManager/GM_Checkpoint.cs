@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Animations;
+using Cinemachine;
 
 public class GM_Checkpoint : MonoBehaviour
 {
@@ -26,18 +28,32 @@ public class GM_Checkpoint : MonoBehaviour
 
     private void Start()
     { 
+        // Set initial text for SZ's
        foreach(CheckpointObject i in safeZones)
         {
             i.safeZoneInfo.text = SZintroText;
         }
 
-        RebootSafeZone();
+        player = GM.player;
+    }
+
+    public void SetSafeZone(CheckpointObject SZ)
+    {
+        currentSafeZone = SZ;
+        currentSafeZonePosition = SZ.transform.position;
+        savedAtSafeZone = SZ;
+
+        Debug.Log(gameObject.name + ": Set Checkpoint to " + SZ);
     }
 
     // Checkpoint conditions are set upon reboot/respawn here
     public void RebootSafeZone()
     {
-        player = GM.player;
         currentSafeZone.safeZoneInfo.text = SZrebootText;
+
+        player = GM.player;
+
+        // Reset the checkpoint panels camera constraint
+        //currentSafeZone.GetComponentInChildren<LookAtConstraint>().SetSource(0, FindObjectOfType<CinemachineBrain>().gameObject);
     }
 }
