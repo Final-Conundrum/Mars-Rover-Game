@@ -63,13 +63,13 @@ public class GUI_MineralAnalysis : MonoBehaviour
                     break;
                 case "Feldspar":
 
-                    description.text = descriptions[0];
-                    image.sprite = images[0];
+                    description.text = descriptions[1];
+                    image.sprite = images[1];
                     break;
 
                 case "Aragonite":
-                    description.text = descriptions[1];
-                    image.sprite = images[1];
+                    description.text = descriptions[0];
+                    image.sprite = images[0];
                     break;
             }
 

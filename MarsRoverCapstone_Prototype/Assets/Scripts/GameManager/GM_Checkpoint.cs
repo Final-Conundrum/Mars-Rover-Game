@@ -44,7 +44,7 @@ public class GM_Checkpoint : MonoBehaviour
     {
         currentSafeZone = SZ;
         currentSafeZonePosition = SZ.transform.position;
-        savedAtSafeZone = SZ;
+        savedAtSafeZone = true;
 
         Debug.Log(gameObject.name + ": Set Checkpoint to " + SZ);
     }
