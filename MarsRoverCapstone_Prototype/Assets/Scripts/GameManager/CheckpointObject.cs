@@ -24,8 +24,6 @@ public class CheckpointObject : MonoBehaviour
     public Canvas canvas;
     // Overhead icon
     public Image icon;
-    public Sprite untriggeredCheckpoint;
-    public Sprite triggeredCheckedPoint;
 
     // Informational panel
     public TMP_Text safeZoneInfo;
@@ -35,32 +33,27 @@ public class CheckpointObject : MonoBehaviour
     // Objects
     public GameObject flag;
 
-    private void Awake()
-    {
-        
-    }
-
     void Start()
     {
-        // Reset SZ icon
-        icon.sprite = untriggeredCheckpoint;
+        // Reset SZ
         flag.SetActive(false);
     }
 
     private void Update()
     {
+        // Make canvas format to the camera position
         canvas.transform.LookAt(GM.playerCamera.transform);
-        //canvas.transform.rotation = Quaternion.Euler(0f, canvas.transform.rotation.y, 0f);
-        //canvas.transform.rotation = Quaternion.Euler(0f, GM.playerCamera.transform.rotation.y, 0f);
 
         // Choose to display SZ Panel depending on player distance
         if (Vector3.Distance(transform.position, Player_ParentObject.staticCamera.transform.position) > distanceToDisplay)
         {
-            SZPanelAppearance(false);
+            SZPanelAppearance(false, new Vector3(1f,1f,1f));
         }
         else
         {
-            SZPanelAppearance(true);
+            float dist = (Vector3.Distance(transform.position, GM.playerCamera.transform.position)) / 30;
+            Debug.Log(dist);
+            SZPanelAppearance(true, new Vector3(dist, dist, dist));
         }
     }
 
@@ -73,22 +66,16 @@ public class CheckpointObject : MonoBehaviour
             // GUI_infoPrompt.CheckPointText()
             if(Input.GetKeyDown(KeyCode.E))
             {
-                icon.sprite = triggeredCheckedPoint;
                 GM.SetSafeZone(this);
                 flag.SetActive(true);
+                icon.gameObject.SetActive(false);
             }
         }
     }
 
-    public void OnTriggerExit(Collider collision)
+    public void SZPanelAppearance(bool visible, Vector3 size)
     {
-        
-
-    }
-
-    public void SZPanelAppearance(bool visible)
-    {
-        safeZoneInfo.enabled = visible;
-        background.enabled = visible;
+        background.gameObject.SetActive(visible);
+        background.transform.localScale = size;
     }
 }
