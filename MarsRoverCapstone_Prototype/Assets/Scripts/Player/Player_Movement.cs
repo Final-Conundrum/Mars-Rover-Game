@@ -76,7 +76,6 @@ public class Player_Movement : MonoBehaviour
     private float newSlideTimer;
     public TMP_Text TankControlsActive;
 
-
     // Start is called before the first frame update
     void Start()
     {

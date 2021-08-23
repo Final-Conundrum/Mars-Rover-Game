@@ -21,14 +21,19 @@ public class CheckpointObject : MonoBehaviour
     private GM_Checkpoint GM => FindObjectOfType<GM_Checkpoint>();
 
     // Aesthetics of checkpoints
+    public Canvas canvas;
+    // Overhead icon
     public Image icon;
-
     public Sprite untriggeredCheckpoint;
     public Sprite triggeredCheckedPoint;
 
+    // Informational panel
     public TMP_Text safeZoneInfo;
     public Image background;
     public float distanceToDisplay = 10f;
+
+    // Objects
+    public GameObject flag;
 
     private void Awake()
     {
@@ -39,20 +44,23 @@ public class CheckpointObject : MonoBehaviour
     {
         // Reset SZ icon
         icon.sprite = untriggeredCheckpoint;
+        flag.SetActive(false);
     }
 
     private void Update()
     {
+        canvas.transform.LookAt(GM.playerCamera.transform);
+        //canvas.transform.rotation = Quaternion.Euler(0f, canvas.transform.rotation.y, 0f);
+        //canvas.transform.rotation = Quaternion.Euler(0f, GM.playerCamera.transform.rotation.y, 0f);
+
         // Choose to display SZ Panel depending on player distance
-        if (Vector3.Distance(transform.position, GM.player.transform.position) > distanceToDisplay)
+        if (Vector3.Distance(transform.position, Player_ParentObject.staticCamera.transform.position) > distanceToDisplay)
         {
-            safeZoneInfo.enabled = false;
-            background.enabled = false;
+            SZPanelAppearance(false);
         }
         else
         {
-            safeZoneInfo.enabled = true;
-            background.enabled = true;
+            SZPanelAppearance(true);
         }
     }
 
@@ -67,6 +75,7 @@ public class CheckpointObject : MonoBehaviour
             {
                 icon.sprite = triggeredCheckedPoint;
                 GM.SetSafeZone(this);
+                flag.SetActive(true);
             }
         }
     }
@@ -75,5 +84,11 @@ public class CheckpointObject : MonoBehaviour
     {
         
 
+    }
+
+    public void SZPanelAppearance(bool visible)
+    {
+        safeZoneInfo.enabled = visible;
+        background.enabled = visible;
     }
 }

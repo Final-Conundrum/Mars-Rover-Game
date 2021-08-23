@@ -23,7 +23,7 @@ public class GM_Checkpoint : MonoBehaviour
     
     public CheckpointObject[] safeZones;
 
-    public GameObject player;
+    public GameObject playerCamera;
 
     // Safe zone variables for setting the environment upon player respawn
     public string SZintroText = "Potential \n > SAFE ZONE <";
@@ -37,7 +37,7 @@ public class GM_Checkpoint : MonoBehaviour
             i.safeZoneInfo.text = SZintroText;
         }
 
-        player = GM.player;
+        playerCamera = FindObjectOfType<Player_ParentObject>().Camera;
     }
 
     public void SetSafeZone(CheckpointObject SZ)
@@ -54,9 +54,6 @@ public class GM_Checkpoint : MonoBehaviour
     {
         currentSafeZone.safeZoneInfo.text = SZrebootText;
 
-        player = GM.player;
-
-        // Reset the checkpoint panels camera constraint
-        //currentSafeZone.GetComponentInChildren<LookAtConstraint>().SetSource(0, FindObjectOfType<CinemachineBrain>().gameObject);
+        playerCamera = FindObjectOfType<Player_ParentObject>().Camera;
     }
 }
