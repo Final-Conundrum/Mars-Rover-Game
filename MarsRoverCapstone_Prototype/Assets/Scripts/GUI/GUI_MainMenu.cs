@@ -19,9 +19,18 @@ public class GUI_MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("Test_Sprint2Obstacles");
+        SceneManager.LoadScene("Test_MainDuplicate");
     }
 
+    public void StartTutorial()
+    {
+
+    }
+
+    public void Database()
+    {
+
+    }
 
     public void QuitGame()
     {
