@@ -171,6 +171,8 @@ public class Player_Movement : MonoBehaviour
                     _CCMovement.y = jumpHeight;
 
                     grounded = false;
+
+                    GM_Audio.PlaySound(audioSource, "Jump");
                 }
 
                 if(tankControls)
