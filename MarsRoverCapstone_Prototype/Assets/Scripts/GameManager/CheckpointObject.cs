@@ -30,6 +30,8 @@ public class CheckpointObject : MonoBehaviour
     public Image background;
     public float distanceToDisplay = 10f;
 
+    public TMP_Text prompt;
+
     // Objects
     public GameObject flag;
 
@@ -37,6 +39,7 @@ public class CheckpointObject : MonoBehaviour
     {
         // Reset SZ
         flag.SetActive(false);
+        prompt.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -52,24 +55,43 @@ public class CheckpointObject : MonoBehaviour
         else
         {
             float dist = (Vector3.Distance(transform.position, GM.playerCamera.transform.position)) / 30;
-            Debug.Log(dist);
             SZPanelAppearance(true, new Vector3(dist, dist, dist));
         }
     }
 
-    public void OnTriggerStay(Collider collision)
+    public void OnTriggerEnter(Collider col)
     {
-        // Prompt player to set safe zone
-        if (collision.gameObject.tag == "Player") 
+        if(col.gameObject.tag == "Player")
         {
             // Display prompt
-            // GUI_infoPrompt.CheckPointText()
+            prompt.gameObject.SetActive(true);
+        }
+    }
+
+    public void OnTriggerStay(Collider col)
+    {
+        // Prompt player to set safe zone
+        if (col.gameObject.tag == "Player") 
+        {
+
             if(Input.GetKeyDown(KeyCode.E))
             {
                 GM.SetSafeZone(this);
                 flag.SetActive(true);
+                prompt.gameObject.SetActive(false);
                 icon.gameObject.SetActive(false);
+
+                safeZoneInfo.text = "<< SAFE ZONE >> \n This is Perseverance's current Reboot area";
             }
+        }
+    }
+
+    public void OnTriggerExit(Collider col)
+    {
+        if (col.gameObject.tag == "Player")
+        {
+            // Display prompt
+            prompt.gameObject.SetActive(false);
         }
     }
 

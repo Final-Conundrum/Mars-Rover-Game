@@ -81,12 +81,12 @@ public class Player_Collision : MonoBehaviour
         if(c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar")
         {
             GUI_MineralAnalysis.currentMineral = c.gameObject.tag;
-            InfoPanel.AragoniteText(); 
-           // MiniGame.MiniGame_PIXL();
+            //InfoPanel.AragoniteText(); 
+            MiniGame.MiniGame_PIXL();
         }
         if(c.gameObject.tag == "SafeZone")
         {
-            InfoPanel.CheckPointText();
+            //InfoPanel.CheckPointText();
         }
         
    }
