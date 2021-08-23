@@ -84,10 +84,18 @@ public class Player_Collision : MonoBehaviour
             //InfoPanel.AragoniteText();
             MiniGame.MiniGame_PIXL();
         }
+
+        if(c.gameObject.tag == "RandomMineral")
+        {
+            GUI_MineralAnalysis.currentMineral = "Random";
+            MiniGame.MiniGame_PIXL();
+        }
+
         if(c.gameObject.tag == "SafeZone")
         {
             //InfoPanel.CheckPointText();
         }
+
         if (c.gameObject.tag == "DustNotification")
         {
             InfoPanel.DustDevilNotification();
