@@ -88,8 +88,12 @@ public class Player_Collision : MonoBehaviour
         {
             //InfoPanel.CheckPointText();
         }
+        if (c.gameObject.tag == "DustNotification")
+        {
+            InfoPanel.DustDevilNotification();
+        }
 
-   }
+    }
 
     private void OnTriggerExit(Collider c)
     {

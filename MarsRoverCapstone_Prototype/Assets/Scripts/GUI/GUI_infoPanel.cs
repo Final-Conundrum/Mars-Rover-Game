@@ -44,7 +44,7 @@ public class GUI_infoPanel : MonoBehaviour
     public void CheckPointMessage() //Dallas has a function for setting checkpoint- ask if he wants same fade out on that. 
     {
         infoPanel.SetActive(true);
-        infoText.text = "> Be advised that there are multiple hazards ahead.";
+        infoText.text = "> Be advised that on your journey you will encounter many hazrads.";
         FadePanel();
     }
 
@@ -74,6 +74,13 @@ public class GUI_infoPanel : MonoBehaviour
 
     }
 
+    public void DustDevilNotification()
+    {
+        infoPanel.SetActive(true);
+        infoText.text = "Warning: Martain dust can often settle on machinery and cause damage. \n It would be best to avoid it.";
+        FadePanel();
+    }
+
     //call this to invoke coroutine
     public void FadePanel()
     {
@@ -82,8 +89,8 @@ public class GUI_infoPanel : MonoBehaviour
 
     IEnumerator FadeOut()
     {
-        panelImage.CrossFadeAlpha(0, 6f, true);
-        yield return new WaitForSeconds(3f);
+        panelImage.CrossFadeAlpha(0, 8f, true);
+        yield return new WaitForSeconds(5f);
            StartCoroutine("FadeCanvasGroup");
     }
     IEnumerator FadeCanvasGroup()
