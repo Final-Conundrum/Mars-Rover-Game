@@ -41,18 +41,17 @@ public class GUI_infoPanel : MonoBehaviour
         infoPanel.SetActive(false);
     }
 
-    public void CheckPointText() //Dallas has a function for setting checkpoint- ask if he wants same fade out on that. 
+    public void CheckPointMessage() //Dallas has a function for setting checkpoint- ask if he wants same fade out on that. 
     {
         infoPanel.SetActive(true);
-        panelImage.color = new Color(0f, 144f, 123f, 1f);
-        infoText.text = "Checkpoint Reached.";
+        infoText.text = "> Be advised that there are multiple hazards ahead.";
+        FadePanel();
     }
 
     public void AragoniteText()
     {
         infoPanel.SetActive(true);
-        infoText.text = "You have collected: Aragonite!";
-        //panelImage.color = new Color(0f,0f,0f,1);
+        infoText.text = "> You have collected: Aragonite! \n > Open the Database to view your collection";
         FadePanel();
     }
 
@@ -83,8 +82,8 @@ public class GUI_infoPanel : MonoBehaviour
 
     IEnumerator FadeOut()
     {
-        panelImage.CrossFadeAlpha(0, 1f, true);
-        yield return new WaitForSeconds(1.1f);
+        panelImage.CrossFadeAlpha(0, 6f, true);
+        yield return new WaitForSeconds(3f);
            StartCoroutine("FadeCanvasGroup");
     }
     IEnumerator FadeCanvasGroup()
