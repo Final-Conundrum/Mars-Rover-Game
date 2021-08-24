@@ -27,6 +27,7 @@ public class Player_Movement : MonoBehaviour
     public bool _alignToGround = true;
     public bool tankControls = true;
     public Camera playerCam;
+    public AudioSource audioSource => GetComponent<AudioSource>();
 
     [Space]
 
@@ -76,7 +77,6 @@ public class Player_Movement : MonoBehaviour
     private float newSlideTimer;
     public TMP_Text TankControlsActive;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -94,6 +94,7 @@ public class Player_Movement : MonoBehaviour
         _rotation = Input.GetAxis("Horizontal") * _rotateSpeed;
         roverSpeed = _currentSpeed;
 
+        // Tank control UI element
         if (!tankControls)
         {
             TankControlsActive.color = Color.red;
@@ -115,7 +116,7 @@ public class Player_Movement : MonoBehaviour
             {
                 tankControls = false;
             }
-        }      
+        }
     }
 
     // FixedUpdate reserved for modifying physics
@@ -142,6 +143,7 @@ public class Player_Movement : MonoBehaviour
             _currentSpeed -= momentumIncrease;
         }
 
+        // Raycast whether play is on flat ground
         RaycastHit hit = new RaycastHit();
         Ray raycastDown = new Ray(transform.position, -transform.up);
 
@@ -152,7 +154,6 @@ public class Player_Movement : MonoBehaviour
                 onSteepSlope = false;
                 hitNormal = new Vector3(0, 1, 0);
                 grounded = true;
-
             }
         }
 
@@ -170,6 +171,8 @@ public class Player_Movement : MonoBehaviour
                     _CCMovement.y = jumpHeight;
 
                     grounded = false;
+
+                    GM_Audio.PlaySound(audioSource, "Jump");
                 }
 
                 if(tankControls)
@@ -207,6 +210,9 @@ public class Player_Movement : MonoBehaviour
                 CCMovementControl(_currentSpeed * airSpeedDivision);
                 break;
         }
+
+        // Driving SFX
+        audioSource.pitch = _currentSpeed / 10;
     }
 
     // Method to encompass getting input and using CC to move object
@@ -288,83 +294,4 @@ public class Player_Movement : MonoBehaviour
     {
         hitNormal = hit.normal;
     }
-
-    // Debugging collision gizmo
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position -transform.up * 2f, 1f);
-    }
-    // CODE ON HAITUS
-
-    /*
-    // Return if positioned on a slope
-    private bool OnSteepSlope()
-    {
-        _slopeCastDirection = transform.forward;
-
-        RaycastHit hit = new RaycastHit();
-        Ray raycastForward = new Ray(transform.position, _slopeCastDirection);
-        Ray raycastBack = new Ray(transform.position, -_slopeCastDirection);
-
-        if (Physics.SphereCast(raycastForward, slopeCastRadius, out hit, slopeCastDistance))
-        {
-            Vector3 slope = hit.normal;
-            _slopeCastHit = hit;
-
-            if ((slope.x > 0.6f || slope.x < -0.6f || slope.z > 0.6f || slope.z < -0.6f) && !hit.collider.isTrigger)
-            {
-                //onSteepSlope = true;
-                return true;
-            }
-        }
-        else if (Physics.SphereCast(raycastBack, slopeCastRadius, out hit, slopeCastDistance))
-        {
-            Vector3 slope = hit.normal;
-            _slopeCastHit = hit;
-
-            if (slope.x > 0.6f || slope.x < -0.6f || slope.z > 0.6f || slope.z < -0.6f)
-            {
-                //onSteepSlope = true;
-                return true;
-            }
-        }
-
-        //onSteepSlope = false;
-        return false;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Debug.DrawLine(transform.position, transform.position + _slopeCastDirection * _slopeCastHit.distance);
-        Gizmos.DrawWireSphere(transform.position + _slopeCastDirection * _slopeCastHit.distance, slopeCastRadius);
-        Gizmos.DrawWireSphere(transform.position + -_slopeCastDirection * _slopeCastHit.distance, slopeCastRadius);
-    }
-
-
-    // Lock Rigidbody constraints while using Character Controller. Only turned false when sliding down slope.
-    public void LockConstraints(bool lockedConstraints)
-    {
-        switch(lockedConstraints)
-        {
-            case true:
-                // Freeze constraints so that Character Controller overrides phyhsics
-
-                CC.enabled = true;
-                RBclass.enabled = false;
-                RB.constraints = RigidbodyConstraints.FreezeAll;
-                RB.useGravity = false;
-
-                break;
-            case false:
-
-                CC.enabled = false;
-                RBclass.enabled = true;
-                RB.constraints = RigidbodyConstraints.FreezeRotation;
-                RB.useGravity = true;
-                break;
-        }
-    }
-    */
 }

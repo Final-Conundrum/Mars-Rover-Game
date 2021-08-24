@@ -13,14 +13,9 @@ public class GM_Audio : MonoBehaviour
     [Header("Player Rover Audio")]
 
     public GameObject player;
-    public AudioSource playerSource;
 
-    public AudioClip drivingSFX;
-    public AudioClip drivingFastSFX;
-    public AudioClip jumpSFX;
-    public AudioClip landingSFX;
-    public AudioClip injurySFX;
-    public AudioClip deathSFX;
+    public AudioClip _drivingSFX, _drivingFastSFX, _jumpSFX, _landingSFX, _injurySFX, _deathSFX;
+    public static AudioClip drivingSFX, drivingFastSFX, jumpSFX, landingSFX, injurySFX, deathSFX;
 
     // Start is called before the first frame update
     void Start()
@@ -28,12 +23,28 @@ public class GM_Audio : MonoBehaviour
         player = GM.player;
     }
 
-    // Update is called once per frame
-    void Update()
+    public static void PlaySound(AudioSource audioSource, string soundName)
     {
-        if(Input.GetAxis("Vertical") == 1)
+        switch(soundName)
         {
-            
+            case "Drive":
+                audioSource.PlayOneShot(drivingSFX);
+                break;
+            case "DriveFast":
+                audioSource.PlayOneShot(drivingFastSFX);
+                break;
+            case "Jump":
+                audioSource.PlayOneShot(jumpSFX);
+                break;
+            case "Injury":
+                audioSource.PlayOneShot(injurySFX);
+                break;
+            case "Landing":
+                audioSource.PlayOneShot(landingSFX);
+                break;
+            case "Death":
+                audioSource.PlayOneShot(deathSFX);
+                break;
         }
     }
 }

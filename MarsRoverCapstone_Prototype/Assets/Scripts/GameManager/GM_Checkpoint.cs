@@ -17,14 +17,17 @@ public class GM_Checkpoint : MonoBehaviour
 
     public bool savedAtSafeZone = false;
 
+    // Relevent Safe zone objects
     public CheckpointObject currentSafeZone;
     public Vector3 currentSafeZonePosition;
-    public string SZintroText = "Potential \n > SAFE ZONE <";
-    public string SZrebootText = "REBOOT SUCCESSFUL \n >> Be careful out there << \n";
-
+    
     public CheckpointObject[] safeZones;
 
-    public GameObject player;
+    public GameObject playerCamera;
+
+    // Safe zone variables for setting the environment upon player respawn
+    public string SZintroText = "Potential \n > SAFE ZONE <";
+    public string SZrebootText = "REBOOT SUCCESSFUL \n >> Be careful out there << \n";
 
     private void Start()
     { 
@@ -34,14 +37,14 @@ public class GM_Checkpoint : MonoBehaviour
             i.safeZoneInfo.text = SZintroText;
         }
 
-        player = GM.player;
+        playerCamera = FindObjectOfType<Player_ParentObject>().Camera;
     }
 
     public void SetSafeZone(CheckpointObject SZ)
     {
         currentSafeZone = SZ;
         currentSafeZonePosition = SZ.transform.position;
-        savedAtSafeZone = SZ;
+        savedAtSafeZone = true;
 
         Debug.Log(gameObject.name + ": Set Checkpoint to " + SZ);
     }
@@ -51,9 +54,6 @@ public class GM_Checkpoint : MonoBehaviour
     {
         currentSafeZone.safeZoneInfo.text = SZrebootText;
 
-        player = GM.player;
-
-        // Reset the checkpoint panels camera constraint
-        //currentSafeZone.GetComponentInChildren<LookAtConstraint>().SetSource(0, FindObjectOfType<CinemachineBrain>().gameObject);
+        playerCamera = FindObjectOfType<Player_ParentObject>().Camera;
     }
 }

@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
         // Get Player and set
         player = FindObjectOfType<Player_Movement>().gameObject;
         _GM_Audio.player = player;
-        _GM_Audio.playerSource = player.GetComponent<AudioSource>();
+        //_GM_Audio.playerSource = player.GetComponent<AudioSource>();
 
         // Set player position to respawn point
         if (_GM_Checkpoint.savedAtSafeZone)
@@ -94,7 +94,6 @@ public class GameManager : MonoBehaviour
                 {
                     passTime++;
                     _GM_Popup.FadingPopup("Mars > Jezero Crater \n 1650 hours ", 6f);
-
                 }
                 else if (passTime == 2)
                 {

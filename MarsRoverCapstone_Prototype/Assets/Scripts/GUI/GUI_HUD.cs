@@ -22,9 +22,6 @@ public class GUI_HUD : MonoBehaviour
     public GameObject inventory;
     public GameObject objectives;
 
-    public TMP_Text usePrompt;
-    public static TMP_Text staticPrompt;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -48,9 +45,6 @@ public class GUI_HUD : MonoBehaviour
             inventory.SetActive(false);
             objectives.SetActive(false);
         }
-
-        // Set static variables
-        staticPrompt = usePrompt;
     }
 
     // Update is called once per frame
@@ -103,19 +97,5 @@ public class GUI_HUD : MonoBehaviour
         objectives.SetActive(true);
         health.gameObject.SetActive(true);
         elevation.gameObject.SetActive(true);
-    }
-
-    public static void DisplayPrompt(bool active, string promptCommand)
-    {
-        switch(active)
-        {
-            case true:
-                staticPrompt.enabled = true;
-                staticPrompt.text = "Press 'E' to " + promptCommand;
-                break;
-            case false:
-                staticPrompt.enabled = false;
-                break;
-        }
     }
 }
