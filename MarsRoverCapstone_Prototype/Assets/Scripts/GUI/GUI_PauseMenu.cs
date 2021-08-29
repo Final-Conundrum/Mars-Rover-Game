@@ -58,6 +58,5 @@ public class GUI_PauseMenu : MonoBehaviour
         _GM_Checkpoint.savedAtSafeZone = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1;
-
     }
 }

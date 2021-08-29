@@ -78,17 +78,20 @@ public class Player_Collision : MonoBehaviour
 
         }
 
-        if(c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar")
+        if (c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar" || c.gameObject.tag == "Random")
         {
             GUI_MineralAnalysis.currentMineral = c.gameObject.tag;
             //InfoPanel.AragoniteText();
-            MiniGame.MiniGame_PIXL();
-        }
 
-        if(c.gameObject.tag == "RandomMineral")
-        {
-            GUI_MineralAnalysis.currentMineral = "Random";
-            MiniGame.MiniGame_PIXL();
+            GUI_HUD.staticPrompt.gameObject.SetActive(true);
+            GUI_HUD.staticPrompt.text = "Press 'E' to analyze mineral with the PIXL camera...";
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                MiniGame.MiniGame_PIXL();
+                GUI_HUD.staticPrompt.gameObject.SetActive(false);
+
+            }
         }
 
         if(c.gameObject.tag == "SafeZone")

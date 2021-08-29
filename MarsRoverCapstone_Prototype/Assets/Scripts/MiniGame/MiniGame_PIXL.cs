@@ -55,10 +55,9 @@ public class MiniGame_PIXL : MonoBehaviour
         }
     }
 
-
-
     public void Exit()
     {
+        Time.timeScale = 1;
         Completed = true;
         Cursor.visible = true;
         GUI_MineralAnalysis.Display(true);

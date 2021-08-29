@@ -22,6 +22,9 @@ public class GUI_HUD : MonoBehaviour
     public GameObject inventory;
     public GameObject objectives;
 
+    public TMP_Text mockupPrompt;
+    public static TMP_Text staticPrompt;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +48,8 @@ public class GUI_HUD : MonoBehaviour
             inventory.SetActive(false);
             objectives.SetActive(false);
         }
+
+        staticPrompt = mockupPrompt;
     }
 
     // Update is called once per frame

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GUI_DeathScreen : MonoBehaviour
 {
@@ -25,5 +26,11 @@ public class GUI_DeathScreen : MonoBehaviour
         Cursor.visible = true;
         DeathPanel.SetActive(true);
         dead = true;
+    }
+
+    public void Reboot()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1;
     }
 }
