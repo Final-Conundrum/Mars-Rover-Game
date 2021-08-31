@@ -27,12 +27,6 @@ public class GM_Audio : MonoBehaviour
     {
         switch(soundName)
         {
-            case "Drive":
-                audioSource.PlayOneShot(drivingSFX);
-                break;
-            case "DriveFast":
-                audioSource.PlayOneShot(drivingFastSFX);
-                break;
             case "Jump":
                 audioSource.PlayOneShot(jumpSFX);
                 break;
