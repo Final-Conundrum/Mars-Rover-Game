@@ -10,9 +10,8 @@ public class Player_Collision : MonoBehaviour
     MiniGame_Systems MiniGame => FindObjectOfType<MiniGame_Systems>();
     GUI_infoPanel InfoPanel => FindObjectOfType<GUI_infoPanel>();
 
-    [SerializeField] private float exitPosY;
-
-    [SerializeField] private bool jumpingFromGeyser = false;
+    private float exitPosY;
+    private bool jumpingFromGeyser = false;
 
     private void Update()
     {
@@ -75,22 +74,21 @@ public class Player_Collision : MonoBehaviour
         if (c.gameObject.tag == "Hazard")
         {
             Player_Stats.TakeDamage(10);
-
         }
 
+        // Call Mini-Game script when interacting with mineral
         if (c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar" || c.gameObject.tag == "Random")
         {
             GUI_MineralAnalysis.currentMineral = c.gameObject.tag;
             //InfoPanel.AragoniteText();
 
             GUI_HUD.staticPrompt.gameObject.SetActive(true);
-            GUI_HUD.staticPrompt.text = "Press 'E' to analyze mineral with the PIXL camera...";
+            GUI_HUD.staticPrompt.text = "Press 'E' to analyze with the PIXL camera...";
 
             if (Input.GetKeyDown(KeyCode.E))
             {
                 MiniGame.MiniGame_PIXL();
                 GUI_HUD.staticPrompt.gameObject.SetActive(false);
-
             }
         }
 
@@ -103,7 +101,6 @@ public class Player_Collision : MonoBehaviour
         {
             InfoPanel.DustDevilNotification();
         }
-
     }
 
     private void OnTriggerExit(Collider c)
@@ -113,5 +110,4 @@ public class Player_Collision : MonoBehaviour
             _Player_Movement.jumpHeight = 0.5f;
         }
     }
-
 }

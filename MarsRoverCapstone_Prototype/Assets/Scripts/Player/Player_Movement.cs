@@ -46,6 +46,10 @@ public class Player_Movement : MonoBehaviour
     public float airSpeedDivision = 0.5f;
     public float rotateSpeed = 1f;
 
+    public float boostLimit = 5f;
+    public float boostConsumptionRate;
+    public float boost;
+
     private float _rotateSpeed;
     [SerializeField] private float _currentSpeed;
     public static float roverSpeed;
@@ -85,6 +89,8 @@ public class Player_Movement : MonoBehaviour
 
         _currentSpeed = minDriveSpeed;
         _rotateSpeed = rotateSpeed;
+
+        boost = boostLimit;
     }
 
     // Update is called once per frame
@@ -126,9 +132,16 @@ public class Player_Movement : MonoBehaviour
         _CCMovement.y -= gravity * Time.fixedDeltaTime;
 
         //Speed, Momentum and Shift speed boost
-        if ((Input.GetAxis("Vertical") == 1 || Input.GetAxis("Vertical") == -1) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && _currentSpeed < maxDriveSpeed)
+        if ((Input.GetAxis("Vertical") == 1 || Input.GetAxis("Vertical") == -1) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
         {
-            _currentSpeed += momentumIncrease;
+            if(boost > 0.5f && _currentSpeed < maxDriveSpeed)
+            {
+                _currentSpeed += momentumIncrease;
+            }
+            else if (boost <= 0.5f && _currentSpeed > midDriveSpeed)
+            {
+                _currentSpeed -= momentumIncrease;
+            }
         }
         else if((Input.GetAxis("Vertical") == 1 || Input.GetAxis("Vertical") == -1) && !(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && _currentSpeed > midDriveSpeed)
         {
@@ -143,8 +156,18 @@ public class Player_Movement : MonoBehaviour
             _currentSpeed -= momentumIncrease;
         }
 
+        // Boost variables
+        if (boost >= 0.5f && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
+        {
+            boost -= boostConsumptionRate;
+        }
+        else if (boost < boostLimit && !(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
+        {
+            boost += boostConsumptionRate;
+        }
+
         // Raycast whether play is on flat ground
-        RaycastHit hit = new RaycastHit();
+            RaycastHit hit = new RaycastHit();
         Ray raycastDown = new Ray(transform.position, -transform.up);
 
         if (Physics.SphereCast(raycastDown, 0.6f, out hit, transform.localScale.y / 2))
@@ -195,7 +218,6 @@ public class Player_Movement : MonoBehaviour
                 if (_CCMovement.y > (jumpHeight / 2) && !Input.GetKey(KeyCode.Space))
                 {
                     _CCMovement.y = 0f;
-
                 }
 
                 // Check for fall damage
@@ -247,7 +269,8 @@ public class Player_Movement : MonoBehaviour
         {
             onSteepSlope = false;
         }
-
+        
+        // Translate object opposite to current slope
         if (onSteepSlope)
         {
             _CCMovement.x += (1f - hitNormal.y) * hitNormal.x * (1f - slideFriction);

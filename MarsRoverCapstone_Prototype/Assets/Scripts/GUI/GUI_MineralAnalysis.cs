@@ -41,12 +41,6 @@ public class GUI_MineralAnalysis : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     // Display analysis and pause
     public static void Display(bool enabeled)
     {
@@ -62,11 +56,9 @@ public class GUI_MineralAnalysis : MonoBehaviour
                     RandomMineral();
                     break;
                 case "Feldspar":
-
                     description.text = descriptions[1];
                     image.sprite = images[1];
                     break;
-
                 case "Aragonite":
                     description.text = descriptions[0];
                     image.sprite = images[0];
