@@ -24,6 +24,7 @@ public class GUI_HUD : MonoBehaviour
 
     // UI Elements
     public GameObject info_panel;
+    public GameObject chooseControlsPanel;
 
     public GameObject inventory;
     public GameObject objectives;
@@ -115,6 +116,7 @@ public class GUI_HUD : MonoBehaviour
         }
     }
 
+    // Close Learning Panel and Activate HUD
     public void ClosePanel()
     {
         Time.timeScale = 1;
@@ -129,5 +131,11 @@ public class GUI_HUD : MonoBehaviour
         objectives.SetActive(true);
         health.gameObject.SetActive(true);
         elevation.gameObject.SetActive(true);
+    }
+
+    public void ChooseControls(bool tankControls)
+    {
+        PM.tankControls = tankControls;
+        chooseControlsPanel.SetActive(false);
     }
 }
