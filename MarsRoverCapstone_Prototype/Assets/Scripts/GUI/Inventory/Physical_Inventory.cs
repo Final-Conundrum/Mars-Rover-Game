@@ -14,7 +14,7 @@ public class Physical_Inventory : MonoBehaviour
         if (item)
         {
             inventory.AddItem(item.item, 1);
-            Destroy(other.gameObject);
+            //Destroy(other.gameObject);
             displayInventory.UpdateDisplay();
 
         }

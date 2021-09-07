@@ -15,14 +15,14 @@ public class Mineral_Pick_Up : MonoBehaviour
 
     private void Start()
     {
-        mineralName.gameObject.SetActive(false);
+        mineralName.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "Player")
         {
-            mineralName.gameObject.SetActive(true);
+            mineralName.enabled = true;
         }
     }
 
@@ -30,7 +30,7 @@ public class Mineral_Pick_Up : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            mineralName.gameObject.SetActive(false);
+            mineralName.enabled = false;
         }
     }
 

@@ -103,11 +103,29 @@ public class Player_Collision : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider c)
+    private void OnTriggerStay(Collider c)
     {
+        // Call Mini-Game script when interacting with mineral
+        if (c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar" || c.gameObject.tag == "Random")
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                MiniGame.MiniGame_PIXL();
+                GUI_HUD.staticPrompt.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider c)
+    { 
         if (c.gameObject.tag == "Geyser")
         {
             _Player_Movement.jumpHeight = 0.5f;
+        }
+
+        if (c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar" || c.gameObject.tag == "Random")
+        {
+            GUI_HUD.staticPrompt.gameObject.SetActive(false);
         }
     }
 }
