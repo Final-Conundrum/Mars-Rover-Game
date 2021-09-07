@@ -79,12 +79,12 @@ public class GUI_HUD : MonoBehaviour
         if(PM.boost > 0.5f) 
         {
             boostSliderHandle.color = Color.green;
-            boosterSliderColour.color = Color.green;
+            boosterSliderColour.color = green;
         }
         else
         {
             boostSliderHandle.color = Color.red;
-            boosterSliderColour.color = Color.red;
+            boosterSliderColour.color = red;
         }
 
         boostSlider.value = PM.boost;

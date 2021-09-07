@@ -79,7 +79,7 @@ public class Player_Movement : MonoBehaviour
     public float slideMuliplier = 0.3f;
     public float slideTimer = 0.9f;
     private float newSlideTimer;
-    public TMP_Text TankControlsActive;
+    public TMP_Text realisticControlsStatus;
 
     // Start is called before the first frame update
     void Start()
@@ -103,13 +103,13 @@ public class Player_Movement : MonoBehaviour
         // Tank control UI element
         if (!tankControls)
         {
-            TankControlsActive.color = Color.red;
-            TankControlsActive.text = "Tank Controls \n OFF";
+            realisticControlsStatus.color = Color.white;
+            realisticControlsStatus.text = "Realistic Controls \n OFF";
         }
         else
         {
-            TankControlsActive.color = Color.cyan;
-            TankControlsActive.text = "Tank Controls \n ON";
+            realisticControlsStatus.color = Color.yellow;
+            realisticControlsStatus.text = "Realistic Controls \n ON";
         }
 
         if(Input.GetKeyDown(KeyCode.T))
