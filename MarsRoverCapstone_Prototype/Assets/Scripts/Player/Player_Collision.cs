@@ -108,21 +108,25 @@ public class Player_Collision : MonoBehaviour
         // Call Mini-Game script when interacting with mineral
         if (c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar" || c.gameObject.tag == "Random")
         {
+            // Open Mini-Game
             if (Input.GetKeyDown(KeyCode.E))
             {
                 MiniGame.MiniGame_PIXL();
                 GUI_HUD.staticPrompt.gameObject.SetActive(false);
+                c.gameObject.SetActive(false);
             }
         }
     }
 
     private void OnTriggerExit(Collider c)
     { 
+        // Reset jump to standard after leaving geyser
         if (c.gameObject.tag == "Geyser")
         {
             _Player_Movement.jumpHeight = 0.5f;
         }
 
+        // Disable prompt after leaving mineral
         if (c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar" || c.gameObject.tag == "Random")
         {
             GUI_HUD.staticPrompt.gameObject.SetActive(false);

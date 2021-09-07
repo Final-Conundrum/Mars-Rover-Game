@@ -33,6 +33,7 @@ public class MiniGame_PIXL : MonoBehaviour
         }
     }
 
+    // Play Mini-game
     public void StartMiniGame()
     {
         VirtualCursor.StartPos = Input.mousePosition - MazeStart.transform.position;
@@ -43,6 +44,7 @@ public class MiniGame_PIXL : MonoBehaviour
         failText.SetActive(false);
     }
 
+    // Fail-state warning: display text describing what the player did wrong.
     public void Fail()
     {
         timer = Time.time + failTextTimer;
@@ -55,6 +57,13 @@ public class MiniGame_PIXL : MonoBehaviour
         }
     }
 
+    // Modify the appearance of the PIXL screens as player plays PIXL
+    public void EditPIXLScreens()
+    {
+
+    }
+
+    // End mini-game and display mineral analysis
     public void Exit()
     {
         Time.timeScale = 1;
