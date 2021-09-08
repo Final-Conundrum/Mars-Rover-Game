@@ -10,7 +10,6 @@ public class MiniGame_PIXL : MonoBehaviour
     public static bool Completed = false;
 
     public MiniGame_PIXL_VirtualCursor VirtualCursor;
-    private Collider2D VirtualCollider => VirtualCursor.GetComponent<Collider2D>();
     public GameObject MazeStart;
     public GameObject MazeEnd;
     
