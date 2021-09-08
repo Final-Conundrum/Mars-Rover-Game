@@ -5,10 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class GUI_MainMenu : MonoBehaviour
 {
+    public GameObject DB;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        DB.SetActive(false);
     }
 
     // Update is called once per frame
@@ -27,9 +29,9 @@ public class GUI_MainMenu : MonoBehaviour
 
     }
 
-    public void Database()
+    public void Database(bool open)
     {
-
+        DB.SetActive(open);
     }
 
     public void QuitGame()
