@@ -67,15 +67,9 @@ public class GUI_PauseMenu : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    public void OpenDataBase()
+    public void OpenDataBase(bool open)
     {
-        DataBaseMenu.SetActive(true);
-        DataBaseReturnButton.SetActive(true);
-    }
-
-    public void CloseDataBase()
-    {
-        DataBaseMenu.SetActive(false);
-        DataBaseReturnButton.SetActive(false);
+        DataBaseMenu.SetActive(open);
+        DataBaseReturnButton.SetActive(open);
     }
 }
