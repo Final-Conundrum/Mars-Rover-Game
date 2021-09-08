@@ -59,6 +59,8 @@ public class CheckpointObject : MonoBehaviour
         }
     }
 
+
+    // Collision with player events
     public void OnTriggerEnter(Collider col)
     {
         if(col.gameObject.tag == "Player")
@@ -79,7 +81,6 @@ public class CheckpointObject : MonoBehaviour
             {
                 GM.SetSafeZone(this);
                 flag.SetActive(true);
-                prompt.gameObject.SetActive(false);
                 icon.gameObject.SetActive(false);
 
                 safeZoneInfo.text = "<< SAFE ZONE >> \n This is Perseverance's current Reboot area";
