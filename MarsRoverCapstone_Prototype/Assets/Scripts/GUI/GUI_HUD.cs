@@ -23,6 +23,8 @@ public class GUI_HUD : MonoBehaviour
     public Image boosterSliderColour;
 
     // UI Elements
+    public GameObject playerHUD;
+
     public GameObject info_panel;
     public GameObject chooseControlsPanel;
 
@@ -53,11 +55,7 @@ public class GUI_HUD : MonoBehaviour
 
             info_panel.SetActive(true);
 
-            health.gameObject.SetActive(false);
-            elevation.gameObject.SetActive(false);
-
-            inventory.SetActive(false);
-            objectives.SetActive(false);
+            playerHUD.SetActive(false);
         }
 
         staticPrompt = mockupPrompt;
@@ -126,11 +124,9 @@ public class GUI_HUD : MonoBehaviour
         GUI_PauseMenu.pausedGame = false;
 
         info_panel.SetActive(false);
+        chooseControlsPanel.SetActive(false);
 
-        inventory.SetActive(true);
-        objectives.SetActive(true);
-        health.gameObject.SetActive(true);
-        elevation.gameObject.SetActive(true);
+        playerHUD.SetActive(true);
     }
 
     public void ChooseControls(bool tankControls)

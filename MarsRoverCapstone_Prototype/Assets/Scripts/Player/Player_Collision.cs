@@ -95,6 +95,8 @@ public class Player_Collision : MonoBehaviour
         if(c.gameObject.tag == "SafeZone")
         {
             //InfoPanel.CheckPointText();
+            GUI_HUD.staticPrompt.gameObject.SetActive(true);
+            GUI_HUD.staticPrompt.text = "Press 'E' to set Safe Zone...";
         }
 
         if (c.gameObject.tag == "DustNotification")
@@ -128,6 +130,11 @@ public class Player_Collision : MonoBehaviour
 
         // Disable prompt after leaving mineral
         if (c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar" || c.gameObject.tag == "Random")
+        {
+            GUI_HUD.staticPrompt.gameObject.SetActive(false);
+        }
+
+        if(c.gameObject.tag == "SafeZone")
         {
             GUI_HUD.staticPrompt.gameObject.SetActive(false);
         }
