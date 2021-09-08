@@ -66,7 +66,6 @@ public class GUI_Database : MonoBehaviour
         MarsPanel.SetActive(true);
         PerseverancePanel.SetActive(false);
         JezeroCraterPanel.SetActive(false);
-        MarsPanel.SetActive(false);
         InstrumentsPanel.SetActive(false);
     }
     public void ActivateInstrumentPanel()
