@@ -21,6 +21,10 @@ public class GM_Audio : MonoBehaviour
     void Start()
     {
         player = GM.player;
+        jumpSFX = _jumpSFX;
+        landingSFX = _landingSFX;
+        injurySFX = _injurySFX;
+        deathSFX = _deathSFX;
     }
 
     public static void PlaySound(AudioSource audioSource, string soundName)

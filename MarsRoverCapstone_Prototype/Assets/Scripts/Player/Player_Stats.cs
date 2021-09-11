@@ -36,7 +36,7 @@ public class Player_Stats : MonoBehaviour
     //Checks the players current health
     private static void healthCheck()
     {
-        if (health == 0)
+        if (health <= 0)
         {
             Destroy(player);
             DeathScreen.Display();

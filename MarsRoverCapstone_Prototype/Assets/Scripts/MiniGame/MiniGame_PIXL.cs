@@ -42,8 +42,6 @@ public class MiniGame_PIXL : MonoBehaviour
         {
             i.color = new Color(0, 0, 0, Vector3.Distance(VirtualCursor.transform.position, MazeEnd.transform.position) / 100);
         }
-
-        Debug.Log(Vector3.Distance(VirtualCursor.transform.position, MazeEnd.transform.position) / 100);
     }
 
     // Play Mini-game
