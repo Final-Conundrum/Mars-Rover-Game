@@ -103,6 +103,11 @@ public class Player_Collision : MonoBehaviour
         {
             InfoPanel.DustDevilNotification();
         }
+        if (c.gameObject.CompareTag("FactTrigger"))
+        {
+            //  InfoPanel.factText.SetText(InfoPanel.factStrings[0]);
+            InfoPanel.ActivateFactPanel();
+        }
     }
 
     private void OnTriggerStay(Collider c)
