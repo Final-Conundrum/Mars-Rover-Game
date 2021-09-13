@@ -109,6 +109,8 @@ public class GUI_infoPanel : MonoBehaviour
         
         FadePanel();
     }
+
+    /*
     string GenerateFact()
     {
         string fact;
@@ -121,7 +123,7 @@ public class GUI_infoPanel : MonoBehaviour
         }
         
         return fact; //change to return new string
-    }
+    }*/
 
     //call this to invoke coroutine
     public void FadePanel()
