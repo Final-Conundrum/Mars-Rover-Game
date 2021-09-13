@@ -25,16 +25,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 12198167840183249}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 8739212542061762615}
-  m_RootOrder: 5
+  m_Father: {fileID: 3856595312293271191}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 818, y: 47}
+  m_AnchoredPosition: {x: 203.12946, y: -145.21274}
   m_SizeDelta: {x: 406.2685, y: 252.6868}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5575212570210494698
@@ -474,7 +474,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 232.0001, y: -529.7401}
+  m_AnchoredPosition: {x: 202, y: -563}
   m_SizeDelta: {x: 407.6785, y: 422.8674}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &552252615769306836
@@ -1058,7 +1058,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1244863828943304032
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1911,6 +1911,7 @@ MonoBehaviour:
   NASAPanel: {fileID: 1244863830569166594}
   MarsPanel: {fileID: 1244863830857178215}
   InstrumentsPanel: {fileID: 1244863829353665279}
+  ExternalPanel: {fileID: 0}
 --- !u!1 &1244863829214331208
 GameObject:
   m_ObjectHideFlags: 0
@@ -3988,7 +3989,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "NASA Image \nGallery"
+  m_Text: "Image \nGallery"
 --- !u!1 &1244863830132791631
 GameObject:
   m_ObjectHideFlags: 0
@@ -5729,7 +5730,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1244863829212695326}
         m_TargetAssemblyTypeName: GUI_Database, Assembly-CSharp
-        m_MethodName: ActivateMarsPanel
+        m_MethodName: ActivateExternalPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6394,7 +6395,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 232, y: -390}
+  m_AnchoredPosition: {x: 202, y: -423.26004}
   m_SizeDelta: {x: 407.6785, y: 422.8674}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3910112267913516559
@@ -6474,7 +6475,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 232.0001, y: -678.7401}
+  m_AnchoredPosition: {x: 202.0001, y: -712.0001}
   m_SizeDelta: {x: 407.6785, y: 422.8674}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1115030132321412399
@@ -6768,7 +6769,7 @@ GameObject:
   - component: {fileID: 7315324885858183801}
   - component: {fileID: 7067155674455414574}
   m_Layer: 5
-  m_Name: Text (2)
+  m_Name: MarsTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6784,9 +6785,10 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 5526576874296365757}
   m_Father: {fileID: 8739212542061762615}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -7526,16 +7528,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3714938730243050557}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 8739212542061762615}
-  m_RootOrder: 7
+  m_Father: {fileID: 1741073434814506903}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 675.47, y: -342}
+  m_AnchoredPosition: {x: 79.13208, y: -109.169876}
   m_SizeDelta: {x: 805.2236, y: 180.5973}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1979061582055646962
@@ -7752,16 +7754,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4611926793450024968}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 8739212542061762615}
-  m_RootOrder: 3
+  m_Father: {fileID: 6489939480709167908}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 237.13, y: -37}
+  m_AnchoredPosition: {x: 228.20932, y: -127}
   m_SizeDelta: {x: 456.4177, y: 379.851}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2741943145343144890
@@ -8054,7 +8056,7 @@ GameObject:
   - component: {fileID: 5054704575353777410}
   - component: {fileID: 6634674384655087048}
   m_Layer: 5
-  m_Name: Text (1)
+  m_Name: TwitterTxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8070,9 +8072,10 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 114842630552003725}
   m_Father: {fileID: 8739212542061762615}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -8295,7 +8298,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8739212542061762615
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8310,11 +8313,8 @@ RectTransform:
   - {fileID: 4355991856984557283}
   - {fileID: 7201690594453917243}
   - {fileID: 6489939480709167908}
-  - {fileID: 1661815673415573305}
   - {fileID: 3856595312293271191}
-  - {fileID: 114842630552003725}
   - {fileID: 1741073434814506903}
-  - {fileID: 5526576874296365757}
   m_Father: {fileID: 1244863828930601049}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8946,11 +8946,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 544f72e33eab0e14088f09768248480d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PerseverancePanel: {fileID: 0}
-  JezeroCraterPanel: {fileID: 0}
-  NASAPanel: {fileID: 0}
-  MarsPanel: {fileID: 0}
-  InstrumentsPanel: {fileID: 0}
+  PerseverancePanel: {fileID: 1244863830728799896}
+  JezeroCraterPanel: {fileID: 1244863828943303967}
+  NASAPanel: {fileID: 1244863830569166594}
+  MarsPanel: {fileID: 1244863830857178215}
+  InstrumentsPanel: {fileID: 1244863829353665279}
+  ExternalPanel: {fileID: 5333290358353658360}
 --- !u!1 &7939346537603288533
 GameObject:
   m_ObjectHideFlags: 0
@@ -9197,7 +9198,7 @@ GameObject:
   - component: {fileID: 3696009159096886909}
   - component: {fileID: 3129475399856834009}
   m_Layer: 5
-  m_Name: Text
+  m_Name: MultiMtxt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9213,7 +9214,8 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1661815673415573305}
   m_Father: {fileID: 8739212542061762615}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
