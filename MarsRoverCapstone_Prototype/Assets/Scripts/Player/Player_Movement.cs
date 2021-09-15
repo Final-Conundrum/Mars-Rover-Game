@@ -61,7 +61,7 @@ public class Player_Movement : MonoBehaviour
     [Header("Jump and Midair Values")]
     // Jump variables, the Fall variables modify the speed in which the rover drops after the jump to give it weight
     public float jumpHeight = 0.5f;
-    public float geyserJumpHeight = 20f;
+    public float geyserBurstElevation = 0.15f;
     public bool onGeyser = false;
 
     public float _coyoteTime = 0.2f;
@@ -192,7 +192,7 @@ public class Player_Movement : MonoBehaviour
                 // Input and AddForce for JUMP
                 if(!onSteepSlope)
                 {
-                    if (Input.GetKey(KeyCode.Space) && !onGeyser)
+                    if (Input.GetKey(KeyCode.Space))
                     {
                         _CCMovement.y = jumpHeight;
 
@@ -205,9 +205,10 @@ public class Player_Movement : MonoBehaviour
                     }
                 }
 
-                if(onGeyser && _CCMovement.y <= geyserJumpHeight)
+                // Transform player upwards while within a geyser burst
+                if(onGeyser)
                 {
-                    _CCMovement.y = geyserJumpHeight;
+                    _CCMovement.y += geyserBurstElevation;
                 }
 
                 // Modify passed values for movement depending on active state of tank controls

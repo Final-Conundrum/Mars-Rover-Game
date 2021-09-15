@@ -132,6 +132,7 @@ public class Player_Collision : MonoBehaviour
             //PM.jumpHeight = PM.geyserJumpHeight;
             //PM._CCMovement.y = PM._CCMovement.y + 10f;
             Player_Movement.grounded = true;
+            PM.onGeyser = true;
             jumpingFromGeyser = true;
         }
     }
@@ -145,7 +146,6 @@ public class Player_Collision : MonoBehaviour
             //PM.jumpHeight = 0.5f;
             PM.onGeyser = false;
             Player_Movement.grounded = false;
-
         }
 
         // Disable prompt after leaving mineral
