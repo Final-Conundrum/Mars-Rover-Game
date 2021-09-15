@@ -15,6 +15,7 @@ public class MiniGame_PIXL : MonoBehaviour
     public GameObject MazeStart;
     public GameObject MazeEnd;
 
+    // Images and panels for result info
     public Image[] HidingPanels;
     public GameObject ResultPanel;
 
@@ -27,7 +28,6 @@ public class MiniGame_PIXL : MonoBehaviour
     {
         StartMiniGame();
         ResultPanel.SetActive(false);
-
     }
 
     // Update is called once per frame
