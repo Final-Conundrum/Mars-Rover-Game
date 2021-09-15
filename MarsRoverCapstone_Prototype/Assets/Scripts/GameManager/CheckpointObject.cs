@@ -15,74 +15,91 @@ public class CheckpointObject : MonoBehaviour
      * i.e: inventory storage locker. 
      */
 
-    private static CheckpointObject instance;
+    private static GameObject instance;
 
     // Find GameManager of checkpoints
     private GM_Checkpoint GM => FindObjectOfType<GM_Checkpoint>();
 
     // Aesthetics of checkpoints
+    public Canvas canvas;
+    // Overhead icon
     public Image icon;
 
-    public Sprite untriggeredCheckpoint;
-    public Sprite triggeredCheckedPoint;
-
+    // Informational panel
     public TMP_Text safeZoneInfo;
     public Image background;
     public float distanceToDisplay = 10f;
 
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(instance);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+    public TMP_Text prompt;
+
+    // Objects
+    public GameObject flag;
 
     void Start()
     {
-        // Reset SZ icon
-        icon.sprite = untriggeredCheckpoint;
+        // Reset SZ
+        flag.SetActive(false);
+        prompt.gameObject.SetActive(false);
     }
 
     private void Update()
     {
+        // Make canvas format to the camera position
+        canvas.transform.LookAt(GM.playerCamera.transform);
+
         // Choose to display SZ Panel depending on player distance
-        if (Vector3.Distance(transform.position, GM.player.transform.position) > distanceToDisplay)
+        if (Vector3.Distance(transform.position, Player_ParentObject.staticCamera.transform.position) > distanceToDisplay)
         {
-            safeZoneInfo.enabled = false;
-            background.enabled = false;
+            SZPanelAppearance(false, new Vector3(1f,1f,1f));
         }
         else
         {
-            safeZoneInfo.enabled = true;
-            background.enabled = true;
+            float dist = (Vector3.Distance(transform.position, GM.playerCamera.transform.position)) / 30;
+            SZPanelAppearance(true, new Vector3(dist, dist, dist));
         }
     }
 
-    public void OnTriggerStay(Collider collision)
+
+    // Collision with player events
+    public void OnTriggerEnter(Collider col)
+    {
+        if(col.gameObject.tag == "Player")
+        {
+            // Display prompt
+            prompt.gameObject.SetActive(true);
+            prompt.text = "Press 'E' to set Safe Zone here...";
+        }
+    }
+
+    public void OnTriggerStay(Collider col)
     {
         // Prompt player to set safe zone
-        if (collision.gameObject.tag == "Player") 
+        if (col.gameObject.tag == "Player") 
         {
-            GUI_HUD.DisplayPrompt(true, "Set your current 'Safe Zone'");
+
             if(Input.GetKeyDown(KeyCode.E))
             {
-                icon.sprite = triggeredCheckedPoint;
                 GM.SetSafeZone(this);
+                flag.SetActive(true);
+                icon.gameObject.SetActive(false);
+
+                safeZoneInfo.text = "<< SAFE ZONE >> \n This is Perseverance's current Reboot area";
             }
         }
     }
 
-    public void OnTriggerExit(Collider collision)
+    public void OnTriggerExit(Collider col)
     {
-        if (collision.gameObject.tag == "Player")
+        if (col.gameObject.tag == "Player")
         {
-            GUI_HUD.DisplayPrompt(false, "Set your current 'Safe Zone'");
+            // Display prompt
+            prompt.gameObject.SetActive(false);
         }
+    }
+
+    public void SZPanelAppearance(bool visible, Vector3 size)
+    {
+        background.gameObject.SetActive(visible);
+        background.transform.localScale = size;
     }
 }

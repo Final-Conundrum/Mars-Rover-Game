@@ -4,20 +4,32 @@ using UnityEngine;
 
 public class MiniGame_Systems : MonoBehaviour
 {
-    public GameObject GameObject_PIXL;
-    public static GameObject Static_PIXL;
+    // Attached Mini-game prefabs
+    public GameObject[] GameObject_PIXL;
+    public static GameObject[] Static_PIXL;
+
     // Start is called before the first frame update
     void Start()
     {
+        // Assign static variables as prefabs
         Static_PIXL = GameObject_PIXL;
     }
 
-    // Update is called once per frame
-    void Update()
+    // Open the PIXL mini-game
+    public void MiniGame_PIXL(){
+
+        int num = Random.Range(0, Static_PIXL.Length);
+
+        Instantiate(Static_PIXL[num]);
+    }
+
+    public void MiniGame_RIMFAX()
     {
 
     }
-    public void MiniGame_PIXL(){
-        Instantiate(Static_PIXL);
+
+    public void MiniGame_DRILL()
+    {
+
     }
 }

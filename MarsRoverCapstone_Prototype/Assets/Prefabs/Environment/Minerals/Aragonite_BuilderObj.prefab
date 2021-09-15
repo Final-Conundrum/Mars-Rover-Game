@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 278068160}
   - component: {fileID: 278068159}
   m_Layer: 5
-  m_Name: Canvas (1)
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27,7 +27,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 278068157}
   m_LocalRotation: {x: -0, y: 0.9025733, z: -0, w: 0.4305362}
-  m_LocalPosition: {x: 0, y: 0, z: -2.87}
+  m_LocalPosition: {x: 0, y: 0, z: -0.47}
   m_LocalScale: {x: 0.33333334, y: 0.11248373, z: 0.33333334}
   m_Children:
   - {fileID: 1569845841}
@@ -36,8 +36,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 128.997, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 3.56, y: 0.65}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 0.31, y: 2.52}
+  m_SizeDelta: {x: 28.7933, y: 31.4485}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &278068161
 Canvas:
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 1569845842}
   - component: {fileID: 1569845844}
   m_Layer: 0
-  m_Name: Text (TMP)
+  m_Name: MineralName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -126,8 +126,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1569845840}
-  m_LocalRotation: {x: 0.04088762, y: -0.8460192, z: 0.06557394, w: 0.5275223}
-  m_LocalPosition: {x: 0, y: 0, z: -11.7}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 278068158}
@@ -135,7 +135,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 9.8}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 39.5, y: 19.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1569845843
@@ -269,6 +269,7 @@ GameObject:
   - component: {fileID: 1810551017047831724}
   - component: {fileID: 1810551017047831723}
   - component: {fileID: 1810551017047831712}
+  - component: {fileID: 8659679432955519923}
   m_Layer: 0
   m_Name: Aragonite_BuilderObj
   m_TagString: Aragonite
@@ -1984,3 +1985,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 105863378af367141a2f4cca819944de, type: 2}
+  mineralName: {fileID: 1569845842}
+--- !u!65 &8659679432955519923
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1810551017047831722}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 5, y: 5, z: 5}
+  m_Center: {x: 0.43948346, y: 0.63673806, z: -0.33069324}

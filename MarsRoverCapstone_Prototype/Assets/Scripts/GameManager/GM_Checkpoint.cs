@@ -17,14 +17,18 @@ public class GM_Checkpoint : MonoBehaviour
 
     public bool savedAtSafeZone = false;
 
+    // Relevent Safe zone objects
     public CheckpointObject currentSafeZone;
     public Vector3 currentSafeZonePosition;
-    public string SZintroText = "Potential \n > SAFE ZONE <";
-    public string SZrebootText = "REBOOT SUCCESSFUL \n >> Be careful out there << \n";
-
+    
     public CheckpointObject[] safeZones;
 
-    public GameObject player;
+    public GameObject playerCamera;
+
+    // Safe zone variables for setting the environment upon player respawn
+    public string SZintroText = "Potential \n > SAFE ZONE <";
+    public string SZrebootText = "REBOOT SUCCESSFUL \n >> Be careful out there << \n";
+    public string[] SZrandomText = { "REBOOT SUCCESSFUL \n>> Be careful out there!", "REBOOT SUCCESSFUL \n>> Remember sand and machine don't mix well, so avoid Mars' dust storms!", "REBOOT SUCCESSFUL \n>> The more we learn, the more we advance, so watch out for minerals and objects to analyze!", "REBOOT SUCCESSFUL \n>> Did you know that Perseverances nickname is Percy?" };
 
     private void Start()
     { 
@@ -34,14 +38,14 @@ public class GM_Checkpoint : MonoBehaviour
             i.safeZoneInfo.text = SZintroText;
         }
 
-        player = GM.player;
+        playerCamera = FindObjectOfType<Player_ParentObject>().Camera;
     }
 
     public void SetSafeZone(CheckpointObject SZ)
     {
         currentSafeZone = SZ;
         currentSafeZonePosition = SZ.transform.position;
-        savedAtSafeZone = SZ;
+        savedAtSafeZone = true;
 
         Debug.Log(gameObject.name + ": Set Checkpoint to " + SZ);
     }
@@ -49,11 +53,10 @@ public class GM_Checkpoint : MonoBehaviour
     // Checkpoint conditions are set upon reboot/respawn here
     public void RebootSafeZone()
     {
-        currentSafeZone.safeZoneInfo.text = SZrebootText;
+        int num = Random.Range(0, SZrandomText.Length - 1);
 
-        player = GM.player;
+        currentSafeZone.safeZoneInfo.text = SZrandomText[num];
 
-        // Reset the checkpoint panels camera constraint
-        //currentSafeZone.GetComponentInChildren<LookAtConstraint>().SetSource(0, FindObjectOfType<CinemachineBrain>().gameObject);
+        playerCamera = FindObjectOfType<Player_ParentObject>().Camera;
     }
 }

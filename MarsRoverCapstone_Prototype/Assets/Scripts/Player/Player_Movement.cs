@@ -27,6 +27,7 @@ public class Player_Movement : MonoBehaviour
     public bool _alignToGround = true;
     public bool tankControls = true;
     public Camera playerCam;
+    public AudioSource audioSource => GetComponent<AudioSource>();
 
     [Space]
 
@@ -45,6 +46,10 @@ public class Player_Movement : MonoBehaviour
     public float airSpeedDivision = 0.5f;
     public float rotateSpeed = 1f;
 
+    public float boostLimit = 5f;
+    public float boostConsumptionRate;
+    public float boost;
+
     private float _rotateSpeed;
     [SerializeField] private float _currentSpeed;
     public static float roverSpeed;
@@ -56,7 +61,8 @@ public class Player_Movement : MonoBehaviour
     [Header("Jump and Midair Values")]
     // Jump variables, the Fall variables modify the speed in which the rover drops after the jump to give it weight
     public float jumpHeight = 0.5f;
-    public float geyserJumpHeight = 20f;
+    public float geyserBurstElevation = 0.15f;
+    public bool onGeyser = false;
 
     public float _coyoteTime = 0.2f;
     public static float coyoteTime;
@@ -74,8 +80,7 @@ public class Player_Movement : MonoBehaviour
     public float slideMuliplier = 0.3f;
     public float slideTimer = 0.9f;
     private float newSlideTimer;
-    public TMP_Text TankControlsActive;
-
+    public TMP_Text realisticControlsStatus;
 
     // Start is called before the first frame update
     void Start()
@@ -85,6 +90,8 @@ public class Player_Movement : MonoBehaviour
 
         _currentSpeed = minDriveSpeed;
         _rotateSpeed = rotateSpeed;
+
+        boost = boostLimit;
     }
 
     // Update is called once per frame
@@ -94,15 +101,16 @@ public class Player_Movement : MonoBehaviour
         _rotation = Input.GetAxis("Horizontal") * _rotateSpeed;
         roverSpeed = _currentSpeed;
 
+        // Tank control UI element
         if (!tankControls)
         {
-            TankControlsActive.color = Color.red;
-            TankControlsActive.text = "Tank Controls \n OFF";
+            realisticControlsStatus.color = Color.white;
+            realisticControlsStatus.text = "Realistic Controls \n OFF";
         }
         else
         {
-            TankControlsActive.color = Color.cyan;
-            TankControlsActive.text = "Tank Controls \n ON";
+            realisticControlsStatus.color = Color.yellow;
+            realisticControlsStatus.text = "Realistic Controls \n ON";
         }
 
         if(Input.GetKeyDown(KeyCode.T))
@@ -115,7 +123,7 @@ public class Player_Movement : MonoBehaviour
             {
                 tankControls = false;
             }
-        }      
+        }
     }
 
     // FixedUpdate reserved for modifying physics
@@ -125,9 +133,16 @@ public class Player_Movement : MonoBehaviour
         _CCMovement.y -= gravity * Time.fixedDeltaTime;
 
         //Speed, Momentum and Shift speed boost
-        if ((Input.GetAxis("Vertical") == 1 || Input.GetAxis("Vertical") == -1) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && _currentSpeed < maxDriveSpeed)
+        if ((Input.GetAxis("Vertical") == 1 || Input.GetAxis("Vertical") == -1) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
         {
-            _currentSpeed += momentumIncrease;
+            if(boost > 0.5f && _currentSpeed < maxDriveSpeed)
+            {
+                _currentSpeed += momentumIncrease;
+            }
+            else if (boost <= 0.5f && _currentSpeed > midDriveSpeed)
+            {
+                _currentSpeed -= momentumIncrease;
+            }
         }
         else if((Input.GetAxis("Vertical") == 1 || Input.GetAxis("Vertical") == -1) && !(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && _currentSpeed > midDriveSpeed)
         {
@@ -142,6 +157,17 @@ public class Player_Movement : MonoBehaviour
             _currentSpeed -= momentumIncrease;
         }
 
+        // Boost variables
+        if (boost >= 0.5f && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
+        {
+            boost -= boostConsumptionRate;
+        }
+        else if (boost < boostLimit && !(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
+        {
+            boost += boostConsumptionRate;
+        }
+
+        // Raycast whether play is on flat ground
         RaycastHit hit = new RaycastHit();
         Ray raycastDown = new Ray(transform.position, -transform.up);
 
@@ -152,7 +178,6 @@ public class Player_Movement : MonoBehaviour
                 onSteepSlope = false;
                 hitNormal = new Vector3(0, 1, 0);
                 grounded = true;
-
             }
         }
 
@@ -165,14 +190,29 @@ public class Player_Movement : MonoBehaviour
                 takeFallDamage = false;
 
                 // Input and AddForce for JUMP
-                if (Input.GetKey(KeyCode.Space) && !onSteepSlope)
+                if(!onSteepSlope)
                 {
-                    _CCMovement.y = jumpHeight;
+                    if (Input.GetKey(KeyCode.Space))
+                    {
+                        _CCMovement.y = jumpHeight;
 
-                    grounded = false;
+                        grounded = false;
+                    }
+
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        GM_Audio.PlaySound(audioSource, "Jump");
+                    }
                 }
 
-                if(tankControls)
+                // Transform player upwards while within a geyser burst
+                if(onGeyser)
+                {
+                    _CCMovement.y += geyserBurstElevation;
+                }
+
+                // Modify passed values for movement depending on active state of tank controls
+                if (tankControls)
                 {
                     // Rotate Rover direction with input
                     transform.Rotate(0, _rotation, 0);
@@ -182,7 +222,7 @@ public class Player_Movement : MonoBehaviour
                     transform.rotation = new Quaternion(0, 0, 0, 0);
                 }
 
-                // Finalize Movement
+                // Finalize Movement values for grounded state
                 CCMovementControl(_currentSpeed);
                 break;
 
@@ -192,7 +232,6 @@ public class Player_Movement : MonoBehaviour
                 if (_CCMovement.y > (jumpHeight / 2) && !Input.GetKey(KeyCode.Space))
                 {
                     _CCMovement.y = 0f;
-
                 }
 
                 // Check for fall damage
@@ -204,9 +243,12 @@ public class Player_Movement : MonoBehaviour
                     transform.Rotate(0, _rotation * airSpeedDivision, 0);
                 }
 
+                // Finalize Movement values for airborn state
                 CCMovementControl(_currentSpeed * airSpeedDivision);
                 break;
         }
+        // Driving SFX based on rovers speed
+        audioSource.pitch = _currentSpeed / 10;
     }
 
     // Method to encompass getting input and using CC to move object
@@ -241,7 +283,8 @@ public class Player_Movement : MonoBehaviour
         {
             onSteepSlope = false;
         }
-
+        
+        // Translate object opposite to current slope
         if (onSteepSlope)
         {
             _CCMovement.x += (1f - hitNormal.y) * hitNormal.x * (1f - slideFriction);
@@ -288,83 +331,4 @@ public class Player_Movement : MonoBehaviour
     {
         hitNormal = hit.normal;
     }
-
-    // Debugging collision gizmo
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position -transform.up * 2f, 1f);
-    }
-    // CODE ON HAITUS
-
-    /*
-    // Return if positioned on a slope
-    private bool OnSteepSlope()
-    {
-        _slopeCastDirection = transform.forward;
-
-        RaycastHit hit = new RaycastHit();
-        Ray raycastForward = new Ray(transform.position, _slopeCastDirection);
-        Ray raycastBack = new Ray(transform.position, -_slopeCastDirection);
-
-        if (Physics.SphereCast(raycastForward, slopeCastRadius, out hit, slopeCastDistance))
-        {
-            Vector3 slope = hit.normal;
-            _slopeCastHit = hit;
-
-            if ((slope.x > 0.6f || slope.x < -0.6f || slope.z > 0.6f || slope.z < -0.6f) && !hit.collider.isTrigger)
-            {
-                //onSteepSlope = true;
-                return true;
-            }
-        }
-        else if (Physics.SphereCast(raycastBack, slopeCastRadius, out hit, slopeCastDistance))
-        {
-            Vector3 slope = hit.normal;
-            _slopeCastHit = hit;
-
-            if (slope.x > 0.6f || slope.x < -0.6f || slope.z > 0.6f || slope.z < -0.6f)
-            {
-                //onSteepSlope = true;
-                return true;
-            }
-        }
-
-        //onSteepSlope = false;
-        return false;
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Debug.DrawLine(transform.position, transform.position + _slopeCastDirection * _slopeCastHit.distance);
-        Gizmos.DrawWireSphere(transform.position + _slopeCastDirection * _slopeCastHit.distance, slopeCastRadius);
-        Gizmos.DrawWireSphere(transform.position + -_slopeCastDirection * _slopeCastHit.distance, slopeCastRadius);
-    }
-
-
-    // Lock Rigidbody constraints while using Character Controller. Only turned false when sliding down slope.
-    public void LockConstraints(bool lockedConstraints)
-    {
-        switch(lockedConstraints)
-        {
-            case true:
-                // Freeze constraints so that Character Controller overrides phyhsics
-
-                CC.enabled = true;
-                RBclass.enabled = false;
-                RB.constraints = RigidbodyConstraints.FreezeAll;
-                RB.useGravity = false;
-
-                break;
-            case false:
-
-                CC.enabled = false;
-                RBclass.enabled = true;
-                RB.constraints = RigidbodyConstraints.FreezeRotation;
-                RB.useGravity = true;
-                break;
-        }
-    }
-    */
 }

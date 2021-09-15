@@ -37,7 +37,7 @@ public class MiniGame_PIXL_VirtualCursor : MonoBehaviour
 
         if (collision.gameObject.tag == "MazeEnd")
         {
-            parent.Exit();
+            parent.EditPIXLScreens(1);
         }
     }  
 }
