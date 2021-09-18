@@ -17,6 +17,7 @@ public class MiniGame_Drill : MonoBehaviour
     public float failTextTimer;
     private float timer;
     private float DrilltimeIteration;
+    private bool PointerDown = true;
  
     // Start is called before the first frame update
     void Start()
@@ -33,9 +34,7 @@ public class MiniGame_Drill : MonoBehaviour
         {
             failText.SetActive(false);
         }
-        if (ButtonActive.OnPointerDown(PointerEventData.Equals(DrilltimeIteration)) {
 
-        }
         {
             if (Time.time > DrilltimeIteration)
             {
