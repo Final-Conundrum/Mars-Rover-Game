@@ -1,26 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class MiniGame_Drill : MonoBehaviour
 {
     // This script runs the drill minigame
 
-
-
     public static bool completed = false;
-    public MiniGame_Drill ButtonActive;
-    public float SetTime;
-
+    public Button ButtonActive;
+    public float DrillTime = 0f;
+    public float WinTime = 10f;
+    public float CoolDownTime = 2f;
     public GameObject failText;
     public float failTextTimer;
-    public float DrillTimer;
-    public float timer;
-
+    private float timer;
+    private float DrilltimeIteration;
+ 
     // Start is called before the first frame update
     void Start()
     {
-        StartMiniGame();
+        Cursor.visible = true;
+        completed = false;
+
     }
 
     // Update is called once per frame
@@ -30,35 +33,47 @@ public class MiniGame_Drill : MonoBehaviour
         {
             failText.SetActive(false);
         }
+        if (ButtonActive.OnPointerDown(PointerEventData.Equals(DrilltimeIteration)) {
+
+        }
+        {
+            if (Time.time > DrilltimeIteration)
+            {
+                DrillTime++;
+                DrilltimeIteration = Time.time + 1f;
+            }
+        }
+        WinMiniGame();
     }
 
-
-    // Play Mini-game
-    public void StartMiniGame()
+    // Win
+    public void WinMiniGame()
     {
-        DrillTimer = SetTime;
-        SetTime = 10f;
-        
-        completed = true;
+        if (DrillTime >= WinTime)
+        {
+            Exit();
+        }
+     
     }
-    // Failed
-    public void FailMiniGame()
+    // CoolDown
+   public void CoolDown()
     {
-        if SetTime => 10f;
-        Destroy(this.gameObject);
-        else{
-            if SetTimer <= 2f;
-            Destroy(this.gameObject);
+        CoolDownTime = Random.Range(0f, 10f);
+        {
+            if (Time.time == CoolDownTime)
+            {
+                DrillTime--;
+                DrilltimeIteration = Time.time - 1f;
+                failText.SetActive(true);
+            }
         }
     }
+    
     // End mini-game and display mineral analysis
     public void Exit()
     {
         Time.timeScale = 1;
-        completed = true;
-        Cursor.visible = true;
         GUI_MineralAnalysis.Display(true);
-
         Destroy(this.gameObject);
     }
 }
