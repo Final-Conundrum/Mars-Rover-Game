@@ -7,6 +7,7 @@ public class MiniGame_Systems : MonoBehaviour
     // Attached Mini-game prefabs
     public GameObject[] GameObject_PIXL;
     public static GameObject[] Static_PIXL;
+    public GameObject GameObject_RIMFAX;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +26,7 @@ public class MiniGame_Systems : MonoBehaviour
 
     public void MiniGame_RIMFAX()
     {
-
+        Instantiate(GameObject_RIMFAX);
     }
 
     public void MiniGame_DRILL()
