@@ -160,7 +160,7 @@ public class Player_Collision : MonoBehaviour
         }
 
         // Disable prompt after leaving mineral
-        if (c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar" || c.gameObject.tag == "Random")
+        if (c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar" || c.gameObject.tag == "Random" || c.gameObject.tag == "RIMFAX")
         {
             GUI_HUD.staticPrompt.gameObject.SetActive(false);
         }

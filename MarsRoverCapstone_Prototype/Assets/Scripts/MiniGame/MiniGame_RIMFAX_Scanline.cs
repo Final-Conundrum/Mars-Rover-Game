@@ -10,7 +10,7 @@ public class MiniGame_RIMFAX_Scanline : MonoBehaviour
     {
         if (other.gameObject.tag == "RIMFAX")
         {
-            Debug.Log("Scanline touched scanning point");
+            //Debug.Log("Scanline touched scanning point");
         }
     }
 

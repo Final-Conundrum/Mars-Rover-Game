@@ -33,6 +33,12 @@ public class MiniGame_RIMFAX : MonoBehaviour
         Cursor.visible = false;
         ResultPanel.SetActive(false);
         failText.SetActive(false);
+
+        // Sets randomized position of scan lines
+        for(int i = 0; i < scanningLines.Length; i++)
+        {
+            scanningLines[i].transform.position = new Vector3(Random.Range(ScanPointA.transform.position.x, ScanPointB.transform.position.x), ScanPointA.transform.position.y, ScanPointA.transform.position.z);
+        }
     }
 
     // Update is called once per frame
