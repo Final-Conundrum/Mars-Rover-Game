@@ -109,19 +109,19 @@ public class GUI_infoPanel : MonoBehaviour
         
         FadePanel();
     }
-    string GenerateFact()
-    {
-        string fact;
-        //if triggered start cycling through the list, moving to the next variable every trigger
-        for (int i = 0; i < factStrings.Count; i++)
-        {
-            factText.SetText(factStrings[i]);
-            i++;
-            fact = factStrings[i];
-        }
+    //string GenerateFact()
+    //{
+    //    string fact;
+    //    //if triggered start cycling through the list, moving to the next variable every trigger
+    //    for (int i = 0; i < factStrings.Count; i++)
+    //    {
+    //        factText.SetText(factStrings[i]);
+    //        i++;
+    //        fact = factStrings[i];
+    //    }
         
-        return fact; //change to return new string
-    }
+    //    //return fact; //change to return new string
+    //}
 
     //call this to invoke coroutine
     public void FadePanel()
