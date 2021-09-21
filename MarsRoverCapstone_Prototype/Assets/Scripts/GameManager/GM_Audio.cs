@@ -13,8 +13,8 @@ public class GM_Audio : MonoBehaviour
     [Header("Player Rover Audio")]
     public GameObject player;
 
-    public AudioClip _drivingSFX, _jumpSFX, _landingSFX, _injurySFX, _deathSFX, _MGWinSFX, _scanSFX;
-    public static AudioClip drivingSFX, jumpSFX, landingSFX, injurySFX, deathSFX, MGWinSFX, scanSFX;
+    public AudioClip _drivingSFX, _jumpSFX, _landingSFX, _injurySFX, _deathSFX, _MGWinSFX, _scanSFX, _geyserSFX;
+    public static AudioClip drivingSFX, jumpSFX, landingSFX, injurySFX, deathSFX, MGWinSFX, scanSFX, geyserSFX;
 
     [Header("Background Audio")]
     public AudioSource _TTS_OpeningMessage;
@@ -32,6 +32,7 @@ public class GM_Audio : MonoBehaviour
         MGWinSFX = _MGWinSFX;
         scanSFX = _scanSFX;
         drivingSFX = _drivingSFX;
+        geyserSFX = _geyserSFX;
 
         TTS_OpeningMessage = _TTS_OpeningMessage;
     }
@@ -69,6 +70,9 @@ public class GM_Audio : MonoBehaviour
                 break;
             case "scanSFX":
                 audioSource.PlayOneShot(scanSFX);
+                break;
+            case "Geyser":
+                audioSource.PlayOneShot(geyserSFX);
                 break;
         }
     }
