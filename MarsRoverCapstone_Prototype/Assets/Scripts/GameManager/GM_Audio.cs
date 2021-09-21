@@ -14,8 +14,8 @@ public class GM_Audio : MonoBehaviour
 
     public GameObject player;
 
-    public AudioClip _drivingSFX, _drivingFastSFX, _jumpSFX, _landingSFX, _injurySFX, _deathSFX;
-    public static AudioClip drivingSFX, drivingFastSFX, jumpSFX, landingSFX, injurySFX, deathSFX;
+    public AudioClip _drivingSFX, _jumpSFX, _landingSFX, _injurySFX, _deathSFX, _MGWinSFX, _scanSFX;
+    public static AudioClip drivingSFX, jumpSFX, landingSFX, injurySFX, deathSFX, MGWinSFX, scanSFX;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +25,9 @@ public class GM_Audio : MonoBehaviour
         landingSFX = _landingSFX;
         injurySFX = _injurySFX;
         deathSFX = _deathSFX;
+        MGWinSFX = _MGWinSFX;
+        scanSFX = _scanSFX;
+        drivingSFX = _drivingSFX;
     }
 
     public static void PlaySound(AudioSource audioSource, string soundName)
@@ -42,6 +45,12 @@ public class GM_Audio : MonoBehaviour
                 break;
             case "Death":
                 audioSource.PlayOneShot(deathSFX);
+                break;
+            case "MGWin":
+                audioSource.PlayOneShot(MGWinSFX);
+                break;
+            case "scanSFX":
+                audioSource.PlayOneShot(scanSFX);
                 break;
         }
     }

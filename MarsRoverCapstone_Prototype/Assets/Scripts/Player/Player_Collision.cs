@@ -37,9 +37,11 @@ public class Player_Collision : MonoBehaviour
             }
         }
 
-        if(c.gameObject.tag == "Ground")
+        if (c.gameObject.tag == "Ground")
         {
-            GM_Audio.StopSound(PM.audioSource);
+            //GM_Audio.StopSound(PM.audioSource);
+            PM.audioSource.clip = GM_Audio.drivingSFX;
+            PM.audioSource.Play();
         }
 
         if (c.gameObject.tag == "Hazard")
@@ -56,6 +58,12 @@ public class Player_Collision : MonoBehaviour
             Player_Movement.coyoteTime = Time.time + PM._coyoteTime;
             Player_Movement.grounded = true;
             jumpingFromGeyser = false;
+
+            if(!PM.audioSource.isPlaying)
+            {
+                PM.audioSource.clip = GM_Audio.drivingSFX;
+                PM.audioSource.Play();
+            }
         }
     }
 

@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class MiniGame_RIMFAX : MonoBehaviour
 {
+    private AudioSource audioSource => GetComponent<AudioSource>();
+
     // Variables for scan line
     public GameObject scanline;
     public float scanlineSpeed;
@@ -54,6 +56,8 @@ public class MiniGame_RIMFAX : MonoBehaviour
                 }
                 else
                 {
+                    GM_Audio.PlaySound(audioSource, "Scan");
+
                     currentTarget = "B";
                 }
                 
@@ -66,6 +70,8 @@ public class MiniGame_RIMFAX : MonoBehaviour
                 else
                 {
                     currentTarget = "A";
+                    GM_Audio.PlaySound(audioSource, "Scan");
+
                 }
                 break;
         }
@@ -84,6 +90,8 @@ public class MiniGame_RIMFAX : MonoBehaviour
         {
             // Hide scan maze and display info about the analysis screen
             case 1:
+                GM_Audio.PlaySound(audioSource, "MGWin");
+
                 ResultPanel.SetActive(true);
                 scanline.gameObject.SetActive(false);
                 Cursor.visible = true;
@@ -112,6 +120,8 @@ public class MiniGame_RIMFAX : MonoBehaviour
     // End mini-game and display scan
     public void Exit()
     {
+        GM_Audio.PlaySound(audioSource, "MGWin");
+
         Time.timeScale = 1;
         Cursor.visible = true;
 
