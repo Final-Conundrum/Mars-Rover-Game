@@ -73,6 +73,7 @@ public class GUI_MineralAnalysis : MonoBehaviour
             GUI_PauseMenu.pausedGame = false;
 
             static_analysisScreen.SetActive(false);
+            Physical_Inventory.AddToInventory();
         }
     }
 

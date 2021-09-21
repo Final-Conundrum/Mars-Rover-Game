@@ -23,6 +23,8 @@ public class GUI_HUD : MonoBehaviour
     public Image boosterSliderColour;
 
     // UI Elements
+    public GameObject playerHUD;
+
     public GameObject info_panel;
     public GameObject chooseControlsPanel;
 
@@ -33,8 +35,8 @@ public class GUI_HUD : MonoBehaviour
     public static TMP_Text staticPrompt;
 
     // Reusable colour values
-    private Color green = new Color(0, 255f, 0, 50f);
-    private Color red = new Color(255f, 0, 0, 50f);
+    private Color greenBoost = new Color(0f, 150f, 0f, 0.6f);
+    private Color redBoost = new Color(255f, 0, 0, 0.6f);
 
     // Start is called before the first frame update
     void Start()
@@ -53,11 +55,7 @@ public class GUI_HUD : MonoBehaviour
 
             info_panel.SetActive(true);
 
-            health.gameObject.SetActive(false);
-            elevation.gameObject.SetActive(false);
-
-            inventory.SetActive(false);
-            objectives.SetActive(false);
+            playerHUD.SetActive(false);
         }
 
         staticPrompt = mockupPrompt;
@@ -78,34 +76,36 @@ public class GUI_HUD : MonoBehaviour
         // Update Boost slider
         if(PM.boost > 0.5f) 
         {
-            boostSliderHandle.color = Color.green;
-            boosterSliderColour.color = green;
+            //boostSliderHandle.color = Color.green;
+            boosterSliderColour.color = greenBoost;
         }
         else
         {
-            boostSliderHandle.color = Color.red;
-            boosterSliderColour.color = red;
+            //boostSliderHandle.color = Color.red;
+            boosterSliderColour.color = redBoost;
         }
 
         boostSlider.value = PM.boost;
 
+        /*
         // Update Elevation information and fall damge
         elevation.text = "Ground Dist.: " + Player_Movement.elevation;
         elevationSlider.value = Player_Movement.elevation;
 
         if(elevationSlider.value < PM.fallDamageHeight)
         {
-            elevationSliderHandle.color = green;
+            elevationSliderHandle.color = greenBoost;
         }
         else
         {
-            elevationSliderHandle.color = red;
-        }
+            elevationSliderHandle.color = redBoost;
+        }*/
         FallDamageCheck();
     }
 
     public void FallDamageCheck()
     {
+        /*
         if (PM.takeFallDamage == false)
         {
             elevationSliderColour.color = green;
@@ -113,7 +113,7 @@ public class GUI_HUD : MonoBehaviour
         else
         {
             elevationSliderColour.color = red;
-        }
+        }*/
     }
 
     // Close Learning Panel and Activate HUD
@@ -126,11 +126,9 @@ public class GUI_HUD : MonoBehaviour
         GUI_PauseMenu.pausedGame = false;
 
         info_panel.SetActive(false);
+        chooseControlsPanel.SetActive(false);
 
-        inventory.SetActive(true);
-        objectives.SetActive(true);
-        health.gameObject.SetActive(true);
-        elevation.gameObject.SetActive(true);
+        playerHUD.SetActive(true);
     }
 
     public void ChooseControls(bool tankControls)

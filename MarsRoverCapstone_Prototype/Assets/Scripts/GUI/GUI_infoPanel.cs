@@ -11,15 +11,26 @@ using TMPro;
  **/
 public class GUI_infoPanel : MonoBehaviour
 {
-    
+    //static variables
     public static GameObject INFO_PANEL;
     public static TMP_Text INFO_TEXT;
     public static GameObject PANEL_PARENT;
+    public static GameObject FACT_PANEL;
+    public static TMP_Text FACT_TEXT;
+
+    //Game Objects
     public GameObject infoPanel;
     public GameObject parentPanel;
     public CanvasGroup _canvasGroup;
     Image panelImage;
     public TMP_Text infoText;
+    public GameObject factPanel;
+    public TMP_Text factText;
+
+    //other
+    public bool isWarning; //This will help determine which panels should self destruct after popping up. (ensure to destroy game object trigger too)
+    public List<string> factStrings; 
+    public string defaultFact = "Perseverance can only move 152 meters per hour!";
 
     //coroutine variables
     public float maxCount = 10f;
@@ -38,13 +49,21 @@ public class GUI_infoPanel : MonoBehaviour
         INFO_PANEL = infoPanel;
         INFO_TEXT = infoText;
         PANEL_PARENT = parentPanel;
+        FACT_PANEL = factPanel;
+        FACT_TEXT = factText;
         infoPanel.SetActive(false);
+        factPanel.SetActive(false);
+        if(factStrings.Count == 0)
+        {
+            factStrings.Add(defaultFact);
+        }
     }
 
-    public void CheckPointMessage() //Dallas has a function for setting checkpoint- ask if he wants same fade out on that. 
+    public void CheckPointMessage() 
     {
         infoPanel.SetActive(true);
         infoText.text = "> Be advised that on your journey you will encounter many hazrads.";
+        isWarning = true;
         FadePanel();
     }
 
@@ -58,28 +77,53 @@ public class GUI_infoPanel : MonoBehaviour
     public void ElevationWarning()
     {
         infoPanel.SetActive(true);
-        infoText.text = "Warning! You may take damage if you fall from this height. n Be careful!";
+        isWarning = true;
+        infoText.text = "> Warning! You may take damage if you fall from this height. n Be careful!";
         
     }
 
     public void FeldsparText()
     {
         infoPanel.SetActive(true);
-        infoText.text = "Attention! You have collected: Feldspar";
+        infoText.text = "> You have collected: Feldspar";
        
     }
 
     public void DamageWarning()
     {
-
+        isWarning = true;
     }
 
     public void DustDevilNotification()
     {
         infoPanel.SetActive(true);
+        isWarning = true;
         infoText.text = "Warning: Martain dust can often settle on machinery and cause damage. \n It would be best to avoid it.";
         FadePanel();
     }
+
+    public void ActivateFactPanel()
+    {
+        infoPanel.SetActive(false); //if this works, will need to put fact panel as its own thing
+        factPanel.SetActive(true);
+        
+        FadePanel();
+    }
+
+    /*
+    string GenerateFact()
+    {
+        string fact;
+        //if triggered start cycling through the list, moving to the next variable every trigger
+        for (int i = 0; i < factStrings.Count; i++)
+        {
+            factText.SetText(factStrings[i]);
+            i++;
+            fact = factStrings[i];
+        }
+        
+        return fact; //change to return new string
+    }*/
 
     //call this to invoke coroutine
     public void FadePanel()
@@ -96,46 +140,8 @@ public class GUI_infoPanel : MonoBehaviour
     IEnumerator FadeCanvasGroup()
     {
         infoPanel.SetActive(false);
-        
-        //while(count < maxCount)
-        //{
-        //    float valueToReduce = 0.1f;
-        //    _canvasGroup.alpha = currentAlpha - valueToReduce;
-        //    count++;
-        //    Debug.Log(count);
-        //}
+        factPanel.SetActive(false);
         yield return null;
-    }
-  
-
-    //IEnumerator FadeOut()//eventually set Opacity value to 0 bit by bit, will be able to do this for fade in also.
-    //{
-    //    yield return new WaitForSeconds(5f);
-    //    infoPanel.SetActive(false);
-    //}
-
-    //public void Fade()
-    //{
-    //    var canvGroup = parentPanel.GetComponent<CanvasGroup>();
-    //    //Toggle the end value based on the faded state
-    //  StartCoroutine(StartFade(canvGroup, canvGroup.alpha, isFaded ? 1 : 0));
-    //    Debug.Log("Coroutine Called");
-    //    isFaded = !isFaded;
-    //}
-    //Reduce the alpha value of canvas groud to get the desired 'fade' effect
-
-    //IEnumerator StartFade(CanvasGroup canvGroup, float start, float end) // potentially have this moved to another script
-    //{
-    //    float counter = 0f;
-    //    while(counter < duration)
-    //    {
-    //        counter += Time.deltaTime;
-    //        canvGroup.alpha = Mathf.Lerp(start, end, counter / duration);
-            
-    //    }
-    //    yield return null;
-    //    Debug.Log("Coroutine ended");
-    //}
-
+    }  
 
 }

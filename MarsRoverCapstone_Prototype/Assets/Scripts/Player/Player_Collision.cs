@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player_Collision : MonoBehaviour
 {
-    Player_Movement _Player_Movement => GetComponent<Player_Movement>();
+    Player_Movement PM => GetComponent<Player_Movement>();
     //Player_Stats _Player_Stats => GetComponent<Player_Stats>();
     Rigidbody RB => GetComponent<Rigidbody>();
     MiniGame_Systems MiniGame => FindObjectOfType<MiniGame_Systems>();
@@ -26,9 +26,9 @@ public class Player_Collision : MonoBehaviour
     private void OnCollisionEnter(Collision c)
     {
         // Checks for ground collision and whether to damage player with fall damage
-        if (c.gameObject.tag == "Ground" && _Player_Movement.takeFallDamage && !jumpingFromGeyser)
+        if (c.gameObject.tag == "Ground" && PM.takeFallDamage && !jumpingFromGeyser)
         {
-            if(transform.position.y <= exitPosY - _Player_Movement.fallDamageHeight)
+            if(transform.position.y <= exitPosY - PM.fallDamageHeight)
             {
                 Player_Stats.TakeDamage(30);
                 Player_Movement.grounded = true;
@@ -48,7 +48,7 @@ public class Player_Collision : MonoBehaviour
         if (c.gameObject.tag == "Ground")
         {
             // Handle Coyote time
-            Player_Movement.coyoteTime = Time.time + _Player_Movement._coyoteTime;
+            Player_Movement.coyoteTime = Time.time + PM._coyoteTime;
             Player_Movement.grounded = true;
             jumpingFromGeyser = false;
         }
@@ -67,7 +67,10 @@ public class Player_Collision : MonoBehaviour
     {
         if (c.gameObject.tag == "Geyser")
         {
-            _Player_Movement.jumpHeight = _Player_Movement.geyserJumpHeight;
+            //PM.jumpHeight = PM.geyserJumpHeight;
+            //PM._CCMovement.y = PM.geyserJumpHeight;
+            PM.onGeyser = true;
+
             jumpingFromGeyser = true;
         }
 
@@ -95,11 +98,18 @@ public class Player_Collision : MonoBehaviour
         if(c.gameObject.tag == "SafeZone")
         {
             //InfoPanel.CheckPointText();
+            GUI_HUD.staticPrompt.gameObject.SetActive(true);
+            GUI_HUD.staticPrompt.text = "Press 'E' to set Safe Zone...";
         }
 
         if (c.gameObject.tag == "DustNotification")
         {
             InfoPanel.DustDevilNotification();
+        }
+        if (c.gameObject.CompareTag("FactTrigger"))
+        {
+            //  InfoPanel.factText.SetText(InfoPanel.factStrings[0]);
+            InfoPanel.ActivateFactPanel();
         }
     }
 
@@ -116,18 +126,35 @@ public class Player_Collision : MonoBehaviour
                 c.gameObject.SetActive(false);
             }
         }
+
+        if (c.gameObject.tag == "Geyser")
+        {
+            //PM.jumpHeight = PM.geyserJumpHeight;
+            //PM._CCMovement.y = PM._CCMovement.y + 10f;
+            Player_Movement.grounded = true;
+            PM.onGeyser = true;
+            jumpingFromGeyser = true;
+        }
     }
 
     private void OnTriggerExit(Collider c)
     { 
         // Reset jump to standard after leaving geyser
+        
         if (c.gameObject.tag == "Geyser")
         {
-            _Player_Movement.jumpHeight = 0.5f;
+            //PM.jumpHeight = 0.5f;
+            PM.onGeyser = false;
+            Player_Movement.grounded = false;
         }
 
         // Disable prompt after leaving mineral
         if (c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar" || c.gameObject.tag == "Random")
+        {
+            GUI_HUD.staticPrompt.gameObject.SetActive(false);
+        }
+
+        if(c.gameObject.tag == "SafeZone")
         {
             GUI_HUD.staticPrompt.gameObject.SetActive(false);
         }

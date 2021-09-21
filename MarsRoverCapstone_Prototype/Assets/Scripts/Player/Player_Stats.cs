@@ -11,7 +11,10 @@ public class Player_Stats : MonoBehaviour
      * and then again right after.
     */
     public static GUI_DeathScreen DeathScreen => FindObjectOfType<GUI_DeathScreen>();
+    public AudioSource _audioSource => GetComponent<AudioSource>();
+    public static AudioSource audioSource;
 
+    // Standard player health values
     public static int health;
     public static float damage;
     public static GameObject hazard;
@@ -22,6 +25,8 @@ public class Player_Stats : MonoBehaviour
     {
         health = 100;
         player = this.gameObject;
+
+        audioSource = _audioSource;
     }
 
     //Deals damage to the player based on the passed in damage amount. 
@@ -31,12 +36,14 @@ public class Player_Stats : MonoBehaviour
         health = newHealth;
 
         healthCheck();
+
+        GM_Audio.PlaySound(audioSource, "Injury");
     }
 
     //Checks the players current health
     private static void healthCheck()
     {
-        if (health == 0)
+        if (health <= 0)
         {
             Destroy(player);
             DeathScreen.Display();

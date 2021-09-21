@@ -61,7 +61,8 @@ public class Player_Movement : MonoBehaviour
     [Header("Jump and Midair Values")]
     // Jump variables, the Fall variables modify the speed in which the rover drops after the jump to give it weight
     public float jumpHeight = 0.5f;
-    public float geyserJumpHeight = 20f;
+    public float geyserBurstElevation = 0.15f;
+    public bool onGeyser = false;
 
     public float _coyoteTime = 0.2f;
     public static float coyoteTime;
@@ -167,7 +168,7 @@ public class Player_Movement : MonoBehaviour
         }
 
         // Raycast whether play is on flat ground
-            RaycastHit hit = new RaycastHit();
+        RaycastHit hit = new RaycastHit();
         Ray raycastDown = new Ray(transform.position, -transform.up);
 
         if (Physics.SphereCast(raycastDown, 0.6f, out hit, transform.localScale.y / 2))
@@ -189,16 +190,29 @@ public class Player_Movement : MonoBehaviour
                 takeFallDamage = false;
 
                 // Input and AddForce for JUMP
-                if (Input.GetKey(KeyCode.Space) && !onSteepSlope)
+                if(!onSteepSlope)
                 {
-                    _CCMovement.y = jumpHeight;
+                    if (Input.GetKey(KeyCode.Space))
+                    {
+                        _CCMovement.y = jumpHeight;
 
-                    grounded = false;
+                        grounded = false;
+                    }
 
-                    GM_Audio.PlaySound(audioSource, "Jump");
+                    if (Input.GetKeyDown(KeyCode.Space))
+                    {
+                        GM_Audio.PlaySound(audioSource, "Jump");
+                    }
                 }
 
-                if(tankControls)
+                // Transform player upwards while within a geyser burst
+                if(onGeyser)
+                {
+                    _CCMovement.y += geyserBurstElevation;
+                }
+
+                // Modify passed values for movement depending on active state of tank controls
+                if (tankControls)
                 {
                     // Rotate Rover direction with input
                     transform.Rotate(0, _rotation, 0);
@@ -208,7 +222,7 @@ public class Player_Movement : MonoBehaviour
                     transform.rotation = new Quaternion(0, 0, 0, 0);
                 }
 
-                // Finalize Movement
+                // Finalize Movement values for grounded state
                 CCMovementControl(_currentSpeed);
                 break;
 
@@ -229,11 +243,11 @@ public class Player_Movement : MonoBehaviour
                     transform.Rotate(0, _rotation * airSpeedDivision, 0);
                 }
 
+                // Finalize Movement values for airborn state
                 CCMovementControl(_currentSpeed * airSpeedDivision);
                 break;
         }
-
-        // Driving SFX
+        // Driving SFX based on rovers speed
         audioSource.pitch = _currentSpeed / 10;
     }
 

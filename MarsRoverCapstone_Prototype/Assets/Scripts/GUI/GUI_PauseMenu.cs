@@ -7,9 +7,13 @@ using UnityEngine.SceneManagement;
 public class GUI_PauseMenu : MonoBehaviour
 {
     private GM_Checkpoint _GM_Checkpoint => FindObjectOfType<GM_Checkpoint>();
+    private GUI_HUD HUD => GetComponent<GUI_HUD>();
 
     public GameObject PauseMenu;
     public GameObject EndOfLevelMenu;
+    public GameObject DataBaseMenu;
+    public GameObject DataBaseReturnButton;
+
     public static bool pausedGame = false;
 
     // Start is called before the first frame update
@@ -17,6 +21,7 @@ public class GUI_PauseMenu : MonoBehaviour
     {
         PauseMenu.SetActive(false);
         EndOfLevelMenu.SetActive(false);
+        DataBaseMenu.SetActive(false);
     }
 
     // Update is called once per frame
@@ -29,6 +34,7 @@ public class GUI_PauseMenu : MonoBehaviour
                 Cursor.visible = true;
                 Time.timeScale = 0;
                 PauseMenu.SetActive(true);
+                HUD.playerHUD.SetActive(false);
                 pausedGame = true;
             }
             else if(pausedGame)
@@ -44,8 +50,9 @@ public class GUI_PauseMenu : MonoBehaviour
         Time.timeScale = 1;
 
         PauseMenu.SetActive(false);
-        pausedGame = false;
+        HUD.playerHUD.SetActive(true);
 
+        pausedGame = false;
     }
 
     public void QuitGame()
@@ -58,5 +65,11 @@ public class GUI_PauseMenu : MonoBehaviour
         _GM_Checkpoint.savedAtSafeZone = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1;
+    }
+
+    public void OpenDataBase(bool open)
+    {
+        DataBaseMenu.SetActive(open);
+        DataBaseReturnButton.SetActive(open);
     }
 }
