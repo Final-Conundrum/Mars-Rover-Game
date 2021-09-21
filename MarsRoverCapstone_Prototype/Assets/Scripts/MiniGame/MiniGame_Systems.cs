@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class MiniGame_Systems : MonoBehaviour
 {
+    public static bool playingMinigame = false;
+
     // Attached Mini-game prefabs
     public GameObject[] GameObject_PIXL;
     public static GameObject[] Static_PIXL;
+    public GameObject GameObject_RIMFAX;
 
     // Start is called before the first frame update
     void Start()
@@ -21,10 +24,15 @@ public class MiniGame_Systems : MonoBehaviour
         int num = Random.Range(0, Static_PIXL.Length);
 
         Instantiate(Static_PIXL[num]);
+
+
+        playingMinigame = true;
     }
 
     public void MiniGame_RIMFAX()
     {
+        Instantiate(GameObject_RIMFAX);
+        playingMinigame = true;
 
     }
 

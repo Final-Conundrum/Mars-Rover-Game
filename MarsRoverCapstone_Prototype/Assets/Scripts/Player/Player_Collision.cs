@@ -37,6 +37,13 @@ public class Player_Collision : MonoBehaviour
             }
         }
 
+        if (c.gameObject.tag == "Ground")
+        {
+            //GM_Audio.StopSound(PM.audioSource);
+            PM.audioSource.clip = GM_Audio.drivingSFX;
+            PM.audioSource.Play();
+        }
+
         if (c.gameObject.tag == "Hazard")
         {
             Player_Stats.TakeDamage(10);
@@ -51,6 +58,12 @@ public class Player_Collision : MonoBehaviour
             Player_Movement.coyoteTime = Time.time + PM._coyoteTime;
             Player_Movement.grounded = true;
             jumpingFromGeyser = false;
+
+            if(!PM.audioSource.isPlaying)
+            {
+                PM.audioSource.clip = GM_Audio.drivingSFX;
+                PM.audioSource.Play();
+            }
         }
     }
 
@@ -87,12 +100,12 @@ public class Player_Collision : MonoBehaviour
 
             GUI_HUD.staticPrompt.gameObject.SetActive(true);
             GUI_HUD.staticPrompt.text = "Press 'E' to analyze with the PIXL camera...";
+        }
 
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                MiniGame.MiniGame_PIXL();
-                GUI_HUD.staticPrompt.gameObject.SetActive(false);
-            }
+        if(c.gameObject.tag == "RIMFAX")
+        {
+            GUI_HUD.staticPrompt.gameObject.SetActive(true);
+            GUI_HUD.staticPrompt.text = "Press 'E' to scan underground with RIMFAX...";
         }
 
         if(c.gameObject.tag == "SafeZone")
@@ -127,6 +140,17 @@ public class Player_Collision : MonoBehaviour
             }
         }
 
+        if (c.gameObject.tag == "RIMFAX")
+        {
+            // Open Mini-Game
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                MiniGame.MiniGame_RIMFAX();
+                GUI_HUD.staticPrompt.gameObject.SetActive(false);
+                c.gameObject.SetActive(false);
+            }
+        }
+
         if (c.gameObject.tag == "Geyser")
         {
             //PM.jumpHeight = PM.geyserJumpHeight;
@@ -149,7 +173,7 @@ public class Player_Collision : MonoBehaviour
         }
 
         // Disable prompt after leaving mineral
-        if (c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar" || c.gameObject.tag == "Random")
+        if (c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar" || c.gameObject.tag == "Random" || c.gameObject.tag == "RIMFAX")
         {
             GUI_HUD.staticPrompt.gameObject.SetActive(false);
         }

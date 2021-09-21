@@ -199,9 +199,11 @@ public class Player_Movement : MonoBehaviour
                         grounded = false;
                     }
 
-                    if (Input.GetKeyDown(KeyCode.Space))
+                    if (Input.GetKeyDown(KeyCode.Space) && !MiniGame_Systems.playingMinigame)
                     {
-                        GM_Audio.PlaySound(audioSource, "Jump");
+                        //GM_Audio.PlaySound(audioSource, "Jump");
+                        audioSource.clip = GM_Audio.jumpSFX;
+                        audioSource.Play();
                     }
                 }
 
@@ -232,6 +234,12 @@ public class Player_Movement : MonoBehaviour
                 if (_CCMovement.y > (jumpHeight / 2) && !Input.GetKey(KeyCode.Space))
                 {
                     _CCMovement.y = 0f;
+                }
+
+                if(Input.GetKeyUp(KeyCode.Space))
+                {
+                    audioSource.clip = GM_Audio.drivingSFX;
+
                 }
 
                 // Check for fall damage
@@ -305,8 +313,12 @@ public class Player_Movement : MonoBehaviour
             _CCMovement = new Vector3(flatMovement.x, _CCMovement.y, flatMovement.z);
         }
 
-        // Finalize Movement directions
-        CC.Move(_CCMovement);
+        // Interrupt movement operations if playing minigame
+        if(!MiniGame_Systems.playingMinigame)
+        {
+            // Finalize Movement directions
+            CC.Move(_CCMovement);
+        }
     }
 
     // Called by Player_Collision to apply Fall damage

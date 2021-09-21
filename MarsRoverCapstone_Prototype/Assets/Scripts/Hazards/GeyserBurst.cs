@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GeyserBurst : MonoBehaviour
 {
+    public AudioSource audioSource => GetComponent<AudioSource>();
+
     public GameObject geyserBurst;
 
     // Position object
@@ -44,7 +46,9 @@ public class GeyserBurst : MonoBehaviour
             timerBetweenBurst = Time.timeSinceLevelLoad + (_timerBetweenAdd + _timerDuringAdd);
 
             // Transform position of geyser
-            geyserBurst.transform.position = posA.position;       
+            geyserBurst.transform.position = posA.position;
+
+            GM_Audio.PlaySound(audioSource, "Geyser");
         }
 
         // Move position of geyser

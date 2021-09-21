@@ -19,6 +19,7 @@ public class CheckpointObject : MonoBehaviour
 
     // Find GameManager of checkpoints
     private GM_Checkpoint GM => FindObjectOfType<GM_Checkpoint>();
+    public AudioSource audioSource => GetComponent<AudioSource>();
 
     // Aesthetics of checkpoints
     public Canvas canvas;
@@ -84,6 +85,8 @@ public class CheckpointObject : MonoBehaviour
                 icon.gameObject.SetActive(false);
 
                 safeZoneInfo.text = "<< SAFE ZONE >> \n This is Perseverance's current Reboot area";
+
+                GM_Audio.PlaySound(audioSource, "MGWin");
             }
         }
     }
