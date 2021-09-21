@@ -45,4 +45,9 @@ public class GM_Audio : MonoBehaviour
                 break;
         }
     }
+
+    public static void StopSound(AudioSource audioSource)
+    {
+        audioSource.Stop();
+    }
 }

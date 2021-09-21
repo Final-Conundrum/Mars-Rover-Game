@@ -37,6 +37,11 @@ public class Player_Collision : MonoBehaviour
             }
         }
 
+        if(c.gameObject.tag == "Ground")
+        {
+            GM_Audio.StopSound(PM.audioSource);
+        }
+
         if (c.gameObject.tag == "Hazard")
         {
             Player_Stats.TakeDamage(10);

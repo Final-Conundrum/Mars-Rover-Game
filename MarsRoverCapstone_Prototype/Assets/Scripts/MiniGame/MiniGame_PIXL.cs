@@ -96,5 +96,7 @@ public class MiniGame_PIXL : MonoBehaviour
         GUI_MineralAnalysis.Display(true);
 
         Destroy(this.gameObject);
+        MiniGame_Systems.playingMinigame = false;
+
     }
 }

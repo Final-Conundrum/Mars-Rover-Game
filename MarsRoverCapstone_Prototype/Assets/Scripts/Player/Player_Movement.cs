@@ -305,8 +305,12 @@ public class Player_Movement : MonoBehaviour
             _CCMovement = new Vector3(flatMovement.x, _CCMovement.y, flatMovement.z);
         }
 
-        // Finalize Movement directions
-        CC.Move(_CCMovement);
+        // Interrupt movement operations if playing minigame
+        if(!MiniGame_Systems.playingMinigame)
+        {
+            // Finalize Movement directions
+            CC.Move(_CCMovement);
+        }
     }
 
     // Called by Player_Collision to apply Fall damage

@@ -116,5 +116,6 @@ public class MiniGame_RIMFAX : MonoBehaviour
         Cursor.visible = true;
 
         Destroy(this.gameObject);
+        MiniGame_Systems.playingMinigame = false;
     }
 }
