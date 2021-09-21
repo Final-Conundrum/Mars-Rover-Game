@@ -29,7 +29,7 @@ public class GUI_infoPanel : MonoBehaviour
 
     //other
     public bool isWarning; //This will help determine which panels should self destruct after popping up. (ensure to destroy game object trigger too)
-    public List<string> factStrings; 
+    public List<string> factStrings = new List<string>(); 
     public string defaultFact = "Perseverance can only move 152 meters per hour!";
 
     //coroutine variables
@@ -42,6 +42,14 @@ public class GUI_infoPanel : MonoBehaviour
        panelImage = infoPanel.GetComponent<Image>();
         panelImage.CrossFadeAlpha(1f, 0f, false);
         currentAlpha = _canvasGroup.alpha;
+
+        //Fill the list
+        factStrings.Add("Ingenuity is the name of the small helicopter that hitched a ride with Perseverance. It took its first flight on April 19th, 2021"); 
+        factStrings.Add("Perseverance cannot Jump.");
+        factStrings.Add(defaultFact);
+        factStrings.Add("Olympus Mons, located on Mars is the highest mountain and volcano\n in the ENTIRE solar system and is 24KM high.");
+        factStrings.Add("Sounds of wind on Mars have been recorded and can be found on SoundCloud");
+
     }
     // Start is called before the first frame update
     void Start()
@@ -104,24 +112,23 @@ public class GUI_infoPanel : MonoBehaviour
 
     public void ActivateFactPanel()
     {
-        infoPanel.SetActive(false); //if this works, will need to put fact panel as its own thing
+        infoPanel.SetActive(false);
         factPanel.SetActive(true);
         
         FadePanel();
     }
-    //string GenerateFact()
-    //{
-    //    string fact;
-    //    //if triggered start cycling through the list, moving to the next variable every trigger
-    //    for (int i = 0; i < factStrings.Count; i++)
-    //    {
-    //        factText.SetText(factStrings[i]);
-    //        i++;
-    //        fact = factStrings[i];
-    //    }
-        
-    //    //return fact; //change to return new string
-    //}
+     public void GenerateFact() //now to find a way to make sure we don't get duplicates 
+    {
+        for(int i = 0; i < factStrings.Count; i++)
+        {
+            int index = Random.Range(1, factStrings.Count + 1); //our 'random' number variable 
+            factText.text = factStrings[index];
+            i++;
+            Debug.Log("Currently printing fact: " + factStrings[index].ToString());
+        }
+       
+    }
+    
 
     //call this to invoke coroutine
     public void FadePanel()
