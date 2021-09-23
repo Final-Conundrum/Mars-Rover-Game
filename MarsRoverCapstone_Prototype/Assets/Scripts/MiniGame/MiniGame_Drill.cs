@@ -41,9 +41,18 @@ public class MiniGame_Drill : MonoBehaviour
                 DrillTime++;
                 DrilltimeIteration = Time.time + 1f;
             }
+            {
+                {
+                    if (Time.time == CoolDownTime)
+                    {
+                       CoolDown();
+                    }
+                }
+            }
         }
         WinMiniGame();
     }
+
 
     // Win
     public void WinMiniGame()
