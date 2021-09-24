@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+
 public class MiniGame_Drill : MonoBehaviour
 {
     // This script runs the drill minigame
@@ -17,7 +18,6 @@ public class MiniGame_Drill : MonoBehaviour
     public float failTextTimer;
     private float timer;
     private float DrilltimeIteration;
-    private bool PointerDown = true;
  
     // Start is called before the first frame update
     void Start()
