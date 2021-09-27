@@ -108,7 +108,7 @@ public class Player_Collision : MonoBehaviour
         {
             InfoPanel.GenerateFact();
             InfoPanel.ActivateFactPanel();
-            c.gameObject.SetActive(false);
+         //   c.gameObject.SetActive(false);
         }
     }
 
