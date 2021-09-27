@@ -49,6 +49,7 @@ public class GUI_infoPanel : MonoBehaviour
         factStrings.Add(defaultFact);
         factStrings.Add("Olympus Mons, located on Mars is the highest mountain and volcano\n in the ENTIRE solar system and is 24KM high.");
         factStrings.Add("Sounds of wind on Mars have been recorded and can be found on SoundCloud");
+        Debug.Log(factStrings.Count.ToString());
 
     }
     // Start is called before the first frame update
@@ -61,7 +62,8 @@ public class GUI_infoPanel : MonoBehaviour
         FACT_TEXT = factText;
         infoPanel.SetActive(false);
         factPanel.SetActive(false);
-        if(factStrings.Count == 0)
+
+        if (factStrings.Count == 0)
         {
             factStrings.Add(defaultFact);
         }
@@ -70,7 +72,7 @@ public class GUI_infoPanel : MonoBehaviour
     public void CheckPointMessage() 
     {
         infoPanel.SetActive(true);
-        infoText.text = "> Be advised that on your journey you will encounter many hazrads.";
+        infoText.text = "> You have reached a checkpoint! ";
         isWarning = true;
         FadePanel();
     }
@@ -121,7 +123,7 @@ public class GUI_infoPanel : MonoBehaviour
     {
         for(int i = 0; i < factStrings.Count; i++)
         {
-            int index = Random.Range(1, factStrings.Count + 1); //our 'random' number variable 
+            int index = Random.Range(1, factStrings.Count); //our 'random' number variable 
             factText.text = factStrings[index];
             i++;
             Debug.Log("Currently printing fact: " + factStrings[index].ToString());
