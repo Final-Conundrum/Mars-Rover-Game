@@ -100,8 +100,9 @@ public class MiniGame_PIXL : MonoBehaviour
         Cursor.visible = true;
         GUI_MineralAnalysis.Display(true);
 
-        Destroy(this.gameObject);
-        MiniGame_Systems.playingMinigame = false;
+        GM_Objectives.UpdateObjective("PIXL");
 
+        MiniGame_Systems.playingMinigame = false;
+        Destroy(this.gameObject);
     }
 }
