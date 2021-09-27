@@ -121,7 +121,7 @@ public class Player_Collision : MonoBehaviour
         }
         if (c.gameObject.CompareTag("FactTrigger"))
         {
-            //  InfoPanel.factText.SetText(InfoPanel.factStrings[0]);
+            InfoPanel.GenerateFact();//could make this return a string and then pass it into activateFactPanel? avoid so many public methods 
             InfoPanel.ActivateFactPanel();
         }
     }
