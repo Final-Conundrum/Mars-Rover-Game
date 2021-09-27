@@ -113,6 +113,7 @@ public class Player_Collision : MonoBehaviour
             //InfoPanel.CheckPointText();
             GUI_HUD.staticPrompt.gameObject.SetActive(true);
             GUI_HUD.staticPrompt.text = "Press 'E' to set Safe Zone...";
+            InfoPanel.CheckPointMessage();
         }
 
         if (c.gameObject.tag == "DustNotification")
@@ -121,8 +122,9 @@ public class Player_Collision : MonoBehaviour
         }
         if (c.gameObject.CompareTag("FactTrigger"))
         {
-            InfoPanel.GenerateFact();//could make this return a string and then pass it into activateFactPanel? avoid so many public methods 
+            InfoPanel.GenerateFact();
             InfoPanel.ActivateFactPanel();
+            c.gameObject.SetActive(false);
         }
     }
 
