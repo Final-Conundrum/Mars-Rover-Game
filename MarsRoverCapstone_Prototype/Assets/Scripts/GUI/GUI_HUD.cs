@@ -55,6 +55,7 @@ public class GUI_HUD : MonoBehaviour
             Cursor.visible = true;
             Time.timeScale = 0;
 
+            chooseControlsPanel.SetActive(true);
             info_panel.SetActive(true);
 
             playerHUD.SetActive(false);
