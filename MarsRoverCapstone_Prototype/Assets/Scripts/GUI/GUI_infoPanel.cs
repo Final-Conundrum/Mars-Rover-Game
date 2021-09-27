@@ -108,7 +108,7 @@ public class GUI_infoPanel : MonoBehaviour
     {
         infoPanel.SetActive(true);
         isWarning = true;
-        infoText.text = "Warning: Martain dust can often settle on machinery and cause damage. \n It would be best to avoid it.";
+        infoText.text = "> Martain dust can often settle on machinery and cause damage. \n It would be best to avoid it.";
         FadePanel();
     }
 
