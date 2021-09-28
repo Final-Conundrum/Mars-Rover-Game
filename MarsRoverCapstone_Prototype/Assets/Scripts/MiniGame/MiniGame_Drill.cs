@@ -44,6 +44,7 @@ public class MiniGame_Drill : MonoBehaviour
             {
                 {
                     if (Time.time == CoolDownTime)
+                        failText.SetActive(true);
                     {
                        CoolDown();
                     }
