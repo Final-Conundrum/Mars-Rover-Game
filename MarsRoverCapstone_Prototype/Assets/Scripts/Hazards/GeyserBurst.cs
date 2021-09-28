@@ -35,7 +35,7 @@ public class GeyserBurst : MonoBehaviour
     void Update()
     {
         // Spawn golf ball every timer check
-        if (Time.timeSinceLevelLoad > timerBetweenBurst)
+        if (Time.time > timerBetweenBurst)
         {
             geyserBurst.SetActive(true);
 
@@ -58,7 +58,7 @@ public class GeyserBurst : MonoBehaviour
         }
 
         // Despawn geyser burst
-        if (Time.timeSinceLevelLoad > timerDuringBurst)
+        if (Time.time > timerDuringBurst)
         {
             geyserBurst.SetActive(false);
 

@@ -5,6 +5,7 @@ using UnityEngine;
 public class DespawnOnTimer : MonoBehaviour
 {
     public bool returnToStart = true;
+    public bool ignoreIfRespawn = false;
     public float despawnTimer = 5f;
     private float _timer;
     private Vector3 spawnPoint;

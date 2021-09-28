@@ -30,7 +30,7 @@ public class Player_Collision : MonoBehaviour
         {
             if(transform.position.y <= exitPosY - PM.fallDamageHeight)
             {
-                Player_Stats.TakeDamage(30);
+                Player_Stats.TakeDamage(25);
                 Player_Movement.grounded = true;
 
                 Debug.Log(gameObject.name + ": Player_Collision, Player should take fall damage here...");
@@ -92,6 +92,17 @@ public class Player_Collision : MonoBehaviour
             Player_Stats.TakeDamage(10);
         }
 
+        if (c.gameObject.tag == "HazardRock" && PM.takeFallDamage)
+        {
+            if (transform.position.y <= exitPosY - PM.fallDamageHeight)
+            {
+                Player_Stats.TakeDamage(30);
+                Player_Movement.grounded = true;
+
+                Debug.Log(gameObject.name + ": Player_Collision, Player should take fall damage here from Hazardous Rock...");
+            }
+        }
+
         // Call Mini-Game script when interacting with mineral
         if (c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar" || c.gameObject.tag == "Random")
         {
@@ -113,16 +124,19 @@ public class Player_Collision : MonoBehaviour
             //InfoPanel.CheckPointText();
             GUI_HUD.staticPrompt.gameObject.SetActive(true);
             GUI_HUD.staticPrompt.text = "Press 'E' to set Safe Zone...";
+            InfoPanel.CheckPointMessage();
         }
 
         if (c.gameObject.tag == "DustNotification")
         {
             InfoPanel.DustDevilNotification();
         }
+
         if (c.gameObject.CompareTag("FactTrigger"))
         {
-            //  InfoPanel.factText.SetText(InfoPanel.factStrings[0]);
+            InfoPanel.GenerateFact();
             InfoPanel.ActivateFactPanel();
+         //   c.gameObject.SetActive(false);
         }
     }
 

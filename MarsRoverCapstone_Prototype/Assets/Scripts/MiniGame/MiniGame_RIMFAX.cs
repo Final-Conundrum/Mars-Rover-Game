@@ -125,7 +125,9 @@ public class MiniGame_RIMFAX : MonoBehaviour
         Time.timeScale = 1;
         Cursor.visible = true;
 
-        Destroy(this.gameObject);
+        GM_Objectives.UpdateObjective("RIMFAX");
+
         MiniGame_Systems.playingMinigame = false;
+        Destroy(this.gameObject);
     }
 }
