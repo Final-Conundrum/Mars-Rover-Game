@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     private GM_Audio _GM_Audio => GetComponent<GM_Audio>();
 
     [SerializeField] public GameObject player;
+    public GameObject postProcessingVolume;
 
     // Passage of Time variables
     public bool usePassageOfTime = true;
@@ -52,6 +53,8 @@ public class GameManager : MonoBehaviour
     {
         //Set Cursor to not be visible
         //Cursor.visible = false;
+
+        postProcessingVolume.SetActive(Settings.postProcessingActive);
     }
 
     // Update is called once per frame
@@ -61,7 +64,10 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Return))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }       
+        }
+
+        postProcessingVolume.SetActive(Settings.postProcessingActive);
+
     }
 
     // Collect variables and set the scene upon scene reload
@@ -115,6 +121,8 @@ public class GameManager : MonoBehaviour
 
                 _GM_Time.SetSceneLights(passTime);
             }
+
+            postProcessingVolume.SetActive(Settings.postProcessingActive);
         }
     }
 }
