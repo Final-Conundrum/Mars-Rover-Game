@@ -12,10 +12,17 @@ public class Mineral_Pick_Up : MonoBehaviour
 
     // Additions made by Dallas for prompts and info
     public TMP_Text mineralName;
+    public Canvas canvas;
 
     private void Start()
     {
         mineralName.enabled = false;
+    }
+
+    private void Update()
+    {
+        // Make canvas format to the camera position
+        canvas.transform.LookAt(GM_Checkpoint.playerCamera.transform);
     }
 
     private void OnTriggerEnter(Collider other)
