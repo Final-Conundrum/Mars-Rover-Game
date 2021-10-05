@@ -74,6 +74,9 @@ public class GM_Audio : MonoBehaviour
             case "Geyser":
                 audioSource.PlayOneShot(geyserSFX);
                 break;
+            case "Scan":
+                audioSource.PlayOneShot(scanSFX);
+                break;
         }
     }
 
