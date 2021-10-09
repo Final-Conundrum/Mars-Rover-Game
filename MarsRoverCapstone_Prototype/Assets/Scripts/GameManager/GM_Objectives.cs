@@ -5,23 +5,14 @@ using TMPro;
 
 public class GM_Objectives : MonoBehaviour
 {
-    public static string objectivePIXLString;
-    private int PIXLCurrent;
-    public static int _PIXLCurrent;
-    public int PIXLTotal;
-    public static int _PIXLTotal;
+    // String used for UI objective display
+    public static string objectivePIXLString, objectiveRIMFAXString, objectiveDrillString;
 
-    public static string objectiveRIMFAXString;
-    private int RIMFAXCurrent;
-    public static int _RIMFAXCurrent;
-    public int RIMFAXTotal;
-    public static int _RIMFAXTotal;
+    // Current completed minigames and total needed to finish
+    private int PIXLCurrent, RIMFAXCurrent, DrillCurrent;
+    public int PIXLTotal, RIMFAXTotal, DrillTotal;
 
-    public static string objectiveDrillString;
-    private int DrillCurrent;
-    public static int _DrillCurrent;
-    public int DrillTotal;
-    public static int _DrillTotal;
+    public static int _PIXLCurrent, _PIXLTotal, _RIMFAXCurrent, _RIMFAXTotal, _DrillCurrent, _DrillTotal;
 
     // Start is called before the first frame update
     void Start()
