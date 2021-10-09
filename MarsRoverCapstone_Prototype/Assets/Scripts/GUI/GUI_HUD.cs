@@ -29,9 +29,6 @@ public class GUI_HUD : MonoBehaviour
     public GameObject chooseControlsPanel;
 
     public GameObject inventory;
-    public TMP_Text objectivePIXL;
-    public TMP_Text objectiveRIMFAX;
-    public TMP_Text objectiveDrill;
 
     public TMP_Text mockupPrompt;
     public static TMP_Text staticPrompt;
@@ -89,10 +86,6 @@ public class GUI_HUD : MonoBehaviour
         }
 
         boostSlider.value = PM.boost;
-
-        objectivePIXL.text = GM_Objectives.objectivePIXLString;
-        objectiveRIMFAX.text = GM_Objectives.objectiveRIMFAXString;
-        objectiveDrill.text = GM_Objectives.objectiveDrillString;
 
         /*
         // Update Elevation information and fall damge
