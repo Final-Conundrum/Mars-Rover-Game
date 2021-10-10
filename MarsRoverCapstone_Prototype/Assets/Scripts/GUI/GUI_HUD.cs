@@ -86,34 +86,6 @@ public class GUI_HUD : MonoBehaviour
         }
 
         boostSlider.value = PM.boost;
-
-        /*
-        // Update Elevation information and fall damge
-        elevation.text = "Ground Dist.: " + Player_Movement.elevation;
-        elevationSlider.value = Player_Movement.elevation;
-
-        if(elevationSlider.value < PM.fallDamageHeight)
-        {
-            elevationSliderHandle.color = greenBoost;
-        }
-        else
-        {
-            elevationSliderHandle.color = redBoost;
-        }*/
-        FallDamageCheck();
-    }
-
-    public void FallDamageCheck()
-    {
-        /*
-        if (PM.takeFallDamage == false)
-        {
-            elevationSliderColour.color = green;
-        }
-        else
-        {
-            elevationSliderColour.color = red;
-        }*/
     }
 
     // Close Learning Panel and Activate HUD
