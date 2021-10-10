@@ -5,8 +5,8 @@ using Cinemachine;
 
 public class IntroCameraDirector : MonoBehaviour
 {
-    public CinemachineVirtualCamera sceneCamera, perseveranceCamera, instrumentCamera, minigameCamera, POICamera, hazardCamera, SZCamera, finalCamera;
-    public GameObject[] sceneProps, perseveranceProps, instrumentProps, minigameProps, POIProps, hazardProps, SZProps, finalProps;
+    public CinemachineVirtualCamera sceneCamera, goalsCamera, perseveranceCamera, instrumentCamera, minigameCamera, POICamera, hazardCamera, SZCamera, disclaimerCamera, finalCamera;
+    public GameObject[] sceneProps, goalsProps, perseveranceProps, instrumentProps, minigameProps, POIProps, hazardProps, SZProps, disclaimerProps, finalProps;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +22,11 @@ public class IntroCameraDirector : MonoBehaviour
 
     public void nextCamera(int cameraPriority, CinemachineVirtualCamera camera, GameObject[] props)
     {
+        cameraPriority++;
 
-
+        foreach(GameObject i in props)
+        {
+            i.SetActive(true);
+        }
     }
 }
