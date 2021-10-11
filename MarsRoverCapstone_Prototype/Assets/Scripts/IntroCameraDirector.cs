@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.SceneManagement;
 
 public class IntroCameraDirector : MonoBehaviour
 {
@@ -18,7 +19,12 @@ public class IntroCameraDirector : MonoBehaviour
     {
         propCollections = new GameObject[][] { sceneProps, goalsProps, perseveranceProps, actionProps, SZProps, disclaimerProps, finalProps };
 
-        // Activate first sequence objects
+        // Deactivate all sequence objects
+        foreach(CinemachineVirtualCamera i in sceneCameras)
+        {
+            i.Priority = 1;
+        }
+
         foreach (GameObject[] x in propCollections)
         {
             foreach (GameObject i in x)
@@ -27,9 +33,14 @@ public class IntroCameraDirector : MonoBehaviour
             }
         }
 
-        GoToCamera(0);
-
+        // Activate start sequence
         sceneCameras[0].Priority = 11;
+
+        foreach (GameObject i in propCollections[0])
+        {
+            i.SetActive(true);
+        }
+
     }
 
     public void GoToCamera(int cameraPriority)
@@ -52,5 +63,11 @@ public class IntroCameraDirector : MonoBehaviour
         }
 
         Debug.Log("Intro Camera: Current camera priority = sceneCamera[" + cameraPriority + "]");
+    }
+
+    public void GoToScene(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+
     }
 }
