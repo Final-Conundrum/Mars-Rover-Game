@@ -9,20 +9,25 @@ public class IntroCameraDirector : MonoBehaviour
     // Organize priority of cameras and enable props for each part of sequence
 
     public CinemachineVirtualCamera[] sceneCameras;
-    public GameObject[] sceneProps, goalsProps, perseveranceProps, SZProps, disclaimerProps, finalProps;
+    public GameObject[] sceneProps, goalsProps, perseveranceProps, actionProps, SZProps, disclaimerProps, finalProps;
     private GameObject[][] propCollections;
     private int currentEvent = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        propCollections = new GameObject[][] { sceneProps, goalsProps, perseveranceProps, SZProps, disclaimerProps, finalProps };
+        propCollections = new GameObject[][] { sceneProps, goalsProps, perseveranceProps, actionProps, SZProps, disclaimerProps, finalProps };
 
         // Activate first sequence objects
-        foreach(GameObject i in propCollections[0])
+        foreach (GameObject[] x in propCollections)
         {
-            i.SetActive(true);
+            foreach (GameObject i in x)
+            {
+                i.SetActive(false);
+            }
         }
+
+        GoToCamera(0);
 
         sceneCameras[0].Priority = 11;
     }
