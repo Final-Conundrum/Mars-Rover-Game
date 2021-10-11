@@ -17,7 +17,7 @@ public class IntroCameraDirector : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        propCollections = new GameObject[][] { sceneProps, goalsProps, perseveranceProps, actionProps, SZProps, disclaimerProps, finalProps };
+        propCollections = new GameObject[][] { sceneProps, disclaimerProps, goalsProps, perseveranceProps, actionProps, SZProps, finalProps };
 
         // Deactivate all sequence objects
         foreach(CinemachineVirtualCamera i in sceneCameras)
