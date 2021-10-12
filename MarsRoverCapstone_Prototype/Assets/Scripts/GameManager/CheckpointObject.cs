@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Animations;
-
+using UnityEngine.SceneManagement;
 public class CheckpointObject : MonoBehaviour
 {
     /* Edited by: Dallas
@@ -68,7 +68,15 @@ public class CheckpointObject : MonoBehaviour
         {
             // Display prompt
             prompt.gameObject.SetActive(true);
-            prompt.text = "Press [E] to set Safe Zone here...";
+
+            if(GM.currentSafeZone != this)
+            {
+                prompt.text = "Press [E] to set Safe Zone here...";
+            }
+            else if(GM.currentSafeZone == this)
+            {
+                prompt.text = "Press [H] to pass the time...";
+            }
         }
     }
 
@@ -78,7 +86,7 @@ public class CheckpointObject : MonoBehaviour
         if (col.gameObject.tag == "Player") 
         {
 
-            if(Input.GetKeyDown(KeyCode.E))
+            if(Input.GetKeyDown(KeyCode.E) && GM.currentSafeZone != this)
             {
                 GM.SetSafeZone(this);
                 flag.SetActive(true);
@@ -87,6 +95,10 @@ public class CheckpointObject : MonoBehaviour
                 safeZoneInfo.text = "<< SAFE ZONE >> \n This is Perseverance's current Reboot area";
 
                 GM_Audio.PlaySound(audioSource, "MGWin");
+            }
+            else if (Input.GetKeyDown(KeyCode.H) && GM.currentSafeZone == this)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
     }

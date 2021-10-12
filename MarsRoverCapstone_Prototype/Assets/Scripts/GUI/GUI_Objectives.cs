@@ -39,6 +39,6 @@ public class GUI_Objectives : MonoBehaviour
 
         expandedPIXL.text = "PIXL: Planetary Instrument for X-ray Lithochemistry helps Perseverance understand the chemical history of the minerals it analyzes. \n \n Find exposed minerals in the environment and analyze (" + GM_Objectives._PIXLCurrent + "/" + GM_Objectives._PIXLTotal + ") times.";
         expandedRIMFAX.text = "RIMFAX: Radar Imager for Mars' Subsurface Experiment lets Perseverance see the underground history of Mars. \n \n Find marked scan zones and use RIMFAX (" + GM_Objectives._RIMFAXCurrent + "/" + GM_Objectives._RIMFAXTotal + ") times.";
-        expandedDrill.text = "Testing Description";
+        expandedDrill.text = "Drill: Uncover samples for future analysis by NASA by drilling delicate exposed minerals on Mars' surface. Drill for samples(" + GM_Objectives._DrillCurrent + "/" + GM_Objectives._DrillTotal + ") times.";
     }
 }

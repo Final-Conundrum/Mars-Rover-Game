@@ -107,6 +107,7 @@ public class MiniGame_Drill : MonoBehaviour
     {
         Time.timeScale = 1;
         GM_Objectives.UpdateObjective("Drill");
+        MiniGame_Systems.playingMinigame = false;
         Destroy(this.gameObject);
     }
 

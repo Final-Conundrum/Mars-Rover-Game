@@ -30,12 +30,6 @@ public class GM_Objectives : MonoBehaviour
         objectiveDrillString = "> Use the Drill to clear and collect samples (" + _DrillCurrent + "/" + _DrillTotal + ")";
 
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
         
     public static void UpdateObjective(string objectiveType)
     {

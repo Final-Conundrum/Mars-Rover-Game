@@ -130,7 +130,7 @@ public class Player_Collision : MonoBehaviour
             //InfoPanel.CheckPointText();
             GUI_HUD.staticPrompt.gameObject.SetActive(true);
             GUI_HUD.staticPrompt.text = "Press [E] to set Safe Zone...";
-            InfoPanel.CheckPointMessage();
+            //InfoPanel.CheckPointMessage();
         }
 
         if (c.gameObject.tag == "DustNotification")
