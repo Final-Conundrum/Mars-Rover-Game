@@ -68,7 +68,7 @@ public class CheckpointObject : MonoBehaviour
         {
             // Display prompt
             prompt.gameObject.SetActive(true);
-            prompt.text = "Press 'E' to set Safe Zone here...";
+            prompt.text = "Press [E] to set Safe Zone here...";
         }
     }
 

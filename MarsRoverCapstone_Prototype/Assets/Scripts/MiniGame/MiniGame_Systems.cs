@@ -10,6 +10,7 @@ public class MiniGame_Systems : MonoBehaviour
     public GameObject[] GameObject_PIXL;
     public static GameObject[] Static_PIXL;
     public GameObject GameObject_RIMFAX;
+    public GameObject GameObject_DRILL;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +39,7 @@ public class MiniGame_Systems : MonoBehaviour
 
     public void MiniGame_DRILL()
     {
-
+        Instantiate(GameObject_DRILL);
+        playingMinigame = true;
     }
 }

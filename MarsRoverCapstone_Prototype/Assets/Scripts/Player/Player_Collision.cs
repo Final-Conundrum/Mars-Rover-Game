@@ -110,20 +110,26 @@ public class Player_Collision : MonoBehaviour
             //InfoPanel.AragoniteText();
 
             GUI_HUD.staticPrompt.gameObject.SetActive(true);
-            GUI_HUD.staticPrompt.text = "Press 'E' to analyze with the PIXL camera...";
+            GUI_HUD.staticPrompt.text = "Press [E] to analyze with the PIXL camera...";
         }
 
         if(c.gameObject.tag == "RIMFAX")
         {
             GUI_HUD.staticPrompt.gameObject.SetActive(true);
-            GUI_HUD.staticPrompt.text = "Press 'E' to scan underground with RIMFAX...";
+            GUI_HUD.staticPrompt.text = "Press [E] to scan underground with RIMFAX...";
+        }
+
+        if(c.gameObject.tag == "Drill")
+        {
+            GUI_HUD.staticPrompt.gameObject.SetActive(true);
+            GUI_HUD.staticPrompt.text = "Press [E] to DRILL for sample...";
         }
 
         if(c.gameObject.tag == "SafeZone")
         {
             //InfoPanel.CheckPointText();
             GUI_HUD.staticPrompt.gameObject.SetActive(true);
-            GUI_HUD.staticPrompt.text = "Press 'E' to set Safe Zone...";
+            GUI_HUD.staticPrompt.text = "Press [E] to set Safe Zone...";
             InfoPanel.CheckPointMessage();
         }
 
@@ -160,6 +166,17 @@ public class Player_Collision : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 MiniGame.MiniGame_RIMFAX();
+                GUI_HUD.staticPrompt.gameObject.SetActive(false);
+                c.gameObject.SetActive(false);
+            }
+        }
+
+        if(c.gameObject.tag == "Drill")
+        {
+            // Open Mini-Game
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                MiniGame.MiniGame_DRILL();
                 GUI_HUD.staticPrompt.gameObject.SetActive(false);
                 c.gameObject.SetActive(false);
             }
