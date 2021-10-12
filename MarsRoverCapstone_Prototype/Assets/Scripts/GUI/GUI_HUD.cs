@@ -38,6 +38,7 @@ public class GUI_HUD : MonoBehaviour
     private Color redBoost = new Color(255f, 0, 0, 0.6f);
 
     public GameObject damageOverlay;
+    private float damageTimer;
 
     // Start is called before the first frame update
     void Start()
@@ -55,7 +56,7 @@ public class GUI_HUD : MonoBehaviour
             Time.timeScale = 0;
 
             chooseControlsPanel.SetActive(true);
-            info_panel.SetActive(true);
+            //info_panel.SetActive(true);
 
             playerHUD.SetActive(false);
         }
@@ -65,6 +66,8 @@ public class GUI_HUD : MonoBehaviour
         // Set values of Boost Slider
         boostSlider.maxValue = PM.boostLimit;
         boostSlider.minValue = 0f;
+
+        damageOverlay.SetActive(false);
     }
 
     // Update is called once per frame
@@ -88,6 +91,11 @@ public class GUI_HUD : MonoBehaviour
         }
 
         boostSlider.value = PM.boost;
+
+        if (Time.time > damageTimer)
+        {
+            damageOverlay.SetActive(false);
+        }
     }
 
     // Close Learning Panel and Activate HUD
@@ -111,8 +119,9 @@ public class GUI_HUD : MonoBehaviour
         chooseControlsPanel.SetActive(false);
     }
 
-    public void DamagePlayer(bool on)
+    public void DamagePlayer()
     {
-        damageOverlay.SetActive(on);
+        damageOverlay.SetActive(true);
+        damageTimer = Time.time + 1f;
     }
 }
