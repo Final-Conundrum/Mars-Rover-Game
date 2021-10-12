@@ -14,6 +14,8 @@ public class IntroCameraDirector : MonoBehaviour
     private GameObject[][] propCollections;
     private int currentEvent = 0;
 
+    public GameObject[] TextPanel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +35,11 @@ public class IntroCameraDirector : MonoBehaviour
             }
         }
 
+        foreach (GameObject i in TextPanel)
+        {
+            i.SetActive(false);
+        }
+
         // Activate start sequence
         sceneCameras[0].Priority = 11;
 
@@ -50,6 +57,12 @@ public class IntroCameraDirector : MonoBehaviour
         {
             i.SetActive(false);
         }
+
+        foreach (GameObject i in TextPanel)
+        {
+            i.SetActive(false);
+        }
+
         sceneCameras[currentEvent].Priority = 1;
 
         // Camera transition
@@ -69,5 +82,15 @@ public class IntroCameraDirector : MonoBehaviour
     {
         SceneManager.LoadScene(sceneName);
 
+    }
+
+    public void LearnButton(int panelNum)
+    {
+        foreach (GameObject i in TextPanel)
+        {
+            i.SetActive(false);
+        }
+
+        TextPanel[panelNum].SetActive(true);
     }
 }
