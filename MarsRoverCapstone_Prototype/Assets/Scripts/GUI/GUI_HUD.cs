@@ -37,6 +37,8 @@ public class GUI_HUD : MonoBehaviour
     private Color greenBoost = new Color(0f, 150f, 0f, 0.6f);
     private Color redBoost = new Color(255f, 0, 0, 0.6f);
 
+    public GameObject damageOverlay;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -107,5 +109,10 @@ public class GUI_HUD : MonoBehaviour
     {
         PM.tankControls = tankControls;
         chooseControlsPanel.SetActive(false);
+    }
+
+    public void DamagePlayer(bool on)
+    {
+        damageOverlay.SetActive(on);
     }
 }
