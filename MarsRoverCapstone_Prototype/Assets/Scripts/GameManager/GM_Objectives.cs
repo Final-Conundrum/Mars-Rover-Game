@@ -13,6 +13,7 @@ public class GM_Objectives : MonoBehaviour
     public int PIXLTotal, RIMFAXTotal, DrillTotal;
 
     public static int _PIXLCurrent, _PIXLTotal, _RIMFAXCurrent, _RIMFAXTotal, _DrillCurrent, _DrillTotal;
+    public static bool completedObjectives = false;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +56,11 @@ public class GM_Objectives : MonoBehaviour
                 objectiveDrillString = "> Use the Drill to clear and collect samples (" + _DrillCurrent + "/" + _DrillTotal + ")";
 
                 break;
+        }
+
+        if(_PIXLCurrent == _PIXLTotal && _RIMFAXCurrent == _RIMFAXTotal && _DrillCurrent == _DrillTotal)
+        {
+            completedObjectives = true;
         }
     }
 }

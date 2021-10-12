@@ -6,24 +6,18 @@ public class EndOfLevel_Object : MonoBehaviour
 {
     private GUI_PauseMenu EndOfLevel => FindObjectOfType<GUI_PauseMenu>();
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player" && GM_Objectives.completedObjectives)
         {
             Cursor.visible = true;
             EndOfLevel.EndOfLevelMenu.SetActive(true);
+            Time.timeScale = 0;
+        }
+        else if(collision.gameObject.tag == "Player" && !GM_Objectives.completedObjectives)
+        {
+            Cursor.visible = true;
+            EndOfLevel.IncompleteEndOfLevelMenu.SetActive(true);
             Time.timeScale = 0;
         }
     }

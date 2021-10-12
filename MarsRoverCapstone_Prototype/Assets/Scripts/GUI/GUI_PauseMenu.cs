@@ -11,6 +11,7 @@ public class GUI_PauseMenu : MonoBehaviour
 
     public GameObject PauseMenu;
     public GameObject EndOfLevelMenu;
+    public GameObject IncompleteEndOfLevelMenu;
     public GameObject DataBaseMenu;
     public GameObject DataBaseReturnButton;
     public GameObject SettingsMenu;
