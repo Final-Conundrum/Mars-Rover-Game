@@ -16,15 +16,9 @@ public class GUI_MainMenu : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void StartGame()
     {
-        SceneManager.LoadScene("Test_MainDuplicate");
+        SceneManager.LoadScene("IntroScene");
     }
 
     public void StartTutorial()
