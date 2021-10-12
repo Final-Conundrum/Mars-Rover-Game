@@ -89,7 +89,7 @@ public class Player_Collision : MonoBehaviour
 
         if (c.gameObject.tag == "Hazard")
         {
-            Player_Stats.TakeDamage(10);
+            Player_Stats.TakeDamage(5);
         }
 
         if (c.gameObject.tag == "HazardRock" && PM.takeFallDamage)

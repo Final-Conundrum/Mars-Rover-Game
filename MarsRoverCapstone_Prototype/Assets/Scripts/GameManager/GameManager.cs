@@ -28,6 +28,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject player;
     public GameObject postProcessingVolume;
 
+    private GeyserBurst[] geysers => FindObjectsOfType<GeyserBurst>();
+
     // Passage of Time variables
     public bool usePassageOfTime = true;
     public static float passTime = 1;
@@ -61,10 +63,11 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // Testing checkpoints
+        /*
         if (Input.GetKeyDown(KeyCode.Return))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
+        }*/
 
         postProcessingVolume.SetActive(Settings.postProcessingActive);
 

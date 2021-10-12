@@ -38,10 +38,10 @@ public class GeyserBurst : MonoBehaviour
             geyserBurst.SetActive(true);
 
             // Set time to despawn geyser burst
-            timerDuringBurst = Time.timeSinceLevelLoad + _timerDuringAdd;
+            timerDuringBurst = Time.time + _timerDuringAdd;
 
             // Set time for next burst
-            timerBetweenBurst = Time.timeSinceLevelLoad + (_timerBetweenAdd + _timerDuringAdd);
+            timerBetweenBurst = Time.time + (_timerBetweenAdd + _timerDuringAdd);
 
             // Transform position of geyser
             geyserBurst.transform.position = posA.position;
