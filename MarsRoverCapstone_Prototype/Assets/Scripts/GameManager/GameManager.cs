@@ -78,6 +78,8 @@ public class GameManager : MonoBehaviour
         // Get Player and set
         player = FindObjectOfType<Player_Movement>().gameObject;
         _GM_Audio.player = player;
+        GM_Checkpoint.playerCamera = FindObjectOfType<Player_ParentObject>().Camera;
+
         //_GM_Audio.playerSource = player.GetComponent<AudioSource>();
 
         // Set player position to respawn point

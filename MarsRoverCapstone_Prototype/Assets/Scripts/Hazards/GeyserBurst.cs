@@ -14,7 +14,7 @@ public class GeyserBurst : MonoBehaviour
 
     public float burstSpeed = 5f;
 
-    private bool bursting = false;
+    [SerializeField] private bool bursting = false;
 
     // Timers
     public float timerBetweenBurst = 5f;
@@ -38,6 +38,7 @@ public class GeyserBurst : MonoBehaviour
         if (Time.time > timerBetweenBurst)
         {
             geyserBurst.SetActive(true);
+            bursting = true;
 
             // Set time to despawn geyser burst
             timerDuringBurst = Time.timeSinceLevelLoad + _timerDuringAdd;
@@ -61,7 +62,7 @@ public class GeyserBurst : MonoBehaviour
         if (Time.time > timerDuringBurst)
         {
             geyserBurst.SetActive(false);
-
+            bursting = false;
         }
     }
 }
