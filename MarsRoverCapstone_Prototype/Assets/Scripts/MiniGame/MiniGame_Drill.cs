@@ -106,9 +106,8 @@ public class MiniGame_Drill : MonoBehaviour
     public void Exit()
     {
         Time.timeScale = 1;
+        GM_Objectives.UpdateObjective("Drill");
         Destroy(this.gameObject);
-        GUI_MineralAnalysis.Display(true);
-
     }
 
     public void OnPress()
