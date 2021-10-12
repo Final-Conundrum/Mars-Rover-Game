@@ -34,7 +34,7 @@ public class MiniGame_Drill : MonoBehaviour
         Cursor.visible = true;
         completed = false;
 
-        CoolDownTime = Time.time + Random.Range(2f, 10f);
+        CoolDownTime = Time.time + Random.Range(2f, 9f);
 
         warningText.SetActive(false);
         failText.SetActive(false);
@@ -96,10 +96,16 @@ public class MiniGame_Drill : MonoBehaviour
    public void CoolDown()
     {
         DrillTime -= 5;
+
+        if(DrillTime < 0)
+        {
+            DrillTime = 0;
+        }
+
         failText.SetActive(true);
         failTextTimer = Time.time + 2f;
 
-        CoolDownTime = Time.time + Random.Range(3f, 10f);
+        CoolDownTime = Random.Range(3f, 9f);
     }
 
     // End mini-game and display mineral analysis
@@ -115,7 +121,7 @@ public class MiniGame_Drill : MonoBehaviour
     {
         buttonDown = true;
         OnClickTrigger = Time.time;
-        CoolDownTime = Time.time + Random.Range(3f, 10f);
+        CoolDownTime = Random.Range(3f, 10f);
 
     }
 
