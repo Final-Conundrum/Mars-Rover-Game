@@ -16,5 +16,6 @@ public class LookAtCamera : MonoBehaviour
     void Update()
     {
         this.transform.LookAt(playerCamera);
+        this.transform.rotation.SetLookRotation(playerCamera.transform.position);
     }
 }
