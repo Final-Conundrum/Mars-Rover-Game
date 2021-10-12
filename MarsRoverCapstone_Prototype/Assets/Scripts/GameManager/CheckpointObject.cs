@@ -96,9 +96,14 @@ public class CheckpointObject : MonoBehaviour
 
                 GM_Audio.PlaySound(audioSource, "MGWin");
             }
-            else if (Input.GetKeyDown(KeyCode.H) && GM.currentSafeZone == this)
+            else if (GM.currentSafeZone == this)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                prompt.text = "Press [H] to UPLOAD FINDINGS & pass the time...";
+                if (Input.GetKeyDown(KeyCode.H))
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                    safeZoneInfo.text = "<< SAFE ZONE >> \n Upload to NASA successful";
+                }
             }
         }
     }
