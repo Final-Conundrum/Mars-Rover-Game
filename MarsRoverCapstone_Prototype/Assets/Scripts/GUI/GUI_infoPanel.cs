@@ -30,7 +30,7 @@ public class GUI_infoPanel : MonoBehaviour
     //other
     public bool isWarning; //This will help determine which panels should self destruct after popping up. (ensure to destroy game object trigger too)
     public List<string> factStrings = new List<string>(); 
-    public string defaultFact = "Perseverance moves at a speed of 152 meters per hour!";
+    public string defaultFact = "Perseverance is able to move at a speed of 152 meters per hour!";
 
     //coroutine variables
     public float maxCount = 10f;
@@ -44,12 +44,15 @@ public class GUI_infoPanel : MonoBehaviour
         currentAlpha = _canvasGroup.alpha;
 
         //Fill the list
-        factStrings.Add("Ingenuity is the small helicopter that went to Mars with Perseverance, it's first flight was on April 19th, 2021"); 
-        factStrings.Add("Perseverance weighs 1025 Kilograms and is the size of a small car");
+        factStrings.Add("Ingenuity is the small helicopter that went to Mars with Perseverance, it's first flight was on April 19th, 2021."); 
+        factStrings.Add("Perseverance weighs 1025 Kilograms and is the size of a small car!");
         factStrings.Add(defaultFact);
         factStrings.Add("Mars is home to the highest volcano and mountain in the ENTIRE universe! it's 24KM high.");
-        factStrings.Add("Sounds of wind on Mars have been recorded and can be found on SoundCloud");
+        factStrings.Add("Sounds of wind on Mars have been recorded and can be found on SoundCloud.");
         factStrings.Add("It's understood by scientists that Jezero Crater was filled with water 3.5 billion years ago.");
+        factStrings.Add("PIXL measures the elemental chemistry of rocks and soil by focusing an X-Ray beam on it.");
+        factStrings.Add("SHERLOC is able to detect and identify organics and minerals on Mars.");
+        factStrings.Add("RIMFAX uses a ground-probing radar to see under the Martian surface. ");
         Debug.Log(factStrings.Count.ToString());
 
     }
@@ -83,7 +86,7 @@ public class GUI_infoPanel : MonoBehaviour
     public void OnApproachNotification()
     {
         infoPanel.SetActive(true);
-        infoText.text = "> There's a potential sample nearby that we should check out!";
+        infoText.text = " There's a potential sample nearby that we should check out!";
         isWarning = false;
         FadePanel();
     }
@@ -91,7 +94,7 @@ public class GUI_infoPanel : MonoBehaviour
     public void AragoniteText()
     {
         infoPanel.SetActive(true);
-        infoText.text = "> You have collected: Aragonite!";
+        infoText.text = " You have collected: Aragonite!";
         FadePanel();
     }
 
@@ -99,14 +102,14 @@ public class GUI_infoPanel : MonoBehaviour
     {
         infoPanel.SetActive(true);
         isWarning = true;
-        infoText.text = "> Warning! You may take damage if you fall from this height. n Be careful!";
+        infoText.text = "Warning! You may take damage if you fall from this height. Be careful!";
         
     }
 
     public void FeldsparText()
     {
         infoPanel.SetActive(true);
-        infoText.text = "> You have collected: Feldspar";
+        infoText.text = "You have collected: Feldspar";
        
     }
 
@@ -119,7 +122,7 @@ public class GUI_infoPanel : MonoBehaviour
     {
         infoPanel.SetActive(true);
         isWarning = true;
-        infoText.text = "> Martain dust can often settle on machinery and cause damage. \n It would be best to avoid it.";
+        infoText.text = "Martain dust can often settle on machinery and can cause some serious damage.";
         FadePanel();
     }
 
