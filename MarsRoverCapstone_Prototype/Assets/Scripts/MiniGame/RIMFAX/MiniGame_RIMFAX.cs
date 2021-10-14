@@ -116,7 +116,7 @@ public class MiniGame_RIMFAX : MonoBehaviour
         }
 
         // Detect win-condition
-        if(scanninglinesCounter == scanningLines.Length)
+        if(scanninglinesCounter >= scanningLines.Length)
         {
             EditRIMFAXScreens(2);          
         }
