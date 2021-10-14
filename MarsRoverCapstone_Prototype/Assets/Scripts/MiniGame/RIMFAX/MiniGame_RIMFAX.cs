@@ -12,6 +12,7 @@ public class MiniGame_RIMFAX : MonoBehaviour
 
     public GameObject scanline;
     public float scanlineSpeed;
+    public float scallineMaxSpeed;
 
     public GameObject ScanPointA;
     public GameObject ScanPointB;
@@ -55,7 +56,7 @@ public class MiniGame_RIMFAX : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // Move scanline from two different points
         switch(currentTarget)
@@ -67,11 +68,24 @@ public class MiniGame_RIMFAX : MonoBehaviour
                 }
                 else
                 {
+                    currentTarget = "B";
                     GM_Audio.PlaySound(audioSource, "Scan");
 
-                    currentTarget = "B";
+                    // Increase speed
+                    if (scanlineSpeed <= scallineMaxSpeed)
+                    {
+                        scanlineSpeed++;
+                    }
+
+                    // Sets randomized position of scan lines
+                    for (int i = 0; i < scanningLines.Length; i++)
+                    {
+                        if (scanningLines != null)
+                        {
+                            scanningLines[i].transform.position = new Vector3(Random.Range(ScanPointA.transform.position.x, ScanPointB.transform.position.x), ScanPointA.transform.position.y, ScanPointA.transform.position.z);
+                        }
+                    }
                 }
-                
                 break;
             case "B":
                 if (scanline.transform.position != ScanPointB.transform.position)
@@ -82,7 +96,21 @@ public class MiniGame_RIMFAX : MonoBehaviour
                 {
                     currentTarget = "A";
                     GM_Audio.PlaySound(audioSource, "Scan");
+                    
+                    // Increase speed
+                    if (scanlineSpeed <= scallineMaxSpeed)
+                    {
+                        scanlineSpeed++;
+                    }
 
+                    // Sets randomized position of scan lines
+                    for (int i = 0; i < scanningLines.Length; i++)
+                    {
+                        if (scanningLines != null)
+                        {
+                            scanningLines[i].transform.position = new Vector3(Random.Range(ScanPointA.transform.position.x, ScanPointB.transform.position.x), ScanPointA.transform.position.y, ScanPointA.transform.position.z);
+                        }
+                    }
                 }
                 break;
         }
