@@ -25,7 +25,7 @@ public class Player_Stats : MonoBehaviour
     public void Start()
     {
         health = 100;
-        player = this.gameObject;
+        player = gameObject;
 
         audioSource = _audioSource;
     }
@@ -39,7 +39,7 @@ public class Player_Stats : MonoBehaviour
         healthCheck();
 
         GM_Audio.PlaySound(audioSource, "Injury");
-        HUD.DamagePlayer();
+        HUD.StartCoroutine(HUD.DamagePlayer());
     }
 
     //Checks the players current health

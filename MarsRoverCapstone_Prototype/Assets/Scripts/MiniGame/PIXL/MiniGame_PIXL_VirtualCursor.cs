@@ -31,6 +31,7 @@ public class MiniGame_PIXL_VirtualCursor : MonoBehaviour
         {
             parent.Fail();
             transform.position = StartPos;
+            parent.StartCoroutine(parent.Fail());
 
             Debug.Log("VirtualCursor: Hit Maze Wall");
         }

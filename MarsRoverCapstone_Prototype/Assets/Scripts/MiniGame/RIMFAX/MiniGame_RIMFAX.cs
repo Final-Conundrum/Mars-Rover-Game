@@ -23,7 +23,6 @@ public class MiniGame_RIMFAX : MonoBehaviour
 
     public GameObject failText;
     public float failTextTimer;
-    private float timer;
 
     // Images and panels for result info
     public Image[] HidingPanels;
@@ -157,16 +156,11 @@ public class MiniGame_RIMFAX : MonoBehaviour
     }
 
     // Fail-state warning: display text describing what the player did wrong.
-    public void Fail()
+    public IEnumerator Fail()
     {
-        timer = Time.time + failTextTimer;
-
         failText.SetActive(true);
-
-        if (Time.time > timer)
-        {
-            failText.SetActive(false);
-        }
+        yield return new WaitForSeconds(failTextTimer);
+        failText.SetActive(false);     
     }
 
     // End mini-game and display scan

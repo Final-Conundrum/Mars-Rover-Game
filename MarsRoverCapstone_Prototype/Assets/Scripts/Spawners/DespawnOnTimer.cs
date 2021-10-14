@@ -43,7 +43,7 @@ public class DespawnOnTimer : MonoBehaviour
             case false:
                 if (Time.time >= (_timer + despawnTimer))
                 {
-                    Destroy(this.gameObject);
+                    Destroy(gameObject);
                 }
                 break;
         }

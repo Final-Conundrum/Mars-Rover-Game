@@ -5,7 +5,6 @@ using UnityEngine;
 public class Player_Collision : MonoBehaviour
 {
     Player_Movement PM => GetComponent<Player_Movement>();
-    //Player_Stats _Player_Stats => GetComponent<Player_Stats>();
     Rigidbody RB => GetComponent<Rigidbody>();
     MiniGame_Systems MiniGame => FindObjectOfType<MiniGame_Systems>();
     GUI_infoPanel InfoPanel => FindObjectOfType<GUI_infoPanel>();

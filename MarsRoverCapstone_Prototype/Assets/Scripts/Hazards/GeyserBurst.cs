@@ -16,7 +16,7 @@ public class GeyserBurst : MonoBehaviour
 
     // Timers
     public float timerBetweenBurst = 5f;
-    public float timerDuringBurst = 3f;
+    public float timerDuringBurst = 5f;
     private float _timerBetweenAdd;
     private float _timerDuringAdd;
 
@@ -35,18 +35,7 @@ public class GeyserBurst : MonoBehaviour
         // Spawn golf ball every timer check
         if (Time.time > timerBetweenBurst)
         {
-            geyserBurst.SetActive(true);
-
-            // Set time to despawn geyser burst
-            timerDuringBurst = Time.time + _timerDuringAdd;
-
-            // Set time for next burst
-            timerBetweenBurst = Time.time + (_timerBetweenAdd + _timerDuringAdd);
-
-            // Transform position of geyser
-            geyserBurst.transform.position = posA.position;
-
-            GM_Audio.PlaySound(audioSource, "Geyser");
+            StartCoroutine(GeyserBursting());
         }
 
         // Move position of geyser
@@ -54,11 +43,23 @@ public class GeyserBurst : MonoBehaviour
         {
             geyserBurst.transform.position = Vector3.MoveTowards(geyserBurst.transform.position, posB.position, burstSpeed * Time.deltaTime);
         }
+    }
+
+    private IEnumerator GeyserBursting()
+    {
+        geyserBurst.SetActive(true);
+
+        // Transform position of geyser
+        geyserBurst.transform.position = posA.position;
+
+        GM_Audio.PlaySound(audioSource, "Geyser");
+
+        // Set time for next burst
+        timerBetweenBurst = Time.time + (_timerBetweenAdd + _timerDuringAdd);
+
+        yield return new WaitForSeconds(timerDuringBurst);
 
         // Despawn geyser burst
-        if (Time.time > timerDuringBurst)
-        {
-            geyserBurst.SetActive(false);
-        }
+        geyserBurst.SetActive(false);
     }
 }

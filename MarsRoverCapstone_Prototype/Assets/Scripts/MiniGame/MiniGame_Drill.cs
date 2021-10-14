@@ -22,8 +22,7 @@ public class MiniGame_Drill : MonoBehaviour
     [SerializeField] private float timeToCoolDown;
     private float OnClickTrigger;
 
-    public float failTextTimer;
-    private float timer;
+    public float failTextTimer = 2f;
     private float DrilltimeIteration;
 
     private bool buttonDown = false;
@@ -102,10 +101,16 @@ public class MiniGame_Drill : MonoBehaviour
             DrillTime = 0;
         }
 
-        failText.SetActive(true);
-        failTextTimer = Time.time + 2f;
-
         CoolDownTime = Random.Range(3f, 9f);
+
+        StartCoroutine(Fail());
+    }
+
+    public IEnumerator Fail()
+    {
+        failText.SetActive(true);
+        yield return new WaitForSeconds(failTextTimer);
+        failText.SetActive(false);
     }
 
     // End mini-game and display mineral analysis
