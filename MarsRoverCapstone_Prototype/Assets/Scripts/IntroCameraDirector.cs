@@ -9,9 +9,16 @@ public class IntroCameraDirector : MonoBehaviour
     // Intro Director: Setup and activate different cameras and props in sequence to communicate the games goals and disclaimers
     // Organize priority of cameras and enable props for each part of sequence
 
+    // Assets for each sequence
     public CinemachineVirtualCamera[] sceneCameras;
     public GameObject[] sceneProps, goalsProps, perseveranceProps, actionProps, SZProps, disclaimerProps, finalProps;
     private GameObject[][] propCollections;
+
+    // Intro precautions
+    private bool playerNotInteracted = true;
+    public GameObject buttonIndicator;
+    public GameObject continuePrompt;
+
     private int currentEvent = 0;
 
     public GameObject[] TextPanel;
@@ -48,8 +55,9 @@ public class IntroCameraDirector : MonoBehaviour
             i.SetActive(true);
         }
 
-        GM_SceneLoader.StartScene();
+        continuePrompt.SetActive(false);
 
+        GM_SceneLoader.StartScene();
     }
 
     public void GoToCamera(int cameraPriority)
@@ -77,12 +85,27 @@ public class IntroCameraDirector : MonoBehaviour
             i.SetActive(true);
         }
 
+        playerNotInteracted = false;
+        buttonIndicator.SetActive(false);
+
         Debug.Log("Intro Camera: Current camera priority = sceneCamera[" + cameraPriority + "]");
     }
 
-    public void GoToGame()
+    public void ClosePrompt()
     {
-        StartCoroutine(GM_SceneLoader.LoadToScene("Scene_MainGame"));
+        continuePrompt.SetActive(false);
+    }
+
+    public void GoToGame(bool ignorePrompt)
+    {
+        if(!playerNotInteracted || ignorePrompt)
+        {
+            StartCoroutine(GM_SceneLoader.LoadToScene("Scene_MainGame"));
+        }
+        else if(playerNotInteracted)
+        {
+            continuePrompt.SetActive(true);
+        }
     }
 
     public void LearnButton(int panelNum)
