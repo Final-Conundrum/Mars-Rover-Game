@@ -32,19 +32,24 @@ public class GUI_PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if(!pausedGame && !GUI_DeathScreen.dead)
-            {
-                Cursor.visible = true;
-                Time.timeScale = 0;
-                PauseMenu.SetActive(true);
-                HUD.playerHUD.SetActive(false);
-                pausedGame = true;
-            }
-            else if(pausedGame)
-            {
-                Cursor.visible = false;
-                ResumeGame();          
-            }
+            PauseGame();
+        }
+    }
+
+    public void PauseGame()
+    {
+        if (!pausedGame && !GUI_DeathScreen.dead)
+        {
+            Cursor.visible = true;
+            Time.timeScale = 0;
+            PauseMenu.SetActive(true);
+            HUD.playerHUD.SetActive(false);
+            pausedGame = true;
+        }
+        else if (pausedGame)
+        {
+            Cursor.visible = false;
+            ResumeGame();
         }
     }
 

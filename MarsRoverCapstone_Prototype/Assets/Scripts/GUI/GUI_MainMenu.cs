@@ -21,11 +21,6 @@ public class GUI_MainMenu : MonoBehaviour
         SceneManager.LoadScene("IntroScene");
     }
 
-    public void StartTutorial()
-    {
-
-    }
-
     public void Database(bool open)
     {
         DB.SetActive(open);

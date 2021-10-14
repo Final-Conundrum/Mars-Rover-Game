@@ -116,16 +116,10 @@ public class Player_Movement : MonoBehaviour
             realisticControlsStatus.text = "Realistic Controls \n ON";
         }
 
+        
         if(Input.GetKeyDown(KeyCode.T))
         {
-            if (!tankControls)
-            {
-                tankControls = true;
-            }
-            else if (tankControls)
-            {
-                tankControls = false;
-            }
+            SwapControlType();
         }
 
         if(Input.GetKeyDown(KeyCode.LeftShift) || (Input.GetKeyDown(KeyCode.RightShift)))
@@ -146,39 +140,13 @@ public class Player_Movement : MonoBehaviour
         // CC Gravity
         _CCMovement.y -= gravity * Time.fixedDeltaTime;
 
-        //Speed, Momentum and Shift speed boost
-        if ((Input.GetAxis("Vertical") == 1 || Input.GetAxis("Vertical") == -1) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
+        if(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
-            if(boost > 0.5f && _currentSpeed < maxDriveSpeed)
-            {
-                _currentSpeed += momentumIncrease;
-            }
-            else if (boost <= 0.5f && _currentSpeed > midDriveSpeed)
-            {
-                _currentSpeed -= momentumIncrease;
-            }
+            BoostSpeed(true);
         }
-        else if((Input.GetAxis("Vertical") == 1 || Input.GetAxis("Vertical") == -1) && !(Input.GetKey(KeyCode.LeftShift) || !Input.GetKey(KeyCode.RightShift)) && _currentSpeed > midDriveSpeed)
+        else
         {
-            _currentSpeed -= momentumIncrease;
-        }
-        else if((Input.GetAxis("Vertical") == 1 || Input.GetAxis("Vertical") == -1) && _currentSpeed < midDriveSpeed)
-        {
-            _currentSpeed += momentumIncrease;
-        }
-        else if(Input.GetAxis("Vertical") == 0 && _currentSpeed > minDriveSpeed)
-        {
-            _currentSpeed -= momentumIncrease;
-        }
-
-        // Boost variables
-        if (boost >= 0.5f && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
-        {
-            boost -= boostConsumptionRate;
-        }
-        else if (boost < boostLimit && !(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
-        {
-            boost += boostConsumptionRate;
+            BoostSpeed(false);
         }
 
         // Raycast whether play is on flat ground
@@ -192,6 +160,7 @@ public class Player_Movement : MonoBehaviour
                 onSteepSlope = false;
                 hitNormal = new Vector3(0, 1, 0);
                 grounded = true;
+                audioSource.clip = GM_Audio.drivingSFX;
             }
         }
 
@@ -205,14 +174,12 @@ public class Player_Movement : MonoBehaviour
 
                 // Input and AddForce for JUMP
                 if(!onSteepSlope)
-                {
+                {        
                     if (Input.GetKey(KeyCode.Space))
                     {
-                        _CCMovement.y = jumpHeight;
-
-                        grounded = false;
+                        Jump();
                     }
-
+                    
                     if (Input.GetKeyDown(KeyCode.Space) && !MiniGame_Systems.playingMinigame)
                     {
                         //GM_Audio.PlaySound(audioSource, "Jump");
@@ -349,6 +316,66 @@ public class Player_Movement : MonoBehaviour
             {
                 takeFallDamage = true;
             }
+        }
+    }
+
+    public void Jump()
+    {
+        if (!onSteepSlope)
+        {
+            _CCMovement.y = jumpHeight;
+
+            grounded = false;
+        }
+    }
+
+    public void SwapControlType()
+    {
+        if (!tankControls)
+        {
+            tankControls = true;
+        }
+        else if (tankControls)
+        {
+            tankControls = false;
+        }
+    }
+
+    public void BoostSpeed(bool currentlyBoosting)
+    {
+        //Speed, Momentum and Shift speed boost
+        if ((Input.GetAxis("Vertical") == 1 || Input.GetAxis("Vertical") == -1) && currentlyBoosting)
+        {
+            if (boost > 0.5f && _currentSpeed < maxDriveSpeed)
+            {
+                _currentSpeed += momentumIncrease;
+            }
+            else if (boost <= 0.5f && _currentSpeed > midDriveSpeed)
+            {
+                _currentSpeed -= momentumIncrease;
+            }
+        }
+        else if ((Input.GetAxis("Vertical") == 1 || Input.GetAxis("Vertical") == -1) && !currentlyBoosting && _currentSpeed > midDriveSpeed)
+        {
+            _currentSpeed -= momentumIncrease;
+        }
+        else if ((Input.GetAxis("Vertical") == 1 || Input.GetAxis("Vertical") == -1) && _currentSpeed < midDriveSpeed)
+        {
+            _currentSpeed += momentumIncrease;
+        }
+        else if (Input.GetAxis("Vertical") == 0 && _currentSpeed > minDriveSpeed)
+        {
+            _currentSpeed -= momentumIncrease;
+        }
+
+        // Boost variables
+        if (boost >= 0.5f && currentlyBoosting)
+        {
+            boost -= boostConsumptionRate;
+        }
+        else if (boost < boostLimit && !currentlyBoosting)
+        {
+            boost += boostConsumptionRate;
         }
     }
 

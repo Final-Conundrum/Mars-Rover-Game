@@ -13,12 +13,7 @@ public class GUI_DeathScreen : MonoBehaviour
     {
         DeathPanel.SetActive(false);
         dead = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Time.timeScale = 0;
     }
 
     public void Display()
