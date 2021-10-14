@@ -63,11 +63,11 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // Testing checkpoints
-        /*
+
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }*/
+            StartCoroutine(GM_SceneLoader.LoadToScene("Scene_MainGame"));
+        }
 
         postProcessingVolume.SetActive(Settings.postProcessingActive);
 
@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
                     passTime++;
                     _GM_Popup.FadingPopup("Mars > Jezero Crater \n 1200 hours ", 6f);
                 }
-                else if(passTime == 4)
+                else if (passTime == 4)
                 {
                     passTime = 1;
                     _GM_Popup.FadingPopup("Mars > Jezero Crater \n 700 hours ", 6f);
@@ -126,8 +126,10 @@ public class GameManager : MonoBehaviour
 
                 _GM_Time.SetSceneLights(passTime);
             }
-
-            postProcessingVolume.SetActive(Settings.postProcessingActive);
         }
+        postProcessingVolume.SetActive(Settings.postProcessingActive);
+
+        // Animate loading into scene
+        GM_SceneLoader.StartScene();
     }
 }

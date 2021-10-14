@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DespawnOnTimer : MonoBehaviour
 {
+    private GM_Checkpoint _GM_Checkpoint => FindObjectOfType<GM_Checkpoint>();
+
     public bool returnToStart = true;
     public bool ignoreIfRespawn = false;
     public float despawnTimer = 5f;
@@ -13,6 +15,11 @@ public class DespawnOnTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(ignoreIfRespawn = true && _GM_Checkpoint.savedAtSafeZone)
+        {
+            gameObject.SetActive(false);
+        }
+
         _timer = Time.time;
 
         if(returnToStart)

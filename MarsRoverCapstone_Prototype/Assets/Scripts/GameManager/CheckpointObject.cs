@@ -85,8 +85,7 @@ public class CheckpointObject : MonoBehaviour
         // Prompt player to set safe zone
         if (col.gameObject.tag == "Player") 
         {
-
-            if(Input.GetKeyDown(KeyCode.E) && GM.currentSafeZone != this)
+            if (Input.GetKeyDown(KeyCode.E) && GM.currentSafeZone != this)
             {
                 GM.SetSafeZone(this);
                 flag.SetActive(true);
@@ -101,8 +100,9 @@ public class CheckpointObject : MonoBehaviour
                 prompt.text = "Press [H] to UPLOAD FINDINGS & pass the time...";
                 if (Input.GetKeyDown(KeyCode.H))
                 {
-                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                    //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                     safeZoneInfo.text = "<< SAFE ZONE >> \n Upload to NASA successful";
+                    StartCoroutine(GM_SceneLoader.LoadToScene("Scene_MainGame"));
                 }
             }
         }

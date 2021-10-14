@@ -48,6 +48,8 @@ public class IntroCameraDirector : MonoBehaviour
             i.SetActive(true);
         }
 
+        GM_SceneLoader.StartScene();
+
     }
 
     public void GoToCamera(int cameraPriority)
@@ -78,10 +80,9 @@ public class IntroCameraDirector : MonoBehaviour
         Debug.Log("Intro Camera: Current camera priority = sceneCamera[" + cameraPriority + "]");
     }
 
-    public void GoToScene(string sceneName)
+    public void GoToGame()
     {
-        SceneManager.LoadScene(sceneName);
-
+        StartCoroutine(GM_SceneLoader.LoadToScene("Scene_MainGame"));
     }
 
     public void LearnButton(int panelNum)

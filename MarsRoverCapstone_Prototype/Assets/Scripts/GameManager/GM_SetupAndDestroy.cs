@@ -6,15 +6,12 @@ public class GM_SetupAndDestroy : MonoBehaviour
 {
     GameManager GM => FindObjectOfType<GameManager>();
 
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
+    float waitToDestroy = 1f;
 
     // Update is called once per frame
     void Update()
     {
         GM.SceneSetup();
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
 }
