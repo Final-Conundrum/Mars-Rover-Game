@@ -80,7 +80,7 @@ public class MiniGame_RIMFAX : MonoBehaviour
                     // Sets randomized position of scan lines
                     for (int i = 0; i < scanningLines.Length; i++)
                     {
-                        if (scanningLines != null)
+                        if (scanningLines[i] != null)
                         {
                             scanningLines[i].transform.position = new Vector3(Random.Range(ScanPointA.transform.position.x, ScanPointB.transform.position.x), ScanPointA.transform.position.y, ScanPointA.transform.position.z);
                         }

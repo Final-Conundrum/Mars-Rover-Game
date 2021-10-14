@@ -5,6 +5,8 @@ using TMPro;
 
 public class GM_Objectives : MonoBehaviour
 {
+    public static GUI_Objectives ObjectiveGUI;
+
     // String used for UI objective display
     public static string objectivePIXLString, objectiveRIMFAXString, objectiveDrillString;
 
@@ -14,6 +16,8 @@ public class GM_Objectives : MonoBehaviour
 
     public static int _PIXLCurrent, _PIXLTotal, _RIMFAXCurrent, _RIMFAXTotal, _DrillCurrent, _DrillTotal;
     public static bool completedObjectives = false;
+
+    public static bool updatingObjectives = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,8 +32,11 @@ public class GM_Objectives : MonoBehaviour
         objectivePIXLString = "> Analyze minerals using the PIXL (" + _PIXLCurrent + "/" + _PIXLTotal + ")";
         objectiveRIMFAXString = "> Use RIMFAX to construct underground scans (" + _RIMFAXCurrent + "/" + _RIMFAXTotal + ")";
         objectiveDrillString = "> Use the Drill to clear and collect samples (" + _DrillCurrent + "/" + _DrillTotal + ")";
+
+        FindObjectiveGUI();
+        ObjectiveGUI.UpdateObjectives();
     }
-        
+
     public static void UpdateObjective(string objectiveType)
     {
         switch(objectiveType)
@@ -47,7 +54,6 @@ public class GM_Objectives : MonoBehaviour
             case "Drill":
                 _DrillCurrent++;
                 objectiveDrillString = "> Use the Drill to clear and collect samples (" + _DrillCurrent + "/" + _DrillTotal + ")";
-
                 break;
         }
 
@@ -55,5 +61,12 @@ public class GM_Objectives : MonoBehaviour
         {
             completedObjectives = true;
         }
+
+        ObjectiveGUI.UpdateObjectives();
+    }
+
+    public void FindObjectiveGUI()
+    {
+        ObjectiveGUI = FindObjectOfType<GUI_Objectives>();
     }
 }

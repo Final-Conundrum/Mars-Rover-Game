@@ -48,7 +48,6 @@ public class GUI_PauseMenu : MonoBehaviour
         }
         else if (pausedGame)
         {
-            Cursor.visible = false;
             ResumeGame();
         }
     }
@@ -56,6 +55,7 @@ public class GUI_PauseMenu : MonoBehaviour
     public void ResumeGame()
     {
         Time.timeScale = 1;
+        Cursor.visible = false;
 
         PauseMenu.SetActive(false);
         HUD.playerHUD.SetActive(true);

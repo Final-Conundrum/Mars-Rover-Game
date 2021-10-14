@@ -13,7 +13,6 @@ public class GUI_DeathScreen : MonoBehaviour
     {
         DeathPanel.SetActive(false);
         dead = false;
-        Time.timeScale = 0;
     }
 
     public void Display()
@@ -21,11 +20,11 @@ public class GUI_DeathScreen : MonoBehaviour
         Cursor.visible = true;
         DeathPanel.SetActive(true);
         dead = true;
+        Time.timeScale = 0;
     }
 
     public void Reboot()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        Time.timeScale = 1;
+        StartCoroutine(GM_SceneLoader.LoadToScene("Scene_MainGame"));
     }
 }

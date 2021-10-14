@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     private GM_Time _GM_Time => GetComponent<GM_Time>();
     private GM_Popup _GM_Popup => GetComponent<GM_Popup>();
     private GM_Audio _GM_Audio => GetComponent<GM_Audio>();
+    private GM_Objectives _GM_Objectives => GetComponent<GM_Objectives>();
 
     [SerializeField] public GameObject player;
     public GameObject postProcessingVolume;
@@ -128,6 +129,8 @@ public class GameManager : MonoBehaviour
             }
         }
         postProcessingVolume.SetActive(Settings.postProcessingActive);
+
+        _GM_Objectives.FindObjectiveGUI();
 
         // Animate loading into scene
         GM_SceneLoader.StartScene();
