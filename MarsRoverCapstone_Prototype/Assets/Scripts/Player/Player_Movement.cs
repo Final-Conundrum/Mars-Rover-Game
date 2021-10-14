@@ -28,6 +28,7 @@ public class Player_Movement : MonoBehaviour
     public bool tankControls = true;
     public Camera playerCam;
     public AudioSource audioSource => GetComponent<AudioSource>();
+    public ParticleSystem boostParticles;
 
     [Space]
 
@@ -92,6 +93,8 @@ public class Player_Movement : MonoBehaviour
         _rotateSpeed = rotateSpeed;
 
         boost = boostLimit;
+
+        boostParticles.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -124,6 +127,17 @@ public class Player_Movement : MonoBehaviour
                 tankControls = false;
             }
         }
+
+        if(Input.GetKeyDown(KeyCode.LeftShift) || (Input.GetKeyDown(KeyCode.RightShift)))
+        {
+            boostParticles.gameObject.SetActive(true);
+        }
+
+        if(Input.GetKeyUp(KeyCode.LeftShift) || (Input.GetKeyUp(KeyCode.RightShift)))
+        {
+            boostParticles.gameObject.SetActive(false);
+
+        }
     }
 
     // FixedUpdate reserved for modifying physics
@@ -144,7 +158,7 @@ public class Player_Movement : MonoBehaviour
                 _currentSpeed -= momentumIncrease;
             }
         }
-        else if((Input.GetAxis("Vertical") == 1 || Input.GetAxis("Vertical") == -1) && !(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) && _currentSpeed > midDriveSpeed)
+        else if((Input.GetAxis("Vertical") == 1 || Input.GetAxis("Vertical") == -1) && !(Input.GetKey(KeyCode.LeftShift) || !Input.GetKey(KeyCode.RightShift)) && _currentSpeed > midDriveSpeed)
         {
             _currentSpeed -= momentumIncrease;
         }
