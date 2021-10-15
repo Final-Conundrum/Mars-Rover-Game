@@ -10,7 +10,7 @@ public class GM_SceneLoader : MonoBehaviour
 
     public Canvas canvas;
 
-    private void Start()
+    private void Awake()
     {
         _transitionAnimation = transitionAnimation;
     }

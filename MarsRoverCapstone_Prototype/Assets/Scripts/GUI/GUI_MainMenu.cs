@@ -13,12 +13,12 @@ public class GUI_MainMenu : MonoBehaviour
     {
         DB.SetActive(false);
         settingsMenu.SetActive(false);
-
+        GM_SceneLoader.StartScene();
     }
 
     public void StartGame()
     {
-        SceneManager.LoadScene("IntroScene");
+        StartCoroutine(GM_SceneLoader.LoadToScene("IntroScene"));
     }
 
     public void Database(bool open)

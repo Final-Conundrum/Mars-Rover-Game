@@ -75,7 +75,7 @@ public class CheckpointObject : MonoBehaviour
             }
             else if(GM.currentSafeZone == this)
             {
-                prompt.text = "Press [H] to pass the time...";
+                prompt.text = "Press [H]  to UPLOAD FINDINGS & to pass the time...";
             }
         }
     }
@@ -95,13 +95,16 @@ public class CheckpointObject : MonoBehaviour
 
                 GM_Audio.PlaySound(audioSource, "MGWin");
             }
-            else if (GM.currentSafeZone == this)
+            
+            if (GM.currentSafeZone == this)
             {
                 prompt.text = "Press [H] to UPLOAD FINDINGS & pass the time...";
                 if (Input.GetKeyDown(KeyCode.H))
                 {
                     //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                     safeZoneInfo.text = "<< SAFE ZONE >> \n Upload to NASA successful";
+                    GM.SetSafeZone(this);
+
                     StartCoroutine(GM_SceneLoader.LoadToScene("Scene_MainGame"));
                 }
             }
