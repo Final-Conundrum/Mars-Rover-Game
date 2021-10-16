@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using Cinemachine;
 
 [RequireComponent(typeof(GM_Checkpoint))]
 [RequireComponent(typeof(GM_Time))]
+[RequireComponent(typeof(GM_Audio))]
+[RequireComponent(typeof(GM_Popup))]
+[RequireComponent(typeof(GM_Objectives))]
 
 public class GameManager : MonoBehaviour
 {
@@ -28,6 +32,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] public GameObject player;
     public static GameObject playerCamera;
+    public CinemachineVirtualCamera introCamera;
     public GameObject postProcessingVolume;
 
     private GeyserBurst[] geysers => FindObjectsOfType<GeyserBurst>();
@@ -60,6 +65,8 @@ public class GameManager : MonoBehaviour
         playerCamera = FindObjectOfType<Player_ParentObject>().Camera;
 
         postProcessingVolume.SetActive(Settings.postProcessingActive);
+
+        introCamera.Priority = 20;
     }
 
     // Update is called once per frame
@@ -84,7 +91,10 @@ public class GameManager : MonoBehaviour
         // Get Player and set
         player = FindObjectOfType<Player_Movement>().gameObject;
         _GM_Audio.player = player;
+
+        // Setup camera transiton
         playerCamera = FindObjectOfType<Player_ParentObject>().Camera;
+        introCamera.Priority = 20;
 
         //_GM_Audio.playerSource = player.GetComponent<AudioSource>();
 
@@ -136,5 +146,6 @@ public class GameManager : MonoBehaviour
 
         // Animate loading into scene
         GM_SceneLoader.StartScene();
+        introCamera.Priority = 0;
     }
 }
