@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     private GM_Objectives _GM_Objectives => GetComponent<GM_Objectives>();
 
     [SerializeField] public GameObject player;
+    public static GameObject playerCamera;
     public GameObject postProcessingVolume;
 
     private GeyserBurst[] geysers => FindObjectsOfType<GeyserBurst>();
@@ -56,6 +57,7 @@ public class GameManager : MonoBehaviour
     {
         //Set Cursor to not be visible
         //Cursor.visible = false;
+        playerCamera = FindObjectOfType<Player_ParentObject>().Camera;
 
         postProcessingVolume.SetActive(Settings.postProcessingActive);
     }
@@ -82,7 +84,7 @@ public class GameManager : MonoBehaviour
         // Get Player and set
         player = FindObjectOfType<Player_Movement>().gameObject;
         _GM_Audio.player = player;
-        GM_Checkpoint.playerCamera = FindObjectOfType<Player_ParentObject>().Camera;
+        playerCamera = FindObjectOfType<Player_ParentObject>().Camera;
 
         //_GM_Audio.playerSource = player.GetComponent<AudioSource>();
 

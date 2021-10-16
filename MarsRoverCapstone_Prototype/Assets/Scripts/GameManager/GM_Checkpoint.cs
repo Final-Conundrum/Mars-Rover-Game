@@ -22,7 +22,6 @@ public class GM_Checkpoint : MonoBehaviour
     
     public CheckpointObject[] safeZones;
 
-    public static GameObject playerCamera;
     public TMP_Text SZprompt;
 
     // Safe zone variables for setting the environment upon player respawn
@@ -37,8 +36,6 @@ public class GM_Checkpoint : MonoBehaviour
         {
             i.safeZoneInfo.text = SZintroText;
         }
-
-        playerCamera = FindObjectOfType<Player_ParentObject>().Camera;
     }
 
     public void SetSafeZone(CheckpointObject SZ)
@@ -57,7 +54,6 @@ public class GM_Checkpoint : MonoBehaviour
 
         currentSafeZone.safeZoneInfo.text = SZrandomText[num];
 
-        playerCamera = FindObjectOfType<Player_ParentObject>().Camera;
         SZprompt = GameObject.FindGameObjectWithTag("StaticPrompt").GetComponent<TMP_Text>();
 
         foreach (CheckpointObject i in safeZones)

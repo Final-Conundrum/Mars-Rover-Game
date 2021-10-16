@@ -46,7 +46,7 @@ public class CheckpointObject : MonoBehaviour
     private void Update()
     {
         // Make canvas format to the camera position
-        canvas.transform.LookAt(GM_Checkpoint.playerCamera.transform);
+        canvas.transform.LookAt(GameManager.playerCamera.transform);
 
         // Choose to display SZ Panel depending on player distance
         if (Vector3.Distance(transform.position, Player_ParentObject.staticCamera.transform.position) > distanceToDisplay)
@@ -55,7 +55,7 @@ public class CheckpointObject : MonoBehaviour
         }
         else
         {
-            float dist = (Vector3.Distance(transform.position, GM_Checkpoint.playerCamera.transform.position)) / 30;
+            float dist = (Vector3.Distance(transform.position, GameManager.playerCamera.transform.position)) / 30;
             SZPanelAppearance(true, new Vector3(dist, dist, dist));
         }
     }

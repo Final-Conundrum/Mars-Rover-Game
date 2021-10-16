@@ -12,13 +12,14 @@ public class GM_Audio : MonoBehaviour
 
     [Header("Player Rover Audio")]
     public GameObject player;
+    public AudioSource audioSource => GetComponent<AudioSource>();
 
     public AudioClip _drivingSFX, _jumpSFX, _landingSFX, _injurySFX, _deathSFX, _MGWinSFX, _scanSFX, _geyserSFX;
     public static AudioClip drivingSFX, jumpSFX, landingSFX, injurySFX, deathSFX, MGWinSFX, scanSFX, geyserSFX;
 
     [Header("Background Audio")]
-    public AudioSource _TTS_OpeningMessage;
-    public static AudioSource TTS_OpeningMessage;
+    public AudioSource _TTS_Message;
+    public static AudioSource TTS_Message;
     public float TTS_OpeningTimer = 10f;
 
     // Start is called before the first frame update
@@ -34,16 +35,16 @@ public class GM_Audio : MonoBehaviour
         drivingSFX = _drivingSFX;
         geyserSFX = _geyserSFX;
 
-        TTS_OpeningMessage = _TTS_OpeningMessage;
+        _TTS_Message = TTS_Message;
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Y) && !TTS_OpeningMessage.isPlaying)
+        if(Input.GetKeyDown(KeyCode.Y) && !TTS_Message.isPlaying)
         {
             TTSSound("Opening", true);
         }
-        else if(Input.GetKeyDown(KeyCode.Y) && TTS_OpeningMessage.isPlaying)
+        else if(Input.GetKeyDown(KeyCode.Y) && TTS_Message.isPlaying)
         {
             TTSSound("Opening", false);
         }
@@ -93,11 +94,11 @@ public class GM_Audio : MonoBehaviour
             case "Opening":
                 if(play)
                 {
-                    TTS_OpeningMessage.Play();
+                    TTS_Message.Play();
                 }
                 else
                 {
-                    TTS_OpeningMessage.Stop();
+                    TTS_Message.Stop();
                 }
                 break;
         }

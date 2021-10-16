@@ -9,7 +9,7 @@ public class MiniGame_PIXL : MonoBehaviour
     // VirtualCursor contains the MiniGame_PIXL_VirtualCursor script that is also required to function
 
     public static bool Completed = false;
-    private AudioSource audioSource => GetComponent<AudioSource>();
+    public AudioSource SFX_Beep;
 
     // Associated game objects
     public MiniGame_PIXL_VirtualCursor VirtualCursor;
@@ -65,8 +65,6 @@ public class MiniGame_PIXL : MonoBehaviour
         {
             // Hide scan maze and display info about the analysis screen
             case 1:
-                GM_Audio.PlaySound(audioSource, "MGWin");
-
                 ResultPanel.SetActive(true);
                 VirtualCursor.gameObject.SetActive(false);
                 Cursor.visible = true;
@@ -75,6 +73,9 @@ public class MiniGame_PIXL : MonoBehaviour
                 {
                     i.color = new Color(0, 0, 0, 1);
                 }
+
+                SFX_Beep.PlayOneShot(SFX_Beep.clip);
+
                 break;
         }
     }
@@ -82,8 +83,6 @@ public class MiniGame_PIXL : MonoBehaviour
     // End mini-game and display mineral analysis
     public void Exit()
     {
-        GM_Audio.PlaySound(audioSource, "MGWin");
-
         Time.timeScale = 1;
         Completed = true;
         Cursor.visible = true;

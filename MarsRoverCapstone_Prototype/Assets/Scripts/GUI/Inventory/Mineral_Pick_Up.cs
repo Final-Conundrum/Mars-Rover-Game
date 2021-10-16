@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using UnityEngine.Animations;
 public class Mineral_Pick_Up : MonoBehaviour
 {
 
@@ -22,7 +22,7 @@ public class Mineral_Pick_Up : MonoBehaviour
     private void Update()
     {
         // Make canvas format to the camera position
-        canvas.transform.LookAt(GM_Checkpoint.playerCamera.transform);
+        canvas.transform.LookAt(GameManager.playerCamera.transform);
     }
 
     private void OnTriggerEnter(Collider other)

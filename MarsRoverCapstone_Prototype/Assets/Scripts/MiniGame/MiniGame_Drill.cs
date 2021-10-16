@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class MiniGame_Drill : MonoBehaviour
 {
-    // This script runs the drill minigame
+    // UI Elements
 
     public static bool completed = false;
     public Button ButtonActive;
@@ -15,6 +15,11 @@ public class MiniGame_Drill : MonoBehaviour
     public GameObject failText;
     public GameObject warningText;
 
+    // Audio
+    public AudioSource drillingSFX;
+    public AudioSource beepSFX;
+
+    // Variables for time
     public float DrillTime = 0f;
     public float WinTime = 10f;
 
@@ -79,17 +84,21 @@ public class MiniGame_Drill : MonoBehaviour
 
         DrillSlider.value = DrillTime;
         WinMiniGame();
+
+        drillingSFX.pitch = DrillTime / 3;
     }
 
 
     // Win
     public void WinMiniGame()
     {
+        drillingSFX.Stop();
+
         if (DrillTime >= WinTime)
         {
             Exit();
         }
-     
+        
     }
     // CoolDown
    public void CoolDown()
@@ -128,6 +137,7 @@ public class MiniGame_Drill : MonoBehaviour
         OnClickTrigger = Time.time;
         CoolDownTime = Random.Range(3f, 10f);
 
+        drillingSFX.Play();
     }
 
     public void OnRelease()
@@ -137,5 +147,7 @@ public class MiniGame_Drill : MonoBehaviour
         {
             DrillTime = 0;
         }
+
+        drillingSFX.Stop();
     }
 }
