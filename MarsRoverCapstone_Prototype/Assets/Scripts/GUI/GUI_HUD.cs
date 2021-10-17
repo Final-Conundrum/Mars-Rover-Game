@@ -9,6 +9,8 @@ public class GUI_HUD : MonoBehaviour
     Player_Movement PM => FindObjectOfType<Player_Movement>();
     GM_Checkpoint GM => FindObjectOfType<GM_Checkpoint>();
 
+    public Animator transitionAnimation;
+
     // UI Sliders
     public TMP_Text health;
     public Slider healthSlider;
@@ -67,6 +69,8 @@ public class GUI_HUD : MonoBehaviour
         boostSlider.minValue = 0f;
 
         damageOverlay.SetActive(false);
+
+        transitionAnimation.SetBool("Transition", true);
     }
 
     // Update is called once per frame
