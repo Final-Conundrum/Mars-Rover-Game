@@ -29,8 +29,8 @@ public class GUI_infoPanel : MonoBehaviour
 
     //other
     public bool isWarning; //This will help determine which panels should self destruct after popping up. (ensure to destroy game object trigger too)
-    public List<string> factStrings; 
-    public string defaultFact = "Perseverance can only move 152 meters per hour!";
+    public List<string> factStrings = new List<string>(); 
+    public string defaultFact = "Perseverance moves at a speed of 152 meters per hour!";
 
     //coroutine variables
     public float maxCount = 10f;
@@ -42,6 +42,16 @@ public class GUI_infoPanel : MonoBehaviour
        panelImage = infoPanel.GetComponent<Image>();
         panelImage.CrossFadeAlpha(1f, 0f, false);
         currentAlpha = _canvasGroup.alpha;
+
+        //Fill the list
+        factStrings.Add("Ingenuity is the small helicopter that went to Mars with Perseverance, it's first flight was on April 19th, 2021"); 
+        factStrings.Add("Perseverance weighs 1025 Kilograms and is the size of a small car");
+        factStrings.Add(defaultFact);
+        factStrings.Add("Mars is home to the highest volcano and mountain in the ENTIRE universe! it's 24KM high.");
+        factStrings.Add("Sounds of wind on Mars have been recorded and can be found on SoundCloud");
+        factStrings.Add("It's understood by scientists that Jezero Crater was filled with water 3.5 billion years ago.");
+        Debug.Log(factStrings.Count.ToString());
+
     }
     // Start is called before the first frame update
     void Start()
@@ -53,24 +63,35 @@ public class GUI_infoPanel : MonoBehaviour
         FACT_TEXT = factText;
         infoPanel.SetActive(false);
         factPanel.SetActive(false);
-        if(factStrings.Count == 0)
+
+        //Fill the list with something to avoid a crash
+        if (factStrings.Count == 0)
         {
             factStrings.Add(defaultFact);
+            factStrings.Add("The list is empty and we are using the defualt string");
         }
     }
 
     public void CheckPointMessage() 
     {
         infoPanel.SetActive(true);
-        infoText.text = "> Be advised that on your journey you will encounter many hazrads.";
+        infoText.text = "> You have reached a checkpoint! ";
         isWarning = true;
+        FadePanel();
+    }
+
+    public void OnApproachNotification()
+    {
+        infoPanel.SetActive(true);
+        infoText.text = "> There's a potential sample nearby that we should check out!";
+        isWarning = false;
         FadePanel();
     }
 
     public void AragoniteText()
     {
         infoPanel.SetActive(true);
-        infoText.text = "> You have collected: Aragonite! \n > Open the Database to view your collection";
+        infoText.text = "> You have collected: Aragonite!";
         FadePanel();
     }
 
@@ -98,32 +119,29 @@ public class GUI_infoPanel : MonoBehaviour
     {
         infoPanel.SetActive(true);
         isWarning = true;
-        infoText.text = "Warning: Martain dust can often settle on machinery and cause damage. \n It would be best to avoid it.";
+        infoText.text = "> Martain dust can often settle on machinery and cause damage. \n It would be best to avoid it.";
         FadePanel();
     }
 
     public void ActivateFactPanel()
     {
-        infoPanel.SetActive(false); //if this works, will need to put fact panel as its own thing
+        infoPanel.SetActive(false);
         factPanel.SetActive(true);
         
         FadePanel();
     }
-
-    /*
-    string GenerateFact()
+     public void GenerateFact() 
     {
-        string fact;
-        //if triggered start cycling through the list, moving to the next variable every trigger
-        for (int i = 0; i < factStrings.Count; i++)
+        for(int i = 0; i < factStrings.Count; i++)
         {
-            factText.SetText(factStrings[i]);
+            int index = Random.Range(1, factStrings.Count); //our 'random' number variable 
+            factText.text = factStrings[index];
             i++;
-            fact = factStrings[i];
+            Debug.Log("Currently printing fact: " + factStrings[index].ToString());
         }
-        
-        return fact; //change to return new string
-    }*/
+       
+    }
+    
 
     //call this to invoke coroutine
     public void FadePanel()

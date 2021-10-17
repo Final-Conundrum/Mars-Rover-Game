@@ -11,9 +11,10 @@ public class GUI_PauseMenu : MonoBehaviour
 
     public GameObject PauseMenu;
     public GameObject EndOfLevelMenu;
+    public GameObject IncompleteEndOfLevelMenu;
     public GameObject DataBaseMenu;
     public GameObject DataBaseReturnButton;
-
+    public GameObject SettingsMenu;
     public static bool pausedGame = false;
 
     // Start is called before the first frame update
@@ -22,6 +23,8 @@ public class GUI_PauseMenu : MonoBehaviour
         PauseMenu.SetActive(false);
         EndOfLevelMenu.SetActive(false);
         DataBaseMenu.SetActive(false);
+        SettingsMenu.SetActive(false);
+
     }
 
     // Update is called once per frame
@@ -65,6 +68,11 @@ public class GUI_PauseMenu : MonoBehaviour
         _GM_Checkpoint.savedAtSafeZone = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1;
+    }
+
+    public void OpenSettings(bool open)
+    {
+        SettingsMenu.SetActive(open);
     }
 
     public void OpenDataBase(bool open)

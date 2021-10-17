@@ -11,6 +11,7 @@ public class Player_Stats : MonoBehaviour
      * and then again right after.
     */
     public static GUI_DeathScreen DeathScreen => FindObjectOfType<GUI_DeathScreen>();
+    public static GUI_HUD HUD => FindObjectOfType<GUI_HUD>();
     public AudioSource _audioSource => GetComponent<AudioSource>();
     public static AudioSource audioSource;
 
@@ -38,6 +39,7 @@ public class Player_Stats : MonoBehaviour
         healthCheck();
 
         GM_Audio.PlaySound(audioSource, "Injury");
+        HUD.DamagePlayer();
     }
 
     //Checks the players current health
@@ -48,11 +50,5 @@ public class Player_Stats : MonoBehaviour
             Destroy(player);
             DeathScreen.Display();
         }
-    }
-
-    // Update is called once per frame
-    public static void Update()
-    {
-        
     }
 }

@@ -30,11 +30,18 @@ public class Player_Collision : MonoBehaviour
         {
             if(transform.position.y <= exitPosY - PM.fallDamageHeight)
             {
-                Player_Stats.TakeDamage(30);
+                Player_Stats.TakeDamage(25);
                 Player_Movement.grounded = true;
 
                 Debug.Log(gameObject.name + ": Player_Collision, Player should take fall damage here...");
             }
+        }
+
+        if (c.gameObject.tag == "Ground")
+        {
+            //GM_Audio.StopSound(PM.audioSource);
+            PM.audioSource.clip = GM_Audio.drivingSFX;
+            PM.audioSource.Play();
         }
 
         if (c.gameObject.tag == "Hazard")
@@ -51,6 +58,12 @@ public class Player_Collision : MonoBehaviour
             Player_Movement.coyoteTime = Time.time + PM._coyoteTime;
             Player_Movement.grounded = true;
             jumpingFromGeyser = false;
+
+            if(!PM.audioSource.isPlaying)
+            {
+                PM.audioSource.clip = GM_Audio.drivingSFX;
+                PM.audioSource.Play();
+            }
         }
     }
 
@@ -76,7 +89,18 @@ public class Player_Collision : MonoBehaviour
 
         if (c.gameObject.tag == "Hazard")
         {
-            Player_Stats.TakeDamage(10);
+            Player_Stats.TakeDamage(5);
+        }
+
+        if (c.gameObject.tag == "HazardRock" && PM.takeFallDamage)
+        {
+            if (transform.position.y <= exitPosY - PM.fallDamageHeight)
+            {
+                Player_Stats.TakeDamage(30);
+                Player_Movement.grounded = true;
+
+                Debug.Log(gameObject.name + ": Player_Collision, Player should take fall damage here from Hazardous Rock...");
+            }
         }
 
         // Call Mini-Game script when interacting with mineral
@@ -86,30 +110,39 @@ public class Player_Collision : MonoBehaviour
             //InfoPanel.AragoniteText();
 
             GUI_HUD.staticPrompt.gameObject.SetActive(true);
-            GUI_HUD.staticPrompt.text = "Press 'E' to analyze with the PIXL camera...";
+            GUI_HUD.staticPrompt.text = "Press [E] to analyze with the PIXL camera...";
+        }
 
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                MiniGame.MiniGame_PIXL();
-                GUI_HUD.staticPrompt.gameObject.SetActive(false);
-            }
+        if(c.gameObject.tag == "RIMFAX")
+        {
+            GUI_HUD.staticPrompt.gameObject.SetActive(true);
+            GUI_HUD.staticPrompt.text = "Press [E] to scan underground with RIMFAX...";
+        }
+
+        if(c.gameObject.tag == "Drill")
+        {
+            GUI_HUD.staticPrompt.gameObject.SetActive(true);
+            GUI_HUD.staticPrompt.text = "Press [E] to DRILL for sample...";
         }
 
         if(c.gameObject.tag == "SafeZone")
         {
             //InfoPanel.CheckPointText();
             GUI_HUD.staticPrompt.gameObject.SetActive(true);
-            GUI_HUD.staticPrompt.text = "Press 'E' to set Safe Zone...";
+            GUI_HUD.staticPrompt.text = "Press [E] to set Safe Zone...";
+            //InfoPanel.CheckPointMessage();
         }
 
         if (c.gameObject.tag == "DustNotification")
         {
             InfoPanel.DustDevilNotification();
         }
+
         if (c.gameObject.CompareTag("FactTrigger"))
         {
-            //  InfoPanel.factText.SetText(InfoPanel.factStrings[0]);
+            InfoPanel.GenerateFact();
             InfoPanel.ActivateFactPanel();
+         //   c.gameObject.SetActive(false);
         }
     }
 
@@ -122,6 +155,28 @@ public class Player_Collision : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 MiniGame.MiniGame_PIXL();
+                GUI_HUD.staticPrompt.gameObject.SetActive(false);
+                c.gameObject.SetActive(false);
+            }
+        }
+
+        if (c.gameObject.tag == "RIMFAX")
+        {
+            // Open Mini-Game
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                MiniGame.MiniGame_RIMFAX();
+                GUI_HUD.staticPrompt.gameObject.SetActive(false);
+                c.gameObject.SetActive(false);
+            }
+        }
+
+        if(c.gameObject.tag == "Drill")
+        {
+            // Open Mini-Game
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                MiniGame.MiniGame_DRILL();
                 GUI_HUD.staticPrompt.gameObject.SetActive(false);
                 c.gameObject.SetActive(false);
             }
@@ -149,7 +204,7 @@ public class Player_Collision : MonoBehaviour
         }
 
         // Disable prompt after leaving mineral
-        if (c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar" || c.gameObject.tag == "Random")
+        if (c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar" || c.gameObject.tag == "Random" || c.gameObject.tag == "RIMFAX")
         {
             GUI_HUD.staticPrompt.gameObject.SetActive(false);
         }

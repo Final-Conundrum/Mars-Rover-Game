@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GeyserBurst : MonoBehaviour
 {
+    public AudioSource audioSource => GetComponent<AudioSource>();
+
     public GameObject geyserBurst;
 
     // Position object
@@ -11,8 +13,6 @@ public class GeyserBurst : MonoBehaviour
     public Transform posB;
 
     public float burstSpeed = 5f;
-
-    private bool bursting = false;
 
     // Timers
     public float timerBetweenBurst = 5f;
@@ -33,18 +33,20 @@ public class GeyserBurst : MonoBehaviour
     void Update()
     {
         // Spawn golf ball every timer check
-        if (Time.timeSinceLevelLoad > timerBetweenBurst)
+        if (Time.time > timerBetweenBurst)
         {
             geyserBurst.SetActive(true);
 
             // Set time to despawn geyser burst
-            timerDuringBurst = Time.timeSinceLevelLoad + _timerDuringAdd;
+            timerDuringBurst = Time.time + _timerDuringAdd;
 
             // Set time for next burst
-            timerBetweenBurst = Time.timeSinceLevelLoad + (_timerBetweenAdd + _timerDuringAdd);
+            timerBetweenBurst = Time.time + (_timerBetweenAdd + _timerDuringAdd);
 
             // Transform position of geyser
-            geyserBurst.transform.position = posA.position;       
+            geyserBurst.transform.position = posA.position;
+
+            GM_Audio.PlaySound(audioSource, "Geyser");
         }
 
         // Move position of geyser
@@ -54,10 +56,9 @@ public class GeyserBurst : MonoBehaviour
         }
 
         // Despawn geyser burst
-        if (Time.timeSinceLevelLoad > timerDuringBurst)
+        if (Time.time > timerDuringBurst)
         {
             geyserBurst.SetActive(false);
-
         }
     }
 }

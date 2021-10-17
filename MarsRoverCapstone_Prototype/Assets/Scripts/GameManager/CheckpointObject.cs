@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Animations;
-
+using UnityEngine.SceneManagement;
 public class CheckpointObject : MonoBehaviour
 {
     /* Edited by: Dallas
@@ -19,6 +19,7 @@ public class CheckpointObject : MonoBehaviour
 
     // Find GameManager of checkpoints
     private GM_Checkpoint GM => FindObjectOfType<GM_Checkpoint>();
+    public AudioSource audioSource => GetComponent<AudioSource>();
 
     // Aesthetics of checkpoints
     public Canvas canvas;
@@ -45,7 +46,7 @@ public class CheckpointObject : MonoBehaviour
     private void Update()
     {
         // Make canvas format to the camera position
-        canvas.transform.LookAt(GM.playerCamera.transform);
+        canvas.transform.LookAt(GM_Checkpoint.playerCamera.transform);
 
         // Choose to display SZ Panel depending on player distance
         if (Vector3.Distance(transform.position, Player_ParentObject.staticCamera.transform.position) > distanceToDisplay)
@@ -54,7 +55,7 @@ public class CheckpointObject : MonoBehaviour
         }
         else
         {
-            float dist = (Vector3.Distance(transform.position, GM.playerCamera.transform.position)) / 30;
+            float dist = (Vector3.Distance(transform.position, GM_Checkpoint.playerCamera.transform.position)) / 30;
             SZPanelAppearance(true, new Vector3(dist, dist, dist));
         }
     }
@@ -67,7 +68,15 @@ public class CheckpointObject : MonoBehaviour
         {
             // Display prompt
             prompt.gameObject.SetActive(true);
-            prompt.text = "Press 'E' to set Safe Zone here...";
+
+            if(GM.currentSafeZone != this)
+            {
+                prompt.text = "Press [E] to set Safe Zone here...";
+            }
+            else if(GM.currentSafeZone == this)
+            {
+                prompt.text = "Press [H] to pass the time...";
+            }
         }
     }
 
@@ -77,13 +86,24 @@ public class CheckpointObject : MonoBehaviour
         if (col.gameObject.tag == "Player") 
         {
 
-            if(Input.GetKeyDown(KeyCode.E))
+            if(Input.GetKeyDown(KeyCode.E) && GM.currentSafeZone != this)
             {
                 GM.SetSafeZone(this);
                 flag.SetActive(true);
                 icon.gameObject.SetActive(false);
 
                 safeZoneInfo.text = "<< SAFE ZONE >> \n This is Perseverance's current Reboot area";
+
+                GM_Audio.PlaySound(audioSource, "MGWin");
+            }
+            else if (GM.currentSafeZone == this)
+            {
+                prompt.text = "Press [H] to UPLOAD FINDINGS & pass the time...";
+                if (Input.GetKeyDown(KeyCode.H))
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                    safeZoneInfo.text = "<< SAFE ZONE >> \n Upload to NASA successful";
+                }
             }
         }
     }

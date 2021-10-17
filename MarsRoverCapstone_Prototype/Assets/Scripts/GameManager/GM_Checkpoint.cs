@@ -23,7 +23,7 @@ public class GM_Checkpoint : MonoBehaviour
     
     public CheckpointObject[] safeZones;
 
-    public GameObject playerCamera;
+    public static GameObject playerCamera;
 
     // Safe zone variables for setting the environment upon player respawn
     public string SZintroText = "Potential \n > SAFE ZONE <";

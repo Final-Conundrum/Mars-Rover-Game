@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1657098338586555333}
   - component: {fileID: 5524708134475547435}
   - component: {fileID: 2063001664408178719}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2538411086904226773}
   - component: {fileID: 4569268872809005103}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: NASA Logo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 1206992127711272101}
   - component: {fileID: 2764329590178366191}
   - component: {fileID: 5816765723051567709}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Flag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,7 +266,7 @@ GameObject:
   - component: {fileID: 6099614317159918826}
   - component: {fileID: 1126944309372439427}
   - component: {fileID: 936204787107315522}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: BG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -342,7 +342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4095878735675056712}
   - component: {fileID: 2847715166304833705}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Area Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -437,7 +437,7 @@ GameObject:
   - component: {fileID: 6488826751035145802}
   - component: {fileID: 6488826751035145805}
   - component: {fileID: 6488826751035145804}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -538,7 +538,7 @@ GameObject:
   - component: {fileID: 6488826751265738720}
   - component: {fileID: 6488826751265738723}
   - component: {fileID: 6488826751265738721}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: RebootDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -696,7 +696,7 @@ GameObject:
   - component: {fileID: 6488826752849692333}
   - component: {fileID: 6488826752849692331}
   - component: {fileID: 6488826752849692330}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -774,7 +774,8 @@ GameObject:
   - component: {fileID: 6488826752972918490}
   - component: {fileID: 6488826752972918489}
   - component: {fileID: 6228153365874137334}
-  m_Layer: 0
+  - component: {fileID: 6164227212488030161}
+  m_Layer: 9
   m_Name: SafeZone
   m_TagString: SafeZone
   m_Icon: {fileID: 0}
@@ -890,6 +891,111 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c7a7b1079ee97748a93d1a580b0d161, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!82 &6164227212488030161
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6488826752972918492}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 58d9af2ac81c89442a470eb9d68a35e9, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.623
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 100
+  Pan2D: 0
+  rolloffMode: 2
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.01
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.17138672
+      value: 0.2579996
+      inSlope: -1.0101011
+      outSlope: -1.0101011
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -1.010101
+      outSlope: -1.010101
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.9
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &6752113994321058783
 GameObject:
   m_ObjectHideFlags: 0
@@ -900,7 +1006,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2810733975748084191}
   - component: {fileID: 5314906721840742597}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: NASA Logo (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -984,7 +1090,7 @@ GameObject:
   - component: {fileID: 7999000531245432089}
   - component: {fileID: 1973247175396745579}
   - component: {fileID: 1236311743749625458}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FlagPole
   m_TagString: Untagged
   m_Icon: {fileID: 0}

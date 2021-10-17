@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     private GM_Audio _GM_Audio => GetComponent<GM_Audio>();
 
     [SerializeField] public GameObject player;
+    public GameObject postProcessingVolume;
+
+    private GeyserBurst[] geysers => FindObjectsOfType<GeyserBurst>();
 
     // Passage of Time variables
     public bool usePassageOfTime = true;
@@ -52,16 +55,22 @@ public class GameManager : MonoBehaviour
     {
         //Set Cursor to not be visible
         //Cursor.visible = false;
+
+        postProcessingVolume.SetActive(Settings.postProcessingActive);
     }
 
     // Update is called once per frame
     void Update()
     {
         // Testing checkpoints
+        /*
         if (Input.GetKeyDown(KeyCode.Return))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }       
+        }*/
+
+        postProcessingVolume.SetActive(Settings.postProcessingActive);
+
     }
 
     // Collect variables and set the scene upon scene reload
@@ -72,6 +81,8 @@ public class GameManager : MonoBehaviour
         // Get Player and set
         player = FindObjectOfType<Player_Movement>().gameObject;
         _GM_Audio.player = player;
+        GM_Checkpoint.playerCamera = FindObjectOfType<Player_ParentObject>().Camera;
+
         //_GM_Audio.playerSource = player.GetComponent<AudioSource>();
 
         // Set player position to respawn point
@@ -115,6 +126,8 @@ public class GameManager : MonoBehaviour
 
                 _GM_Time.SetSceneLights(passTime);
             }
+
+            postProcessingVolume.SetActive(Settings.postProcessingActive);
         }
     }
 }

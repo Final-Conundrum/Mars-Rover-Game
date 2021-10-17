@@ -29,14 +29,16 @@ public class GUI_HUD : MonoBehaviour
     public GameObject chooseControlsPanel;
 
     public GameObject inventory;
-    public GameObject objectives;
 
     public TMP_Text mockupPrompt;
     public static TMP_Text staticPrompt;
 
     // Reusable colour values
-    private Color green = new Color(0, 255f, 0, 50f);
-    private Color red = new Color(255f, 0, 0, 50f);
+    private Color greenBoost = new Color(0f, 150f, 0f, 0.6f);
+    private Color redBoost = new Color(255f, 0, 0, 0.6f);
+
+    public GameObject damageOverlay;
+    private float damageTimer;
 
     // Start is called before the first frame update
     void Start()
@@ -53,7 +55,8 @@ public class GUI_HUD : MonoBehaviour
             Cursor.visible = true;
             Time.timeScale = 0;
 
-            info_panel.SetActive(true);
+            chooseControlsPanel.SetActive(true);
+            //info_panel.SetActive(true);
 
             playerHUD.SetActive(false);
         }
@@ -63,6 +66,8 @@ public class GUI_HUD : MonoBehaviour
         // Set values of Boost Slider
         boostSlider.maxValue = PM.boostLimit;
         boostSlider.minValue = 0f;
+
+        damageOverlay.SetActive(false);
     }
 
     // Update is called once per frame
@@ -76,41 +81,20 @@ public class GUI_HUD : MonoBehaviour
         // Update Boost slider
         if(PM.boost > 0.5f) 
         {
-            boostSliderHandle.color = Color.green;
-            boosterSliderColour.color = green;
+            //boostSliderHandle.color = Color.green;
+            boosterSliderColour.color = greenBoost;
         }
         else
         {
-            boostSliderHandle.color = Color.red;
-            boosterSliderColour.color = red;
+            //boostSliderHandle.color = Color.red;
+            boosterSliderColour.color = redBoost;
         }
 
         boostSlider.value = PM.boost;
 
-        // Update Elevation information and fall damge
-        elevation.text = "Ground Dist.: " + Player_Movement.elevation;
-        elevationSlider.value = Player_Movement.elevation;
-
-        if(elevationSlider.value < PM.fallDamageHeight)
+        if (Time.time > damageTimer)
         {
-            elevationSliderHandle.color = green;
-        }
-        else
-        {
-            elevationSliderHandle.color = red;
-        }
-        FallDamageCheck();
-    }
-
-    public void FallDamageCheck()
-    {
-        if (PM.takeFallDamage == false)
-        {
-            elevationSliderColour.color = green;
-        }
-        else
-        {
-            elevationSliderColour.color = red;
+            damageOverlay.SetActive(false);
         }
     }
 
@@ -133,5 +117,11 @@ public class GUI_HUD : MonoBehaviour
     {
         PM.tankControls = tankControls;
         chooseControlsPanel.SetActive(false);
+    }
+
+    public void DamagePlayer()
+    {
+        damageOverlay.SetActive(true);
+        damageTimer = Time.time + 1f;
     }
 }
