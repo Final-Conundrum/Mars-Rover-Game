@@ -6,6 +6,7 @@ using TMPro;
 public class GM_Objectives : MonoBehaviour
 {
     public static GUI_Objectives ObjectiveGUI;
+    public static GUI_infoPanel playerPopup;
 
     // Objective audio
     public AudioSource audioSource => GetComponent<AudioSource>();
@@ -43,8 +44,6 @@ public class GM_Objectives : MonoBehaviour
         _Obj_PIXL_TTS = Obj_PIXL_TTS;
         _Obj_RIMFAX_TTS = Obj_RIMFAX_TTS;
         _Obj_Drill_TTS = Obj_Drill_TTS;
-
-
 
         objectivePIXLString = "> Analyze minerals using the PIXL (" + _PIXLCurrent + "/" + _PIXLTotal + ")";
         objectiveRIMFAXString = "> Use RIMFAX to construct underground scans (" + _RIMFAXCurrent + "/" + _RIMFAXTotal + ")";
@@ -84,6 +83,7 @@ public class GM_Objectives : MonoBehaviour
         }
 
         ObjectiveGUI.UpdateObjectives();
+        playerPopup.StartCoroutine(GUI_infoPanel.ImageFadeout());
     }
 
     public void FindObjectiveGUI()

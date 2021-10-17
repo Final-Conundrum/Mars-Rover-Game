@@ -95,7 +95,6 @@ public class GameManager : MonoBehaviour
         // Setup camera transiton
         playerCamera = FindObjectOfType<Player_ParentObject>().Camera;
         introCamera.Priority = 20;
-
         //_GM_Audio.playerSource = player.GetComponent<AudioSource>();
 
         // Set player position to respawn point
@@ -147,5 +146,7 @@ public class GameManager : MonoBehaviour
         // Animate loading into scene
         GM_SceneLoader.StartScene();
         introCamera.Priority = 0;
+
+        GM_Objectives.playerPopup = FindObjectOfType<GUI_infoPanel>();
     }
 }

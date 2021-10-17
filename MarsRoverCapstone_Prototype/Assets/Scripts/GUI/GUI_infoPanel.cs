@@ -26,6 +26,8 @@ public class GUI_infoPanel : MonoBehaviour
     public TMP_Text infoText;
     public GameObject factPanel;
     public TMP_Text factText;
+    public GameObject checkmarkIcon;
+    public static GameObject _checkmarkIcon;
 
     //other
     public bool isWarning; //This will help determine which panels should self destruct after popping up. (ensure to destroy game object trigger too)
@@ -66,6 +68,9 @@ public class GUI_infoPanel : MonoBehaviour
         FACT_TEXT = factText;
         infoPanel.SetActive(false);
         factPanel.SetActive(false);
+
+        _checkmarkIcon = checkmarkIcon;
+        _checkmarkIcon.gameObject.SetActive(false);
 
         //Fill the list with something to avoid a crash
         if (factStrings.Count == 0)
@@ -144,7 +149,6 @@ public class GUI_infoPanel : MonoBehaviour
         }
        
     }
-    
 
     //call this to invoke coroutine
     public void FadePanel()
@@ -165,4 +169,12 @@ public class GUI_infoPanel : MonoBehaviour
         yield return null;
     }  
 
+    public static IEnumerator ImageFadeout()
+    {
+        _checkmarkIcon.gameObject.SetActive(true);
+        _checkmarkIcon.GetComponent<Animator>().SetBool("Fade", true);
+        yield return new WaitForSeconds(5f);
+        _checkmarkIcon.GetComponent<Animator>().SetBool("Fade", false);
+        _checkmarkIcon.gameObject.SetActive(false);
+    }
 }
