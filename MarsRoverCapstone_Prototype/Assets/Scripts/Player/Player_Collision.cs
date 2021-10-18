@@ -108,28 +108,17 @@ public class Player_Collision : MonoBehaviour
             GUI_MineralAnalysis.currentMineral = c.gameObject.tag;
             //InfoPanel.AragoniteText();
 
-            GUI_HUD.staticPrompt.gameObject.SetActive(true);
-            GUI_HUD.staticPrompt.text = "Press [E] to analyze with the PIXL camera...";
+            GUI_HUD.UpdatePrompt("E", "Analyze with the PIXL camera", true);
         }
 
         if(c.gameObject.tag == "RIMFAX")
         {
-            GUI_HUD.staticPrompt.gameObject.SetActive(true);
-            GUI_HUD.staticPrompt.text = "Press [E] to scan underground with RIMFAX...";
+            GUI_HUD.UpdatePrompt("E", "Scan underground with RIMFAX", true);
         }
 
-        if(c.gameObject.tag == "Drill")
+        if (c.gameObject.tag == "Drill")
         {
-            GUI_HUD.staticPrompt.gameObject.SetActive(true);
-            GUI_HUD.staticPrompt.text = "Press [E] to DRILL for sample...";
-        }
-
-        if(c.gameObject.tag == "SafeZone")
-        {
-            //InfoPanel.CheckPointText();
-            GUI_HUD.staticPrompt.gameObject.SetActive(true);
-            GUI_HUD.staticPrompt.text = "Press [E] to set Safe Zone...";
-            //InfoPanel.CheckPointMessage();
+            GUI_HUD.UpdatePrompt("E", "DRILL for sample", true);
         }
 
         if (c.gameObject.tag == "DustNotification")
@@ -154,7 +143,7 @@ public class Player_Collision : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 MiniGame.MiniGame_PIXL();
-                GUI_HUD.staticPrompt.gameObject.SetActive(false);
+                GUI_HUD.UpdatePrompt("", "", false);
                 c.gameObject.GetComponent<MiniGame_PIXLMineral>().CompleteThis();
                 c.gameObject.SetActive(false);
             }
@@ -166,7 +155,7 @@ public class Player_Collision : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 MiniGame.MiniGame_RIMFAX();
-                GUI_HUD.staticPrompt.gameObject.SetActive(false);
+                GUI_HUD.UpdatePrompt("", "", false);
                 c.gameObject.GetComponent<MiniGame_RIMFAXLocation>().CompleteThis();
                 c.gameObject.SetActive(false);
             }
@@ -178,7 +167,7 @@ public class Player_Collision : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 MiniGame.MiniGame_DRILL();
-                GUI_HUD.staticPrompt.gameObject.SetActive(false);
+                GUI_HUD.UpdatePrompt("", "", false);
                 c.gameObject.GetComponent<MiniGame_DrillLocation>().CompleteThis();
                 c.gameObject.SetActive(false);
             }
@@ -208,7 +197,7 @@ public class Player_Collision : MonoBehaviour
         // Disable prompt after leaving mineral
         if (c.gameObject.tag == "PIXLMineral" || c.gameObject.tag == "RIMFAX" || c.gameObject.tag == "Drill" || c.gameObject.tag == "SafeZone")
         {
-            GUI_HUD.staticPrompt.gameObject.SetActive(false);
+            GUI_HUD.UpdatePrompt("", "", false);
         }
     }
 }

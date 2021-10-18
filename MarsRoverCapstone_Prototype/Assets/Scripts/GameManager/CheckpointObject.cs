@@ -31,8 +31,6 @@ public class CheckpointObject : MonoBehaviour
     public Image background;
     public float distanceToDisplay = 10f;
 
-    public TMP_Text prompt;
-
     // Objects
     public GameObject flag;
 
@@ -40,7 +38,6 @@ public class CheckpointObject : MonoBehaviour
     {
         // Reset SZ
         flag.SetActive(false);
-        prompt.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -67,15 +64,13 @@ public class CheckpointObject : MonoBehaviour
         if(col.gameObject.tag == "Player")
         {
             // Display prompt
-            prompt.gameObject.SetActive(true);
-
             if(GM.currentSafeZone != this)
             {
-                prompt.text = "Press [E] to set Safe Zone here...";
+                GUI_HUD.UpdatePrompt("E", "Set Safe Zone here", true);
             }
             else if(GM.currentSafeZone == this)
             {
-                prompt.text = "Press [H]  to UPLOAD FINDINGS & to pass the time...";
+                GUI_HUD.UpdatePrompt("H", "UPLOAD FINDINGS & to pass the time", true);
             }
         }
     }
@@ -98,7 +93,8 @@ public class CheckpointObject : MonoBehaviour
             
             if (GM.currentSafeZone == this)
             {
-                prompt.text = "Press [H] to UPLOAD FINDINGS & pass the time...";
+                GUI_HUD.UpdatePrompt("H", "UPLOAD FINDINGS & to pass the time", true);
+
                 if (Input.GetKeyDown(KeyCode.H))
                 {
                     //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -116,7 +112,7 @@ public class CheckpointObject : MonoBehaviour
         if (col.gameObject.tag == "Player")
         {
             // Display prompt
-            prompt.gameObject.SetActive(false);
+            GUI_HUD.UpdatePrompt("", "", false);
         }
     }
 

@@ -39,8 +39,10 @@ public class GUI_HUD : MonoBehaviour
 
     [Space]
     [Header("Static Prompt")]
-    public TMP_Text mockupPrompt;
-    public static TMP_Text staticPrompt;
+    public TMP_Text universalPrompt, keyPrompt;
+    public GameObject promptBackground;
+    public static TMP_Text staticUniversalPrompt, staticKey;
+    public static GameObject staticPromptBackground;
 
     // Reusable colour values
     private Color greenBoost = new Color(0f, 150f, 0f, 0.6f);
@@ -69,7 +71,12 @@ public class GUI_HUD : MonoBehaviour
             playerHUD.SetActive(false);
         }
 
-        staticPrompt = mockupPrompt;
+        // Set static objects
+        staticUniversalPrompt = universalPrompt;
+        staticPromptBackground = promptBackground;
+        staticKey = keyPrompt;
+
+        UpdatePrompt("", "", false);
 
         // Set values of Boost Slider
         boostSlider.maxValue = PM.boostLimit;
@@ -128,5 +135,12 @@ public class GUI_HUD : MonoBehaviour
         damageOverlay.SetActive(true);
         yield return new WaitForSeconds(damageTimer);
         damageOverlay.SetActive(false);
+    }
+
+    public static void UpdatePrompt(string keyToActivate, string promptMessage, bool visible)
+    {
+        staticPromptBackground.SetActive(visible);
+        staticKey.text = "Press [" + keyToActivate + "]";
+        staticUniversalPrompt.text = promptMessage;
     }
 }

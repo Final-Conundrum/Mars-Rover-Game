@@ -57,12 +57,5 @@ public class GM_Checkpoint : MonoBehaviour
         int num = Random.Range(0, SZrandomText.Length - 1);
 
         currentSafeZone.safeZoneInfo.text = SZrandomText[num];
-
-        SZprompt = GameObject.FindGameObjectWithTag("StaticPrompt").GetComponent<TMP_Text>();
-
-        foreach (CheckpointObject i in safeZones)
-        {
-            i.prompt = SZprompt;
-        }
     }
 }
