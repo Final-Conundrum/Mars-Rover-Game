@@ -46,15 +46,18 @@ public class GUI_infoPanel : MonoBehaviour
         currentAlpha = _canvasGroup.alpha;
 
         //Fill the list
-        factStrings.Add("Ingenuity is the small helicopter that went to Mars with Perseverance, it's first flight was on April 19th, 2021."); 
+        factStrings.Add("Ingenuity is the small helicopter that went to Mars with Perseverance."); 
         factStrings.Add("Perseverance weighs 1025 Kilograms and is the size of a small car!");
         factStrings.Add(defaultFact);
-        factStrings.Add("Mars is home to the highest volcano and mountain in the ENTIRE universe! it's 24KM high.");
-        factStrings.Add("Sounds of wind on Mars have been recorded and can be found on SoundCloud.");
+        factStrings.Add("Mars is home to the highest volcano and mountain in the ENTIRE universe!");
+        factStrings.Add("Sounds on Mars have been recorded and can be found on SoundCloud.");
         factStrings.Add("It's understood by scientists that Jezero Crater was filled with water 3.5 billion years ago.");
-        factStrings.Add("PIXL measures the elemental chemistry of rocks and soil by focusing an X-Ray beam on it.");
-        factStrings.Add("SHERLOC is able to detect and identify organics and minerals on Mars.");
-        factStrings.Add("RIMFAX uses a ground-probing radar to see under the Martian surface. ");
+        factStrings.Add("Perseverance is able to turn carbon-dioxide into oxygen.");
+        factStrings.Add("One of Perseverance's goals is to prepare humans for life on Mars.");
+        factStrings.Add("Samples collected by Perseverance will one day return to Earth. ");
+        //factStrings.Add("PIXL measures the elemental chemistry of rocks and soil by focusing an X-Ray beam on it.");
+        //factStrings.Add("SHERLOC is able to detect and identify organics and minerals on Mars.");
+        //factStrings.Add("RIMFAX uses a ground-probing radar to see under the Martian surface. ");
         Debug.Log(factStrings.Count.ToString());
 
     }
