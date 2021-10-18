@@ -24,13 +24,10 @@ public class Hazard_Movement : MonoBehaviour
     public int rotationSpeed;
     public float moveSpeed;
     public int pointsToSpawn;
-    int min, max;
+    //int min, max;
     
     Coroutine moveIE;
   
-
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -46,12 +43,13 @@ public class Hazard_Movement : MonoBehaviour
     {
         for(int i = 0; i < pointsToSpawn; i++)
         {
-            Instantiate(checkPointPrefab, GeneratePoints(), Quaternion.identity);
+            //Instantiate(checkPointPrefab, GeneratePoints(), Quaternion.identity);
             points.Add(checkPointPrefab);
             Debug.Log(points.Count);
         }
     }
 
+    /*
     Vector3 GeneratePoints()
     {
         int x, y, z;
@@ -60,7 +58,7 @@ public class Hazard_Movement : MonoBehaviour
         z = Random.Range(min = -30, max = 30);
         return new Vector3(x, y, z);
 
-    }
+    }*/
 
     // Update is called once per frame
     void Update()

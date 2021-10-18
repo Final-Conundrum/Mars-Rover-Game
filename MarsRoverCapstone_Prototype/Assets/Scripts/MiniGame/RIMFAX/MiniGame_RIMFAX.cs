@@ -8,8 +8,12 @@ public class MiniGame_RIMFAX : MonoBehaviour
     private AudioSource audioSource => GetComponent<AudioSource>();
 
     // Variables for scan line gameplay
+    [Space]
+    [Header("RIMFAX Objects")]
     public GameObject gameplayObject;
 
+    [Space]
+    [Header("Scan line variables")]
     public GameObject scanline;
     public float scanlineSpeed;
     public float scallineMaxSpeed;
@@ -21,6 +25,8 @@ public class MiniGame_RIMFAX : MonoBehaviour
     public GameObject[] scanningLines;
     public int scanninglinesCounter = 0;
 
+    [Space]
+    [Header("UI Elements")]
     public GameObject failText;
     public float failTextTimer;
 
@@ -174,6 +180,7 @@ public class MiniGame_RIMFAX : MonoBehaviour
         GM_Objectives.UpdateObjective("RIMFAX");
 
         MiniGame_Systems.playingMinigame = false;
+        Physical_Inventory.AddToInventory("RIMFAX");
         Destroy(this.gameObject);
     }
 

@@ -103,7 +103,7 @@ public class Player_Collision : MonoBehaviour
         }
 
         // Call Mini-Game script when interacting with mineral
-        if (c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar" || c.gameObject.tag == "Random")
+        if (c.gameObject.tag == "PIXLMineral")
         {
             GUI_MineralAnalysis.currentMineral = c.gameObject.tag;
             //InfoPanel.AragoniteText();
@@ -148,13 +148,14 @@ public class Player_Collision : MonoBehaviour
     private void OnTriggerStay(Collider c)
     {
         // Call Mini-Game script when interacting with mineral
-        if (c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar" || c.gameObject.tag == "Random")
+        if (c.gameObject.tag == "PIXLMineral")
         {
             // Open Mini-Game
             if (Input.GetKeyDown(KeyCode.E))
             {
                 MiniGame.MiniGame_PIXL();
                 GUI_HUD.staticPrompt.gameObject.SetActive(false);
+                c.gameObject.GetComponent<MiniGame_PIXLMineral>().CompleteThis();
                 c.gameObject.SetActive(false);
             }
         }
@@ -166,6 +167,7 @@ public class Player_Collision : MonoBehaviour
             {
                 MiniGame.MiniGame_RIMFAX();
                 GUI_HUD.staticPrompt.gameObject.SetActive(false);
+                c.gameObject.GetComponent<MiniGame_RIMFAXLocation>().CompleteThis();
                 c.gameObject.SetActive(false);
             }
         }
@@ -177,6 +179,7 @@ public class Player_Collision : MonoBehaviour
             {
                 MiniGame.MiniGame_DRILL();
                 GUI_HUD.staticPrompt.gameObject.SetActive(false);
+                c.gameObject.GetComponent<MiniGame_DrillLocation>().CompleteThis();
                 c.gameObject.SetActive(false);
             }
         }
@@ -192,9 +195,9 @@ public class Player_Collision : MonoBehaviour
     }
 
     private void OnTriggerExit(Collider c)
-    { 
+    {
         // Reset jump to standard after leaving geyser
-        
+
         if (c.gameObject.tag == "Geyser")
         {
             //PM.jumpHeight = 0.5f;
@@ -203,12 +206,7 @@ public class Player_Collision : MonoBehaviour
         }
 
         // Disable prompt after leaving mineral
-        if (c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar" || c.gameObject.tag == "Random" || c.gameObject.tag == "RIMFAX")
-        {
-            GUI_HUD.staticPrompt.gameObject.SetActive(false);
-        }
-
-        if(c.gameObject.tag == "SafeZone")
+        if (c.gameObject.tag == "PIXLMineral" || c.gameObject.tag == "RIMFAX" || c.gameObject.tag == "Drill" || c.gameObject.tag == "SafeZone")
         {
             GUI_HUD.staticPrompt.gameObject.SetActive(false);
         }

@@ -12,6 +12,9 @@ public class GUI_HUD : MonoBehaviour
     public Animator transitionAnimation;
 
     // UI Sliders
+    [Space]
+    [Header("UI Sliders")]
+
     public TMP_Text health;
     public Slider healthSlider;
 
@@ -25,6 +28,8 @@ public class GUI_HUD : MonoBehaviour
     public Image boosterSliderColour;
 
     // UI Elements
+    [Space]
+    [Header(" Other UI Elements")]
     public GameObject playerHUD;
 
     public GameObject info_panel;
@@ -32,6 +37,8 @@ public class GUI_HUD : MonoBehaviour
 
     public GameObject inventory;
 
+    [Space]
+    [Header("Static Prompt")]
     public TMP_Text mockupPrompt;
     public static TMP_Text staticPrompt;
 
@@ -94,7 +101,7 @@ public class GUI_HUD : MonoBehaviour
         boostSlider.value = PM.boost;
     }
 
-    // Close Learning Panel and Activate HUD
+    // Close Controls Panel and Activate HUD
     public void ClosePanel()
     {
         Time.timeScale = 1;
@@ -115,6 +122,7 @@ public class GUI_HUD : MonoBehaviour
         chooseControlsPanel.SetActive(false);
     }
 
+    // Activate Damaged player HUD elements
     public IEnumerator DamagePlayer()
     {
         damageOverlay.SetActive(true);

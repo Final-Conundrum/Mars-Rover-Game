@@ -63,6 +63,9 @@ public class GUI_MineralAnalysis : MonoBehaviour
                     description.text = descriptions[0];
                     image.sprite = images[0];
                     break;
+                case "PIXLMineral":
+                    RandomMineral();
+                    break;
             }
 
             title.text = "> Analysis > " + image.sprite.name;
@@ -73,7 +76,7 @@ public class GUI_MineralAnalysis : MonoBehaviour
             GUI_PauseMenu.pausedGame = false;
 
             static_analysisScreen.SetActive(false);
-            Physical_Inventory.AddToInventory();
+            Physical_Inventory.AddToInventory("PIXL");
         }
     }
 

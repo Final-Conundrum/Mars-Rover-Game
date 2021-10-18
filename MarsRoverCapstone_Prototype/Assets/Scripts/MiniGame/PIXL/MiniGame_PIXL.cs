@@ -9,14 +9,21 @@ public class MiniGame_PIXL : MonoBehaviour
     // VirtualCursor contains the MiniGame_PIXL_VirtualCursor script that is also required to function
 
     public static bool Completed = false;
+
+    [Space]
+    [Header("Audio sources")]
     public AudioSource SFX_Beep;
 
     // Associated game objects
+    [Space]
+    [Header("PIXL Game Objects")]
     public MiniGame_PIXL_VirtualCursor VirtualCursor;
     public GameObject MazeStart;
     public GameObject MazeEnd;
 
     // Images and panels for result info
+    [Space]
+    [Header("UI elements")]
     public Image[] HidingPanels;
     public GameObject ResultPanel;
 

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 629553935480238679}
   - component: {fileID: 629553935480238672}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: Shiny Mineral
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -311,7 +311,8 @@ GameObject:
   - component: {fileID: 629553935967702634}
   - component: {fileID: 629553935967702635}
   - component: {fileID: 303418034589911337}
-  - component: {fileID: 8874710109693209510}
+  - component: {fileID: 4455290036283144819}
+  - component: {fileID: 1983771903201207623}
   m_Layer: 0
   m_Name: DRILL_Location
   m_TagString: Drill
@@ -1158,7 +1159,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.5, y: 1.0000001, z: 2.5}
   m_Center: {x: 0.46520758, y: 0.50000006, z: -0.532192}
---- !u!114 &8874710109693209510
+--- !u!114 &4455290036283144819
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1167,12 +1168,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 629553935967702646}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7da75cbfe51c1984f8578565a14d9ec1, type: 3}
+  m_Script: {fileID: 11500000, guid: 3055fe8562949694e8694c45ad6431fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 0}
-  mineralName: {fileID: 8375866707739284989}
-  canvas: {fileID: 1555315923957394795}
+  objectToAppear: {fileID: 4345220960253142451}
+--- !u!114 &1983771903201207623
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629553935967702646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d37af66ae654ba4380661febaaeccad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryItem: {fileID: 11400000, guid: 2c1c9e202ddb7fd4bacc3712ead28078, type: 2}
 --- !u!1 &629553936121165576
 GameObject:
   m_ObjectHideFlags: 0
@@ -1186,7 +1198,7 @@ GameObject:
   - component: {fileID: 629553936121165581}
   - component: {fileID: 629553936121165582}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: Shiny Mineral
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1484,7 +1496,7 @@ GameObject:
   - component: {fileID: 629553936274531534}
   - component: {fileID: 629553936274531535}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Shiny Mineral
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1782,7 +1794,7 @@ GameObject:
   - component: {fileID: 629553936629616149}
   - component: {fileID: 629553936629616150}
   m_Layer: 0
-  m_Name: Cube (4)
+  m_Name: Shiny Mineral
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2080,7 +2092,7 @@ GameObject:
   - component: {fileID: 629553937247267580}
   - component: {fileID: 629553937247267581}
   m_Layer: 0
-  m_Name: Cube (5)
+  m_Name: Shiny Mineral
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2378,7 +2390,7 @@ GameObject:
   - component: {fileID: 629553937421202960}
   - component: {fileID: 629553937421202961}
   m_Layer: 0
-  m_Name: Cube (3)
+  m_Name: Shiny Mineral
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2832,7 +2844,7 @@ GameObject:
   - component: {fileID: 5245985570745390610}
   - component: {fileID: 9029585313748466752}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Canvas_PopupIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1518227171327101655}
   - component: {fileID: 8180372509364223485}
   m_Layer: 0
-  m_Name: Canvas
+  m_Name: Canvas_PopupIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -117,9 +117,7 @@ LookAtConstraint:
   m_UseUpObject: 0
   m_IsContraintActive: 1
   m_IsLocked: 0
-  m_Sources:
-  - sourceTransform: {fileID: 0}
-    weight: 1
+  m_Sources: []
 --- !u!1 &6459336567684258231
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,7 +131,7 @@ GameObject:
   - component: {fileID: 6459336567684258224}
   - component: {fileID: 6459336567684258225}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: Canvas_GroundIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -383,8 +381,8 @@ GameObject:
   - component: {fileID: 6459336568785017253}
   - component: {fileID: 6459336568785017258}
   - component: {fileID: 6459336568785017259}
-  - component: {fileID: 9109883545560834285}
   - component: {fileID: 3461223585167504117}
+  - component: {fileID: 9026980513056184620}
   m_Layer: 0
   m_Name: RIMFAX_Location
   m_TagString: RIMFAX
@@ -470,21 +468,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &9109883545560834285
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6459336568785017256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7da75cbfe51c1984f8578565a14d9ec1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 0}
-  mineralName: {fileID: 0}
-  canvas: {fileID: 6238244869581234212}
 --- !u!114 &3461223585167504117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -498,6 +481,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectToAppear: {fileID: 4972783724056137561}
+--- !u!114 &9026980513056184620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6459336568785017256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15d99df4e2e1d4e4ba2bb3fe133ab534, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryItem: {fileID: 11400000, guid: 4d262ecc82301bf4d9e94aaffffb4aad, type: 2}
 --- !u!1 &7100866729433224655
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,6 +17,8 @@ public class GM_Checkpoint : MonoBehaviour
     public bool savedAtSafeZone = false;
 
     // Relevent Safe zone objects
+    [Space]
+    [Header("Found SZ in scene (non-interactable)")]
     public CheckpointObject currentSafeZone;
     public Vector3 currentSafeZonePosition;
     
@@ -25,6 +27,8 @@ public class GM_Checkpoint : MonoBehaviour
     public TMP_Text SZprompt;
 
     // Safe zone variables for setting the environment upon player respawn
+    [Space]
+    [Header("SZ info variables")]
     public string SZintroText = "Potential \n > SAFE ZONE <";
     public string SZrebootText = "REBOOT SUCCESSFUL \n >> Be careful out there << \n";
     public string[] SZrandomText = { "REBOOT SUCCESSFUL \n>> Be careful out there!", "REBOOT SUCCESSFUL \n>> Remember sand and machine don't mix well, so avoid Mars' dust storms!", "REBOOT SUCCESSFUL \n>> The more we learn, the more we advance, so watch out for minerals and objects to analyze!", "REBOOT SUCCESSFUL \n>> Did you know that Perseverances nickname is Percy?" };

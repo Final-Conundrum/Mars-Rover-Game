@@ -9,7 +9,10 @@ public class Physical_Inventory : MonoBehaviour
     public Display_Inventory _displayInventory;
     public static Display_Inventory displayInventory;
 
-    public static Mineral_Pick_Up currentMineralInteraction;
+    //public static Mineral_Pick_Up currentMineralInteraction;
+    public static MiniGame_PIXLMineral currentPIXLInteraction;
+    public static MiniGame_DrillLocation currentDrillInteraction;
+    public static MiniGame_RIMFAXLocation currentRIMFAXInteraction;
 
     public void Start()
     {
@@ -25,19 +28,46 @@ public class Physical_Inventory : MonoBehaviour
         {
             inventory.AddItem(item.item, 1);
             displayInventory.UpdateDisplay();
-        }*/
+        }
 
         if(c.gameObject.tag == "Aragonite" || c.gameObject.tag == "Feldspar" || c.gameObject.tag == "Random")
         {
             currentMineralInteraction = c.gameObject.GetComponent<Mineral_Pick_Up>();
         }
+        */
+
+        if(c.gameObject.tag == "PIXLMineral")
+        {
+            currentPIXLInteraction = c.gameObject.GetComponent<MiniGame_PIXLMineral>();
+        }
+
+        if(c.gameObject.tag == "RIMFAX")
+        {
+            currentRIMFAXInteraction = c.gameObject.GetComponent<MiniGame_RIMFAXLocation>();
+        }
+
+        if (c.gameObject.tag == "Drill")
+        {
+            currentDrillInteraction = c.gameObject.GetComponent<MiniGame_DrillLocation>();
+        }
     }
 
-    public static void AddToInventory()
+    public static void AddToInventory(string minigameType)
     {
-        inventory.AddItem(currentMineralInteraction.item, 1);
+        switch (minigameType) {
+            case "PIXL":
+                inventory.AddItem(currentPIXLInteraction.inventoryItem, 1);
+                break;
+            case "RIMFAX":
+                inventory.AddItem(currentRIMFAXInteraction.inventoryItem, 1);
+
+                break;
+            case "Drill":
+                inventory.AddItem(currentDrillInteraction.inventoryItem, 1);
+
+                break;
+        }
         displayInventory.UpdateDisplay();
-        
     }
 
     //reset inventory to 0 when exiting play mode. 
