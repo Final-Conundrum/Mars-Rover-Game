@@ -91,7 +91,7 @@ public class CheckpointObject : MonoBehaviour
                 flag.SetActive(true);
                 icon.gameObject.SetActive(false);
 
-                safeZoneInfo.text = "<< SAFE ZONE >> \n This is Perseverance's current Reboot area";
+                safeZoneInfo.text = "This is Perseverance's current Reboot area";
 
                 GM_Audio.PlaySound(audioSource, "MGWin");
             }
@@ -102,7 +102,7 @@ public class CheckpointObject : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.H))
                 {
                     //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-                    safeZoneInfo.text = "<< SAFE ZONE >> \n Upload to NASA successful";
+                    safeZoneInfo.text = "Upload to NASA successful";
                     GM.SetSafeZone(this);
 
                     StartCoroutine(GM_SceneLoader.LoadToScene("Scene_MainGame"));

@@ -768,7 +768,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  postProcessingVolume: {fileID: 364385645403754495}
+  introCamera: {fileID: 0}
+  PP_Volume: {fileID: 364385645403754494}
+  PP_day: {fileID: 11400000, guid: 16c93ecad3417ba4c87796421864d4a6, type: 2}
+  PP_night: {fileID: 11400000, guid: a36b2ca4d08625849b9f533083bf3a75, type: 2}
   usePassageOfTime: 1
 --- !u!114 &6002234463349467822
 MonoBehaviour:
@@ -1044,18 +1047,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4ee218776e98c546903f49c75c40fd9, type: 3}
---- !u!1 &364385645403754495 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 364385645344872400, guid: a4ee218776e98c546903f49c75c40fd9,
-    type: 3}
-  m_PrefabInstance: {fileID: 58890287}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &364385645403754480 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 364385645344872415, guid: a4ee218776e98c546903f49c75c40fd9,
     type: 3}
   m_PrefabInstance: {fileID: 58890287}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &364385645403754494 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 364385645344872401, guid: a4ee218776e98c546903f49c75c40fd9,
+    type: 3}
+  m_PrefabInstance: {fileID: 58890287}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &578539773
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.PostProcessing;
 
 [RequireComponent(typeof(GM_Checkpoint))]
 [RequireComponent(typeof(GM_Time))]
@@ -33,7 +35,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] public GameObject player;
     public static GameObject playerCamera;
     public CinemachineVirtualCamera introCamera;
-    public GameObject postProcessingVolume;
+    public PostProcessVolume PP_Volume;
+    public PostProcessProfile PP_day;
+    public PostProcessProfile PP_night;
 
     private GeyserBurst[] geysers => FindObjectsOfType<GeyserBurst>();
 
@@ -64,7 +68,7 @@ public class GameManager : MonoBehaviour
         //Cursor.visible = false;
         playerCamera = FindObjectOfType<Player_ParentObject>().Camera;
 
-        postProcessingVolume.SetActive(Settings.postProcessingActive);
+        PP_Volume.gameObject.SetActive(Settings.postProcessingActive);
 
         introCamera.Priority = 20;
     }
@@ -79,7 +83,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine(GM_SceneLoader.LoadToScene("Scene_MainGame"));
         }
 
-        postProcessingVolume.SetActive(Settings.postProcessingActive);
+        PP_Volume.gameObject.SetActive(Settings.postProcessingActive);
 
     }
 
@@ -122,12 +126,14 @@ public class GameManager : MonoBehaviour
                 {
                     passTime++;
                     _GM_Popup.FadingPopup("Mars > Jezero Crater \n 2200 hours ", 6f);
+                    PP_Volume.profile = PP_night;
 
                 }
                 else if (passTime == 3 || passTime == 0)
                 {
                     passTime++;
                     _GM_Popup.FadingPopup("Mars > Jezero Crater \n 1200 hours ", 6f);
+                    PP_Volume.profile = PP_day;
                 }
                 else if (passTime == 4)
                 {
@@ -139,7 +145,7 @@ public class GameManager : MonoBehaviour
                 _GM_Time.SetSceneLights(passTime);
             }
         }
-        postProcessingVolume.SetActive(Settings.postProcessingActive);
+        PP_Volume.gameObject.SetActive(Settings.postProcessingActive);
 
         _GM_Objectives.FindObjectiveGUI();
 
