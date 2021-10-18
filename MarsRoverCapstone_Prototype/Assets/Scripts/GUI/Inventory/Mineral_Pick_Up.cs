@@ -14,6 +14,7 @@ public class Mineral_Pick_Up : MonoBehaviour
     public TMP_Text mineralName;
     public Canvas canvas;
 
+    /*
     private void Start()
     {
         mineralName.enabled = false;
@@ -39,7 +40,7 @@ public class Mineral_Pick_Up : MonoBehaviour
         {
             mineralName.enabled = false;
         }
-    }
+    }*/
 
     //    /*This can be thought of as the 'physical' version of the scriptable object (Item.cs)
     //     * This will be the item that players interact with in the scene.
