@@ -773,8 +773,8 @@ GameObject:
   - component: {fileID: 6488826752972918491}
   - component: {fileID: 6488826752972918490}
   - component: {fileID: 6488826752972918489}
-  - component: {fileID: 6228153365874137334}
   - component: {fileID: 6164227212488030161}
+  - component: {fileID: 9018083938817559588}
   m_Layer: 9
   m_Name: SafeZone
   m_TagString: SafeZone
@@ -879,18 +879,6 @@ MonoBehaviour:
   distanceToDisplay: 40
   prompt: {fileID: 0}
   flag: {fileID: 8409822341435865482}
---- !u!114 &6228153365874137334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6488826752972918492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c7a7b1079ee97748a93d1a580b0d161, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &6164227212488030161
 AudioSource:
   m_ObjectHideFlags: 0
@@ -996,6 +984,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &9018083938817559588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6488826752972918492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3055fe8562949694e8694c45ad6431fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToAppear: {fileID: 6488826751035145806}
+  lookAtConstraint: {fileID: 0}
 --- !u!1 &6752113994321058783
 GameObject:
   m_ObjectHideFlags: 0

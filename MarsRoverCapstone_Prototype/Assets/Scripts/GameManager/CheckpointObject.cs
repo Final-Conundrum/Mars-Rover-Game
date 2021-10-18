@@ -21,15 +21,11 @@ public class CheckpointObject : MonoBehaviour
     private GM_Checkpoint GM => FindObjectOfType<GM_Checkpoint>();
     public AudioSource audioSource => GetComponent<AudioSource>();
 
-    [Space]
-    [Header("World space UI elements")]
     // Aesthetics of checkpoints
     public Canvas canvas;
     // Overhead icon
     public Image icon;
 
-    [Space]
-    [Header("Information of Popup panel")]
     // Informational panel
     public TMP_Text safeZoneInfo;
     public Image background;
@@ -37,8 +33,6 @@ public class CheckpointObject : MonoBehaviour
 
     public TMP_Text prompt;
 
-    [Space]
-    [Header("SZ Objects")]
     // Objects
     public GameObject flag;
 
