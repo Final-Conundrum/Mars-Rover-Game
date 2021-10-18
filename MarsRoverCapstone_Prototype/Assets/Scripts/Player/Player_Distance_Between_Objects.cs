@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /**
- * This could be re-used to make markers for each mineral or something
+ * <SUMMARY> 
+ * Gets the disance between the player and the first mineral of the game. It then calls our GUI_InfoPanel. OnApproachNotification method to display a message to the player. 
+ * 
  **/
 public class Player_Distance_Between_Objects : MonoBehaviour
 {
@@ -34,7 +36,7 @@ public class Player_Distance_Between_Objects : MonoBehaviour
     {
         //Returns the distance between player's position and the target's position
         distance = Vector3.Distance(player.position, target.position);
-        Debug.Log("Distance to object: " + distance.ToString());
+        
     }
 
     //void GetHalfwayPoint()
@@ -48,6 +50,10 @@ public class Player_Distance_Between_Objects : MonoBehaviour
         if(distance <= 25.0f)
         {
             InfoPanel.OnApproachNotification();
-        } 
+        }
+        if (distance < 15.0f || distance == 0)
+        {
+            InfoPanel.infoPanel.SetActive(false);
+        }
     }
 }
