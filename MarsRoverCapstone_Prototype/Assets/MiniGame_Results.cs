@@ -51,8 +51,7 @@ public class MiniGame_Results : MonoBehaviour
         int random = Random.Range(0, _PIXL_ImagePrefab.Length - 1);
 
         _PIXL_ResultsObject.gameObject.SetActive(true);
-        //_PIXL_ResultsObject = _PIXL_Sprites[random];
-        Instantiate(_PIXL_ImagePrefab[random], _PIXL_Transform);
+        GameObject resultObject = Instantiate(_PIXL_ImagePrefab[random], _PIXL_Transform);
         _PIXL_ResultsObject.GetComponent<Animator>().SetBool("Transition", true);
 
         yield return new WaitForSeconds(timer);
@@ -60,6 +59,7 @@ public class MiniGame_Results : MonoBehaviour
         _PIXL_ResultsObject.GetComponent<Animator>().SetBool("Transition", false);
         yield return new WaitForSeconds(2f);
         _PIXL_ResultsObject.gameObject.SetActive(false);
+        Destroy(resultObject);
     }
 
     public static IEnumerator ShowRIMFAXResults(float timer)

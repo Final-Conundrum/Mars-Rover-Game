@@ -79,7 +79,8 @@ public class MiniGame_PIXL : MonoBehaviour
 
                 foreach (Image i in HidingPanels)
                 {
-                    i.color = new Color(0, 0, 0, 1);
+                    //i.color = new Color(0, 0, 0, 1);
+                    i.gameObject.SetActive(false);
                 }
 
                 SFX_Beep.PlayOneShot(SFX_Beep.clip);
