@@ -32,9 +32,14 @@ public class GameManager : MonoBehaviour
     private GM_Audio _GM_Audio => GetComponent<GM_Audio>();
     private GM_Objectives _GM_Objectives => GetComponent<GM_Objectives>();
 
+    [Space]
+    [Header("Static Player Objects")]
     [SerializeField] public GameObject player;
     public static GameObject playerCamera;
     public CinemachineVirtualCamera introCamera;
+
+    [Space]
+    [Header("Post Processing Variables")]
     public PostProcessVolume PP_Volume;
     public PostProcessProfile PP_day;
     public PostProcessProfile PP_night;

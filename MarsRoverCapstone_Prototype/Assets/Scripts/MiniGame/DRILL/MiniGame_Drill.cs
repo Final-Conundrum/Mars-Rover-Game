@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 
 public class MiniGame_Drill : MonoBehaviour
 {
+    public Sprite[] ResultImages;
+
     // UI Elements
     [Space]
     [Header("UI Elements")]
@@ -134,6 +136,9 @@ public class MiniGame_Drill : MonoBehaviour
         GM_Objectives.UpdateObjective("Drill");
         MiniGame_Systems.playingMinigame = false;
         Physical_Inventory.AddToInventory("Drill");
+
+        int random = Random.Range(0, ResultImages.Length);
+
         Destroy(this.gameObject);
     }
 

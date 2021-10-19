@@ -26,6 +26,7 @@ public class MiniGame_PIXL : MonoBehaviour
     [Header("UI elements")]
     public Image[] HidingPanels;
     public GameObject ResultPanel;
+    public GameObject ResultImages;
 
     public GameObject failText;
     public float failTextTimer = 2f;
@@ -93,11 +94,22 @@ public class MiniGame_PIXL : MonoBehaviour
         Time.timeScale = 1;
         Completed = true;
         Cursor.visible = true;
-        GUI_MineralAnalysis.Display(true);
+
+        //GUI_MineralAnalysis.Display(true);
 
         GM_Objectives.UpdateObjective("PIXL");
 
         MiniGame_Systems.playingMinigame = false;
+
+        StartCoroutine(MiniGame_Results.ShowPIXLResults(5f));
+        StartCoroutine(DestroyOnTimer(5f));
+    }
+
+    IEnumerator DestroyOnTimer(float timer)
+    {
+        gameObject.transform.localScale = new Vector3(0, 0, 0);
+
+        yield return new WaitForSeconds(timer);
         Destroy(gameObject);
     }
 }

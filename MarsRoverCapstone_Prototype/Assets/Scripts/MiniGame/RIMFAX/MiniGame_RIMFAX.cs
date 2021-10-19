@@ -37,6 +37,8 @@ public class MiniGame_RIMFAX : MonoBehaviour
 
     public GameObject ResultPanel;
 
+    private bool completed = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -108,12 +110,15 @@ public class MiniGame_RIMFAX : MonoBehaviour
                         scanlineSpeed++;
                     }
 
-                    // Sets randomized position of scan lines
-                    for (int i = 0; i < scanningLines.Length; i++)
+                    if (!completed)
                     {
-                        if (scanningLines != null)
+                        // Sets randomized position of scan lines
+                        for (int i = 0; i < scanningLines.Length - 1; i++)
                         {
-                            scanningLines[i].transform.position = new Vector3(Random.Range(ScanPointA.transform.position.x, ScanPointB.transform.position.x), ScanPointA.transform.position.y, ScanPointA.transform.position.z);
+                            if (scanningLines != null)
+                            {
+                                scanningLines[i].transform.position = new Vector3(Random.Range(ScanPointA.transform.position.x, ScanPointB.transform.position.x), ScanPointA.transform.position.y, ScanPointA.transform.position.z);
+                            }
                         }
                     }
                 }
@@ -181,7 +186,19 @@ public class MiniGame_RIMFAX : MonoBehaviour
 
         MiniGame_Systems.playingMinigame = false;
         Physical_Inventory.AddToInventory("RIMFAX");
-        Destroy(this.gameObject);
+
+        completed = true;
+
+        StartCoroutine(MiniGame_Results.ShowRIMFAXResults(5f));
+        StartCoroutine(DestroyOnTimer(5f));
+    }
+
+    IEnumerator DestroyOnTimer(float timer)
+    {
+        gameObject.transform.localScale = new Vector3(0, 0, 0);
+
+        yield return new WaitForSeconds(timer);
+        Destroy(gameObject);
     }
 
     public void LearnButton(int panelNum)
