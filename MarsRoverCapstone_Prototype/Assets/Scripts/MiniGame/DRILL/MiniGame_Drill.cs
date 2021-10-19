@@ -7,8 +7,6 @@ using UnityEngine.EventSystems;
 
 public class MiniGame_Drill : MonoBehaviour
 {
-    public Sprite[] ResultImages;
-
     // UI Elements
     [Space]
     [Header("UI Elements")]
@@ -38,7 +36,7 @@ public class MiniGame_Drill : MonoBehaviour
     private float DrilltimeIteration;
 
     private bool buttonDown = false;
- 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -101,7 +99,7 @@ public class MiniGame_Drill : MonoBehaviour
     {
         drillingSFX.Stop();
 
-        if (DrillTime >= WinTime)
+        if (DrillTime >= WinTime && !completed)
         {
             Exit();
         }
@@ -137,9 +135,18 @@ public class MiniGame_Drill : MonoBehaviour
         MiniGame_Systems.playingMinigame = false;
         Physical_Inventory.AddToInventory("Drill");
 
-        int random = Random.Range(0, ResultImages.Length);
+        completed = true;
 
-        Destroy(this.gameObject);
+        StartCoroutine(MiniGame_Results.ShowDRILLResults(5f));
+        StartCoroutine(DestroyOnTimer(5f));
+    }
+
+    IEnumerator DestroyOnTimer(float timer)
+    {
+        gameObject.transform.localScale = new Vector3(0, 0, 0);
+
+        yield return new WaitForSeconds(timer);
+        Destroy(gameObject);
     }
 
     public void OnPress()
