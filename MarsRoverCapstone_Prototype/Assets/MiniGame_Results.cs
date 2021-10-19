@@ -7,10 +7,12 @@ public class MiniGame_Results : MonoBehaviour
 {
     [Space]
     [Header("PIXL Result Assets")]
-    public Image PIXL_ResultsImage;
-    public static Image _PIXL_ResultsImage;
-    public Sprite[] PIXL_Sprites;
-    public static Sprite[] _PIXL_Sprites;
+    public GameObject PIXL_ResultsObject;
+    public static GameObject _PIXL_ResultsObject;
+    public GameObject[] PIXL_ImagePrefab;
+    public static GameObject[] _PIXL_ImagePrefab;
+
+    public static Transform _PIXL_Transform;
 
     [Space]
     [Header("RIMFAX Result Assets")]
@@ -29,12 +31,13 @@ public class MiniGame_Results : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PIXL_ResultsImage.gameObject.SetActive(false);
+        PIXL_ResultsObject.gameObject.SetActive(false);
         RIMFAX_ResultsImage.gameObject.SetActive(false);
         DRILL_ResultsImage.gameObject.SetActive(false);
 
-        _PIXL_ResultsImage = PIXL_ResultsImage;
-        _PIXL_Sprites = PIXL_Sprites;
+        _PIXL_ResultsObject = PIXL_ResultsObject;
+        _PIXL_ImagePrefab = PIXL_ImagePrefab;
+        _PIXL_Transform = PIXL_ResultsObject.transform;
 
         _RIMFAX_ResultsImage = RIMFAX_ResultsImage;
         _RIMFAX_Sprites = RIMFAX_Sprites;
@@ -45,17 +48,18 @@ public class MiniGame_Results : MonoBehaviour
 
     public static IEnumerator ShowPIXLResults(float timer)
     {
-        int random = Random.Range(0, _PIXL_Sprites.Length - 1);
+        int random = Random.Range(0, _PIXL_ImagePrefab.Length - 1);
 
-        _PIXL_ResultsImage.gameObject.SetActive(true);
-        _PIXL_ResultsImage.sprite = _PIXL_Sprites[random];
-        _PIXL_ResultsImage.GetComponent<Animator>().SetBool("Transition", true);
+        _PIXL_ResultsObject.gameObject.SetActive(true);
+        //_PIXL_ResultsObject = _PIXL_Sprites[random];
+        Instantiate(_PIXL_ImagePrefab[random], _PIXL_Transform);
+        _PIXL_ResultsObject.GetComponent<Animator>().SetBool("Transition", true);
 
         yield return new WaitForSeconds(timer);
 
-        _PIXL_ResultsImage.GetComponent<Animator>().SetBool("Transition", false);
+        _PIXL_ResultsObject.GetComponent<Animator>().SetBool("Transition", false);
         yield return new WaitForSeconds(2f);
-        _PIXL_ResultsImage.gameObject.SetActive(false);
+        _PIXL_ResultsObject.gameObject.SetActive(false);
     }
 
     public static IEnumerator ShowRIMFAXResults(float timer)
