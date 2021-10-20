@@ -119,6 +119,7 @@ public class MiniGame_PIXL : MonoBehaviour
         Destroy(gameObject);
     }
 
+    // Called from buttons to reveal fact panels
     public void LearnButton(int panelNum)
     {
         TextPanels[panelNum].SetActive(true);

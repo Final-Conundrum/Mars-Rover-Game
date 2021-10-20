@@ -75,7 +75,6 @@ public class MiniGame_RIMFAX : MonoBehaviour
                 else
                 {
                     currentTarget = "B";
-                    scanSFX.PlayOneShot(scanSFX.clip);
 
                     // Increase speed
                     if (scanlineSpeed <= scallineMaxSpeed)
@@ -91,6 +90,7 @@ public class MiniGame_RIMFAX : MonoBehaviour
                             scanningLines[i].transform.position = new Vector3(Random.Range(ScanPointA.transform.position.x, ScanPointB.transform.position.x), ScanPointA.transform.position.y, ScanPointA.transform.position.z);
                         }
                     }
+                    scanSFX.PlayOneShot(scanSFX.clip);
                 }
                 break;
             case "B":
@@ -101,7 +101,6 @@ public class MiniGame_RIMFAX : MonoBehaviour
                 else
                 {
                     currentTarget = "A";
-                    scanSFX.PlayOneShot(scanSFX.clip);
                     
                     // Increase speed
                     if (scanlineSpeed <= scallineMaxSpeed)
@@ -114,12 +113,13 @@ public class MiniGame_RIMFAX : MonoBehaviour
                         // Sets randomized position of scan lines
                         for (int i = 0; i < scanningLines.Length - 1; i++)
                         {
-                            if (scanningLines != null)
+                            if (scanningLines[i] != null)
                             {
                                 scanningLines[i].transform.position = new Vector3(Random.Range(ScanPointA.transform.position.x, ScanPointB.transform.position.x), ScanPointA.transform.position.y, ScanPointA.transform.position.z);
                             }
                         }
                     }
+                    scanSFX.PlayOneShot(scanSFX.clip);
                 }
                 break;
         }
@@ -164,6 +164,8 @@ public class MiniGame_RIMFAX : MonoBehaviour
     // End mini-game and display scan
     public void Exit()
     {
+        completed = true;
+
         winSFX.PlayOneShot(winSFX.clip);
 
         Time.timeScale = 1;
@@ -173,8 +175,6 @@ public class MiniGame_RIMFAX : MonoBehaviour
 
         MiniGame_Systems.playingMinigame = false;
         Physical_Inventory.AddToInventory("RIMFAX");
-
-        completed = true;
 
         StartCoroutine(MiniGame_Results.ShowRIMFAXResults(5f));
         StartCoroutine(DestroyOnTimer(5f));
@@ -188,6 +188,7 @@ public class MiniGame_RIMFAX : MonoBehaviour
         Destroy(gameObject);
     }
 
+    // Called from buttons to reveal fact panels
     public void LearnButton(int panelNum)
     {
         TextPanel[panelNum].SetActive(true);

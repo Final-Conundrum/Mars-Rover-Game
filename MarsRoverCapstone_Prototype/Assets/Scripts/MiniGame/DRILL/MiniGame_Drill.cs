@@ -15,6 +15,7 @@ public class MiniGame_Drill : MonoBehaviour
     public Slider DrillSlider;
     public GameObject failText;
     public GameObject warningText;
+    public GameObject drillImage;
 
     // Audio
     [Space]
@@ -155,6 +156,7 @@ public class MiniGame_Drill : MonoBehaviour
         OnClickTrigger = Time.time;
         CoolDownTime = Random.Range(3f, 10f);
 
+        drillImage.GetComponent<Animator>().SetBool("Drill", true);
         drillingSFX.Play();
     }
 
@@ -166,6 +168,7 @@ public class MiniGame_Drill : MonoBehaviour
             DrillTime = 0;
         }
 
-        drillingSFX.Stop();
+        drillImage.GetComponent<Animator>().SetBool("Drill", false);
+        drillingSFX.Pause();
     }
 }
