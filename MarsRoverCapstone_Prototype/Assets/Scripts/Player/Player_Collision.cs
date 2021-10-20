@@ -25,11 +25,11 @@ public class Player_Collision : MonoBehaviour
     private void OnCollisionEnter(Collision c)
     {
         // Checks for ground collision and whether to damage player with fall damage
-        if (c.gameObject.tag == "Ground" && PM.takeFallDamage && !jumpingFromGeyser)
+        if (c.gameObject.tag == "Ground" && PM.takeFallDamage)
         {
             if(transform.position.y <= exitPosY - PM.fallDamageHeight)
             {
-                Player_Stats.TakeDamage(25);
+                Player_Stats.TakeDamage(15);
                 Player_Movement.grounded = true;
 
                 Debug.Log(gameObject.name + ": Player_Collision, Player should take fall damage here...");
@@ -38,6 +38,7 @@ public class Player_Collision : MonoBehaviour
 
         if (c.gameObject.tag == "Ground")
         {
+            PM.onGeyser = false;
             //GM_Audio.StopSound(PM.audioSource);
             PM.audioSource.clip = GM_Audio.drivingSFX;
             PM.audioSource.Play();
@@ -190,8 +191,9 @@ public class Player_Collision : MonoBehaviour
         if (c.gameObject.tag == "Geyser")
         {
             //PM.jumpHeight = 0.5f;
-            PM.onGeyser = false;
-            Player_Movement.grounded = false;
+            //PM.onGeyser = false;
+            //Player_Movement.grounded = false;
+            StartCoroutine(ExittingGeyser());
         }
 
         // Disable prompt after leaving mineral
@@ -199,5 +201,13 @@ public class Player_Collision : MonoBehaviour
         {
             GUI_HUD.UpdatePrompt("", "", false);
         }
+    }
+
+    IEnumerator ExittingGeyser()
+    {
+        yield return new WaitForSeconds(2f);
+
+        PM.onGeyser = false;
+        Player_Movement.grounded = false;
     }
 }

@@ -342,9 +342,9 @@ GameObject:
   - component: {fileID: 4009805473073336898}
   - component: {fileID: 4009805473073336899}
   - component: {fileID: 4009805473073336900}
-  - component: {fileID: 6244437471052842332}
   - component: {fileID: 4705666329770021265}
   - component: {fileID: 7785075841104761381}
+  - component: {fileID: 7851771832762039923}
   m_Layer: 0
   m_Name: PIXL RandomMineral
   m_TagString: PIXLMineral
@@ -2047,19 +2047,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
---- !u!65 &6244437471052842332
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4009805473073336901}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 5, y: 5, z: 5}
-  m_Center: {x: 0.43948346, y: 0.63673806, z: -0.33069324}
 --- !u!114 &4705666329770021265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2087,3 +2074,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryItem: {fileID: 11400000, guid: c940c152253aee04e94f8465712075f1, type: 2}
+--- !u!136 &7851771832762039923
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4009805473073336901}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 1.98
+  m_Height: 1.2734939
+  m_Direction: 1
+  m_Center: {x: 0.3868874, y: 0.63674694, z: -0.5641705}
