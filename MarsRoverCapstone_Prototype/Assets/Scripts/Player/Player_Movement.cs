@@ -22,6 +22,7 @@ public class Player_Movement : MonoBehaviour
 
     public Rigidbody RB => GetComponent<Rigidbody>();
     CharacterController CC => GetComponent<CharacterController>();
+    Player_Collision PC => GetComponent<Player_Collision>();
 
     public static bool grounded;
     public bool _alignToGround = true;
@@ -122,15 +123,14 @@ public class Player_Movement : MonoBehaviour
             SwapControlType();
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftShift) || (Input.GetKeyDown(KeyCode.RightShift)))
+        if(_currentSpeed > midDriveSpeed + 1)
         {
             boostParticles.gameObject.SetActive(true);
         }
 
-        if(Input.GetKeyUp(KeyCode.LeftShift) || (Input.GetKeyUp(KeyCode.RightShift)))
+        if(_currentSpeed <= midDriveSpeed )
         {
             boostParticles.gameObject.SetActive(false);
-
         }
     }
 
@@ -153,7 +153,7 @@ public class Player_Movement : MonoBehaviour
         RaycastHit hit = new RaycastHit();
         Ray raycastDown = new Ray(transform.position, -transform.up);
 
-        if (Physics.SphereCast(raycastDown, 0.6f, out hit, transform.localScale.y / 2))
+        if (Physics.SphereCast(raycastDown, 0.7f, out hit, transform.localScale.y / 2))
         {
             if(hit.collider.gameObject.tag == "Ground")
             {
@@ -211,8 +211,8 @@ public class Player_Movement : MonoBehaviour
 
             // Player is Mid-air
             case false:
-                // Stop jump velocity after letting go jump button, giving it weighted feeling
-                if (_CCMovement.y > (jumpHeight / 2) && !Input.GetKey(KeyCode.Space))
+                if (_CCMovement.y > (jumpHeight / 1.5) && !Input.GetKey(KeyCode.Space))
+
                 {
                     _CCMovement.y = 0f;
                 }
@@ -220,7 +220,6 @@ public class Player_Movement : MonoBehaviour
                 if(Input.GetKeyUp(KeyCode.Space))
                 {
                     audioSource.clip = GM_Audio.drivingSFX;
-
                 }
 
                 // Check for fall damage

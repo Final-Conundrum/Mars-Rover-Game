@@ -9,7 +9,7 @@ public class Player_Collision : MonoBehaviour
     MiniGame_Systems MiniGame => FindObjectOfType<MiniGame_Systems>();
     GUI_infoPanel InfoPanel => FindObjectOfType<GUI_infoPanel>();
 
-    private float exitPosY;
+    public float exitPosY;
     private bool jumpingFromGeyser = false;
 
     private void Update()
