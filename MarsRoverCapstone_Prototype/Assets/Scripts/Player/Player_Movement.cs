@@ -28,7 +28,8 @@ public class Player_Movement : MonoBehaviour
     public bool _alignToGround = true;
     public bool tankControls = true;
     public Camera playerCam;
-    public AudioSource audioSource => GetComponent<AudioSource>();
+    public AudioSource audio_DriveSFX;
+    public AudioSource audio_JumpSFX;
     public ParticleSystem boostParticles;
 
     [Space]
@@ -160,7 +161,7 @@ public class Player_Movement : MonoBehaviour
                 onSteepSlope = false;
                 hitNormal = new Vector3(0, 1, 0);
                 grounded = true;
-                audioSource.clip = GM_Audio.drivingSFX;
+                audio_DriveSFX.Play();
             }
         }
 
@@ -182,9 +183,7 @@ public class Player_Movement : MonoBehaviour
                     
                     if (Input.GetKeyDown(KeyCode.Space) && !MiniGame_Systems.playingMinigame)
                     {
-                        //GM_Audio.PlaySound(audioSource, "Jump");
-                        audioSource.clip = GM_Audio.jumpSFX;
-                        audioSource.Play();
+                        audio_JumpSFX.Play();
                     }
                 }
 
@@ -217,9 +216,13 @@ public class Player_Movement : MonoBehaviour
                     _CCMovement.y = 0f;
                 }
 
+                
+                // Audio mid-air
+                audio_DriveSFX.Pause();
+
                 if(Input.GetKeyUp(KeyCode.Space))
                 {
-                    audioSource.clip = GM_Audio.drivingSFX;
+                    audio_JumpSFX.Stop();
                 }
 
                 // Check for fall damage
@@ -236,7 +239,7 @@ public class Player_Movement : MonoBehaviour
                 break;
         }
         // Driving SFX based on rovers speed
-        audioSource.pitch = _currentSpeed / 10;
+        audio_DriveSFX.pitch = _currentSpeed / 10;
     }
 
     // Method to encompass getting input and using CC to move object

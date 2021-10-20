@@ -79,7 +79,6 @@ public class MiniGame_PIXL : MonoBehaviour
 
                 foreach (Image i in HidingPanels)
                 {
-                    //i.color = new Color(0, 0, 0, 1);
                     i.gameObject.SetActive(false);
                 }
 
@@ -95,8 +94,6 @@ public class MiniGame_PIXL : MonoBehaviour
         Time.timeScale = 1;
         Completed = true;
         Cursor.visible = true;
-
-        //GUI_MineralAnalysis.Display(true);
 
         GM_Objectives.UpdateObjective("PIXL");
 

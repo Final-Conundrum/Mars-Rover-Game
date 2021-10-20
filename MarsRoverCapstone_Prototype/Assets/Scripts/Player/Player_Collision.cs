@@ -9,7 +9,7 @@ public class Player_Collision : MonoBehaviour
     MiniGame_Systems MiniGame => FindObjectOfType<MiniGame_Systems>();
     GUI_infoPanel InfoPanel => FindObjectOfType<GUI_infoPanel>();
 
-    public float exitPosY;
+    private float exitPosY;
     private bool jumpingFromGeyser = false;
 
     private void Update()
@@ -39,9 +39,8 @@ public class Player_Collision : MonoBehaviour
         if (c.gameObject.tag == "Ground")
         {
             PM.onGeyser = false;
-            //GM_Audio.StopSound(PM.audioSource);
-            PM.audioSource.clip = GM_Audio.drivingSFX;
-            PM.audioSource.Play();
+
+            PM.audio_DriveSFX.Play();
         }
 
         if (c.gameObject.tag == "Hazard")
@@ -59,10 +58,9 @@ public class Player_Collision : MonoBehaviour
             Player_Movement.grounded = true;
             jumpingFromGeyser = false;
 
-            if(!PM.audioSource.isPlaying)
+            if(!PM.audio_DriveSFX.isPlaying)
             {
-                PM.audioSource.clip = GM_Audio.drivingSFX;
-                PM.audioSource.Play();
+                PM.audio_DriveSFX.Play();
             }
         }
     }
@@ -80,10 +78,7 @@ public class Player_Collision : MonoBehaviour
     {
         if (c.gameObject.tag == "Geyser")
         {
-            //PM.jumpHeight = PM.geyserJumpHeight;
-            //PM._CCMovement.y = PM.geyserJumpHeight;
             PM.onGeyser = true;
-
             jumpingFromGeyser = true;
         }
 
@@ -107,7 +102,6 @@ public class Player_Collision : MonoBehaviour
         if (c.gameObject.tag == "PIXLMineral")
         {
             GUI_MineralAnalysis.currentMineral = c.gameObject.tag;
-            //InfoPanel.AragoniteText();
 
             GUI_HUD.UpdatePrompt("E", "Analyze with the PIXL camera", true);
         }
