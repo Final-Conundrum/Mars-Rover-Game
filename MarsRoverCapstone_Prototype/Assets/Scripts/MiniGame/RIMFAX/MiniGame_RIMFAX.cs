@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class MiniGame_RIMFAX : MonoBehaviour
 {
-    private AudioSource audioSource => GetComponent<AudioSource>();
+    public AudioSource scanSFX;
+    public AudioSource winSFX;
 
     // Variables for scan line gameplay
     [Space]
@@ -35,8 +36,6 @@ public class MiniGame_RIMFAX : MonoBehaviour
     public GameObject IntroPanel;
     public GameObject[] TextPanel;
 
-    public GameObject ResultPanel;
-
     private bool completed = false;
 
     // Start is called before the first frame update
@@ -46,9 +45,9 @@ public class MiniGame_RIMFAX : MonoBehaviour
 
         Cursor.visible = true;
         IntroPanel.SetActive(true);
-        ResultPanel.SetActive(false);
         failText.SetActive(false);
         gameplayObject.SetActive(false);
+        scanline.SetActive(false);
 
         // Sets randomized position of scan lines
         for (int i = 0; i < scanningLines.Length; i++)
@@ -76,7 +75,7 @@ public class MiniGame_RIMFAX : MonoBehaviour
                 else
                 {
                     currentTarget = "B";
-                    GM_Audio.PlaySound(audioSource, "Scan");
+                    scanSFX.PlayOneShot(scanSFX.clip);
 
                     // Increase speed
                     if (scanlineSpeed <= scallineMaxSpeed)
@@ -102,7 +101,7 @@ public class MiniGame_RIMFAX : MonoBehaviour
                 else
                 {
                     currentTarget = "A";
-                    GM_Audio.PlaySound(audioSource, "Scan");
+                    scanSFX.PlayOneShot(scanSFX.clip);
                     
                     // Increase speed
                     if (scanlineSpeed <= scallineMaxSpeed)
@@ -126,8 +125,9 @@ public class MiniGame_RIMFAX : MonoBehaviour
         }
 
         // Detect win-condition
-        if(scanninglinesCounter >= scanningLines.Length)
+        if(scanninglinesCounter >= scanningLines.Length && !completed)
         {
+            completed = true;
             EditRIMFAXScreens(2);          
         }
     }
@@ -139,29 +139,16 @@ public class MiniGame_RIMFAX : MonoBehaviour
         {
             // Hide scan maze and display info about the analysis screen
             case 1:
-                //GM_Audio.PlaySound(audioSource, "MGWin");
-
                 IntroPanel.SetActive(false);
                 scanline.gameObject.SetActive(true);
                 gameplayObject.SetActive(true);
                 Cursor.visible = false;
 
-                foreach (Image i in HidingPanels)
-                {
-                    i.color = new Color(255, 255, 255, 1);
-                }
+                scanSFX.PlayOneShot(scanSFX.clip);
                 break;
             case 2:
-                GM_Audio.PlaySound(audioSource, "MGWin");
-
-                ResultPanel.SetActive(true);
                 scanline.gameObject.SetActive(false);
-                Cursor.visible = true;
-
-                foreach (Image i in HidingPanels)
-                {
-                    i.color = new Color(0, 0, 0, 1);
-                }
+                Exit();
                 break;
         }
     }
@@ -177,10 +164,10 @@ public class MiniGame_RIMFAX : MonoBehaviour
     // End mini-game and display scan
     public void Exit()
     {
-        GM_Audio.PlaySound(audioSource, "MGWin");
+        winSFX.PlayOneShot(winSFX.clip);
 
         Time.timeScale = 1;
-        Cursor.visible = true;
+        Cursor.visible = false;
 
         GM_Objectives.UpdateObjective("RIMFAX");
 

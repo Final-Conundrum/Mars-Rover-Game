@@ -16,34 +16,40 @@ public class MiniGame_Results : MonoBehaviour
 
     [Space]
     [Header("RIMFAX Result Assets")]
-    public Image RIMFAX_ResultsImage;
-    public static Image _RIMFAX_ResultsImage;
-    public Sprite[] RIMFAX_Sprites;
-    public static Sprite[] _RIMFAX_Sprites;
+    public GameObject RIMFAX_ResultsObject;
+    public static GameObject _RIMFAX_ResultsObject;
+    public GameObject[] RIMFAX_ImagePrefab;
+    public static GameObject[] _RIMFAX_ImagePrefab;
+
+    public static Transform _RIMFAX_Transform;
 
     [Space]
     [Header("DRILL Result Assets")]
-    public Image DRILL_ResultsImage;
-    public static Image _DRILL_ResultsImage;
-    public Sprite[] DRILL_Sprites;
-    public static Sprite[] _DRILL_Sprites;
+    public Image DRILL_ResultsObject;
+    public static Image _DRILL_ResultsObject;
+    public Sprite[] DRILL_ImagePrefab;
+    public static Sprite[] _DRILL_ImagePrefab;
+
+    public static Transform _DRILL_Transform;
 
     // Start is called before the first frame update
     void Start()
     {
         PIXL_ResultsObject.gameObject.SetActive(false);
-        RIMFAX_ResultsImage.gameObject.SetActive(false);
-        DRILL_ResultsImage.gameObject.SetActive(false);
+        RIMFAX_ResultsObject.gameObject.SetActive(false);
+        DRILL_ResultsObject.gameObject.SetActive(false);
 
         _PIXL_ResultsObject = PIXL_ResultsObject;
         _PIXL_ImagePrefab = PIXL_ImagePrefab;
         _PIXL_Transform = PIXL_ResultsObject.transform;
 
-        _RIMFAX_ResultsImage = RIMFAX_ResultsImage;
-        _RIMFAX_Sprites = RIMFAX_Sprites;
+        _RIMFAX_ResultsObject = RIMFAX_ResultsObject;
+        _RIMFAX_ImagePrefab = RIMFAX_ImagePrefab;
+        _RIMFAX_Transform = RIMFAX_ResultsObject.transform;
 
-        _DRILL_ResultsImage = DRILL_ResultsImage;
-        _DRILL_Sprites = DRILL_Sprites;
+        _DRILL_ResultsObject = DRILL_ResultsObject;
+        _DRILL_ImagePrefab = DRILL_ImagePrefab;
+        _DRILL_Transform = DRILL_ResultsObject.transform;
     }
 
     public static IEnumerator ShowPIXLResults(float timer)
@@ -58,39 +64,42 @@ public class MiniGame_Results : MonoBehaviour
 
         _PIXL_ResultsObject.GetComponent<Animator>().SetBool("Transition", false);
         yield return new WaitForSeconds(2f);
+
         _PIXL_ResultsObject.gameObject.SetActive(false);
         Destroy(resultObject);
     }
 
     public static IEnumerator ShowRIMFAXResults(float timer)
     {
-        int random = Random.Range(0, _RIMFAX_Sprites.Length - 1);
+        int random = Random.Range(0, _RIMFAX_ImagePrefab.Length - 1);
 
-        _RIMFAX_ResultsImage.gameObject.SetActive(true);
-        _RIMFAX_ResultsImage.sprite = _RIMFAX_Sprites[random];
-        _RIMFAX_ResultsImage.GetComponent<Animator>().SetBool("Transition", true);
+        _RIMFAX_ResultsObject.gameObject.SetActive(true);
+        GameObject resultObject = Instantiate(_RIMFAX_ImagePrefab[random], _RIMFAX_Transform);
+        _RIMFAX_ResultsObject.GetComponent<Animator>().SetBool("Transition", true);
 
         yield return new WaitForSeconds(timer);
 
-        _RIMFAX_ResultsImage.GetComponent<Animator>().SetBool("Transition", false);
+        _RIMFAX_ResultsObject.GetComponent<Animator>().SetBool("Transition", false);
         yield return new WaitForSeconds(2f);
 
-        _RIMFAX_ResultsImage.gameObject.SetActive(false);
+        _RIMFAX_ResultsObject.gameObject.SetActive(false);
+        Destroy(resultObject);
+
     }
 
     public static IEnumerator ShowDRILLResults(float timer)
     {
-        int random = Random.Range(0, _DRILL_Sprites.Length - 1);
+        int random = Random.Range(0, _DRILL_ImagePrefab.Length - 1);
 
-        _DRILL_ResultsImage.gameObject.SetActive(true);
-        _DRILL_ResultsImage.sprite = _DRILL_Sprites[random];
-        _DRILL_ResultsImage.GetComponent<Animator>().SetBool("Transition", true);
+        _DRILL_ResultsObject.gameObject.SetActive(true);
+        _DRILL_ResultsObject.sprite = _DRILL_ImagePrefab[random];
+        _DRILL_ResultsObject.GetComponent<Animator>().SetBool("Transition", true);
 
         yield return new WaitForSeconds(timer);
 
-        _DRILL_ResultsImage.GetComponent<Animator>().SetBool("Transition", false);
+        _DRILL_ResultsObject.GetComponent<Animator>().SetBool("Transition", false);
         yield return new WaitForSeconds(2f);
 
-        _DRILL_ResultsImage.gameObject.SetActive(false);
+        _DRILL_ResultsObject.gameObject.SetActive(false);
     }
 }
