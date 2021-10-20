@@ -32,9 +32,9 @@ public class Settings : MonoBehaviour
         Screen.SetResolution(1920, 1080, isFullscreen);
     }
 
-    public void ScreenSize540()
+    public void ScreenSize720()
     {
-        Screen.SetResolution(960, 540, isFullscreen);
+        Screen.SetResolution(1280, 720, isFullscreen);
     }
 
     public void ScreenSizeFullScreen(bool enabled)
@@ -71,5 +71,8 @@ public class Settings : MonoBehaviour
         }
     }
 
-    // Audio settings
+    public void SetQualitySettings(int qualityIndex)
+    {
+        QualitySettings.SetQualityLevel(qualityIndex);
+    }
 }
