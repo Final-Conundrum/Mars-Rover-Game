@@ -73,6 +73,10 @@ public class Physical_Inventory : MonoBehaviour
     //reset inventory to 0 when exiting play mode. 
     private void OnApplicationQuit()
     {
+        ClearInventory();
+    }
+    public void ClearInventory()
+    {
         inventory.itemContainer.Clear();
     }
 }
