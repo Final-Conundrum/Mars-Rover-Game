@@ -32,7 +32,7 @@ public class GUI_infoPanel : MonoBehaviour
     //other
     public bool isWarning; //This will help determine which panels should self destruct after popping up. (ensure to destroy game object trigger too)
     public List<string> factStrings = new List<string>(); 
-    public string defaultFact = "Perseverance is able to move at a speed of 152 meters per hour!";
+    public string defaultFact = "Perseverance moves at a speed of 152 meters per hour!";
 
     //coroutine variables
     public float maxCount = 10f;
@@ -49,7 +49,7 @@ public class GUI_infoPanel : MonoBehaviour
         factStrings.Add("Ingenuity is the small helicopter that went to Mars with Perseverance."); 
         factStrings.Add("Perseverance weighs 1025 Kilograms and is the size of a small car!");
         factStrings.Add(defaultFact);
-        factStrings.Add("Mars is home to the highest volcano and mountain in the ENTIRE universe!");
+        factStrings.Add("Mars is home to the tallest volcano and mountain in the ENTIRE universe!");
         factStrings.Add("Sounds on Mars have been recorded and can be found on SoundCloud.");
         factStrings.Add("It's understood by scientists that Jezero Crater was filled with water 3.5 billion years ago.");
         factStrings.Add("Perseverance is able to turn carbon-dioxide into oxygen.");
@@ -79,14 +79,14 @@ public class GUI_infoPanel : MonoBehaviour
         if (factStrings.Count == 0)
         {
             factStrings.Add(defaultFact);
-            factStrings.Add("The list is empty and we are using the defualt string");
+            factStrings.Add("The list is empty");
         }
     }
 
     public void CheckPointMessage() 
     {
         infoPanel.SetActive(true);
-        infoText.text = "> You have reached a checkpoint! ";
+        infoText.text = "You have reached a checkpoint! ";
         isWarning = true;
         FadePanel();
     }
@@ -94,7 +94,7 @@ public class GUI_infoPanel : MonoBehaviour
     public void OnApproachNotification()
     {
         infoPanel.SetActive(true);
-        infoText.text = " There's a potential sample nearby that we should check out!";
+        infoText.text = "There's a potential sample nearby that we should check out!";
         isWarning = false;
         FadePanel();
     }
