@@ -32,6 +32,7 @@ public class Inventory_Systems : ScriptableObject
         {
             //Add an item to the inventory if we do not have the item already.
             itemContainer.Add(new Inventory_Slots(_item, _amount));
+           
         }
     }
 

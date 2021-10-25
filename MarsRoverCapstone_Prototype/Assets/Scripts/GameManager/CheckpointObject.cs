@@ -20,6 +20,7 @@ public class CheckpointObject : MonoBehaviour
     // Find GameManager of checkpoints
     private GM_Checkpoint GM => FindObjectOfType<GM_Checkpoint>();
     public AudioSource audioSource => GetComponent<AudioSource>();
+    public static Inventory_Systems inventory_system; 
 
     // Aesthetics of checkpoints
     public Canvas canvas;
@@ -100,7 +101,7 @@ public class CheckpointObject : MonoBehaviour
                     //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                     safeZoneInfo.text = "Upload to NASA successful";
                     GM.SetSafeZone(this);
-
+                    
                     StartCoroutine(GM_SceneLoader.LoadToScene("Scene_MainGame"));
                 }
             }
