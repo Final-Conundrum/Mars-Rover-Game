@@ -76,17 +76,17 @@ public class MiniGame_Results : MonoBehaviour
     private void Update()
     {
         // Check for input once a result screen has been triggered
-        if(Input.GetKey(KeyCode.Space) && PIXLActive)
+        if(Input.GetKey(KeyCode.E) && PIXLActive)
         {
             StartCoroutine(HidePIXLResults());
         }
 
-        if (Input.GetKey(KeyCode.Space) && RIMFAXActive)
+        if (Input.GetKey(KeyCode.E) && RIMFAXActive)
         {
             StartCoroutine(HideRIMFAXResults());
         }
 
-        if (Input.GetKey(KeyCode.Space) && DRILLActive)
+        if (Input.GetKey(KeyCode.E) && DRILLActive)
         {
             StartCoroutine(HideDRILLResults());
         }
@@ -104,8 +104,9 @@ public class MiniGame_Results : MonoBehaviour
         currentPIXLResult = Instantiate(_PIXL_ImagePrefab[random], _PIXL_Transform);
         _PIXL_ResultsObject.GetComponent<Animator>().SetBool("Transition", true);
 
-        yield return new WaitForSeconds(timer);
         PIXLActive = true;
+
+        yield return new WaitForSeconds(timer);
     }
 
     // Hide the currently displayd PIXL result screen
@@ -135,8 +136,9 @@ public class MiniGame_Results : MonoBehaviour
         currentDRILLResult = Instantiate(_RIMFAX_ImagePrefab[random], _RIMFAX_Transform);
         _RIMFAX_ResultsObject.GetComponent<Animator>().SetBool("Transition", true);
 
-        yield return new WaitForSeconds(timer);
         RIMFAXActive = true;
+
+        yield return new WaitForSeconds(timer);
     }
 
     // Hide the currently displayd RIMFAX result screen
@@ -166,8 +168,9 @@ public class MiniGame_Results : MonoBehaviour
         _DRILL_ResultsObject.sprite = _DRILL_ImagePrefab[random];
         _DRILL_ResultsObject.GetComponent<Animator>().SetBool("Transition", true);
 
-        yield return new WaitForSeconds(timer);
         DRILLActive = true;
+
+        yield return new WaitForSeconds(timer);
     }
 
     // Hide the currently displayd DRILL result screen

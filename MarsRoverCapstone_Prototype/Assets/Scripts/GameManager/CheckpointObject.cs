@@ -98,10 +98,10 @@ public class CheckpointObject : MonoBehaviour
 
                 if (Input.GetKeyDown(KeyCode.H))
                 {
-                    //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                     safeZoneInfo.text = "Upload to NASA successful";
                     GM.SetSafeZone(this);
-                    
+                    GM.RebootSafeZone();
+
                     StartCoroutine(GM_SceneLoader.LoadToScene("Scene_MainGame"));
                 }
             }

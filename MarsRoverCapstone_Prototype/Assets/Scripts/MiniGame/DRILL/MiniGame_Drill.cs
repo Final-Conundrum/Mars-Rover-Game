@@ -132,7 +132,7 @@ public class MiniGame_Drill : MonoBehaviour
     public void Exit()
     {
         Time.timeScale = 1;
-        GM_Objectives.UpdateObjective("Drill");
+
         MiniGame_Systems.playingMinigame = false;
         Physical_Inventory.AddToInventory("Drill");
 

@@ -54,8 +54,32 @@ public class GM_Checkpoint : MonoBehaviour
     // Checkpoint conditions are set upon reboot/respawn here
     public void RebootSafeZone()
     {
+        Physical_Inventory inventory = FindObjectOfType<Physical_Inventory>();
+
+        foreach (Inventory_Slots i in Physical_Inventory.inventory.itemContainer)
+        {
+            if (i.item.name == "RandomMineral")
+            {
+                GM_Objectives.UpdateObjective("PIXL", i.amount);
+            }
+
+            if (i.item.name == "Drill_Item")
+            {
+                GM_Objectives.UpdateObjective("Drill", i.amount);
+            }
+
+            if (i.item.name == "RIMFAX_Item")
+            {
+                GM_Objectives.UpdateObjective("RIMFAX", i.amount);
+            }
+
+        }
+
+        inventory.ClearInventory();
+
         int num = Random.Range(0, SZrandomText.Length - 1);
 
         currentSafeZone.safeZoneInfo.text = SZrandomText[num];
+
     }
 }

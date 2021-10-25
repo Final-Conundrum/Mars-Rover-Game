@@ -171,8 +171,6 @@ public class MiniGame_RIMFAX : MonoBehaviour
         Time.timeScale = 1;
         Cursor.visible = false;
 
-        GM_Objectives.UpdateObjective("RIMFAX");
-
         MiniGame_Systems.playingMinigame = false;
         Physical_Inventory.AddToInventory("RIMFAX");
 

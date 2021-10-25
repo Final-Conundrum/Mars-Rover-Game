@@ -68,11 +68,10 @@ public class GUI_PauseMenu : MonoBehaviour
         Application.Quit();
     }
 
-    public void RestartGame()
+    public void RestartGame(bool returnToCheckpoint)
     {
-        _GM_Checkpoint.savedAtSafeZone = false;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        Time.timeScale = 1;
+        _GM_Checkpoint.savedAtSafeZone = returnToCheckpoint;
+        StartCoroutine(GM_SceneLoader.LoadToScene("Scene_MainGame"));
     }
 
     public void OpenSettings(bool open)

@@ -103,9 +103,10 @@ public class MiniGame_PIXL : MonoBehaviour
         Completed = true;
         Cursor.visible = true;
 
-        GM_Objectives.UpdateObjective("PIXL");
+        //GM_Objectives.UpdateObjective("PIXL");
 
         MiniGame_Systems.playingMinigame = false;
+        Physical_Inventory.AddToInventory("PIXL");
 
         StartCoroutine(MiniGame_Results.ShowPIXLResults(5f));
         StartCoroutine(DestroyOnTimer(5f));
