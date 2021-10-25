@@ -76,17 +76,17 @@ public class MiniGame_Results : MonoBehaviour
     private void Update()
     {
         // Check for input once a result screen has been triggered
-        if(Input.GetKeyDown(KeyCode.Space) && PIXLActive)
+        if(Input.GetKey(KeyCode.Space) && PIXLActive)
         {
             StartCoroutine(HidePIXLResults());
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && RIMFAXActive)
+        if (Input.GetKey(KeyCode.Space) && RIMFAXActive)
         {
             StartCoroutine(HideRIMFAXResults());
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && DRILLActive)
+        if (Input.GetKey(KeyCode.Space) && DRILLActive)
         {
             StartCoroutine(HideDRILLResults());
         }

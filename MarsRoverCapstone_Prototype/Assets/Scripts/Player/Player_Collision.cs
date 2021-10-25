@@ -125,7 +125,7 @@ public class Player_Collision : MonoBehaviour
         {
             InfoPanel.GenerateFact();
             InfoPanel.ActivateFactPanel();
-         //   c.gameObject.SetActive(false);
+         // c.gameObject.SetActive(false);
         }
     }
 
@@ -194,6 +194,11 @@ public class Player_Collision : MonoBehaviour
         if (c.gameObject.tag == "PIXLMineral" || c.gameObject.tag == "RIMFAX" || c.gameObject.tag == "Drill" || c.gameObject.tag == "SafeZone")
         {
             GUI_HUD.UpdatePrompt("", "", false);
+        }
+
+        if(c.gameObject.tag == "FactTrigger")
+        {
+            c.gameObject.SetActive(false);
         }
     }
 
