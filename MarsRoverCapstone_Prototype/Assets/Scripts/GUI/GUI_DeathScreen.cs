@@ -25,6 +25,9 @@ public class GUI_DeathScreen : MonoBehaviour
 
     public void Reboot()
     {
+        Physical_Inventory inventory = FindObjectOfType<Physical_Inventory>();
+        inventory.ClearInventory();
+
         StartCoroutine(GM_SceneLoader.LoadToScene("Scene_MainGame"));
     }
 }

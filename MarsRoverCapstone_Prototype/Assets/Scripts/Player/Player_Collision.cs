@@ -87,7 +87,7 @@ public class Player_Collision : MonoBehaviour
             Player_Stats.TakeDamage(5);
         }
 
-        if (c.gameObject.tag == "HazardRock" && PM.takeFallDamage)
+        if (c.gameObject.tag == "HazardRock")
         {
             if (transform.position.y <= exitPosY - PM.fallDamageHeight)
             {
@@ -170,11 +170,14 @@ public class Player_Collision : MonoBehaviour
 
         if (c.gameObject.tag == "Geyser")
         {
-            //PM.jumpHeight = PM.geyserJumpHeight;
-            //PM._CCMovement.y = PM._CCMovement.y + 10f;
             Player_Movement.grounded = true;
             PM.onGeyser = true;
             jumpingFromGeyser = true;
+        }
+
+        if (c.gameObject.tag == "Hazard")
+        {
+            StartCoroutine(DamageOverTime());
         }
     }
 
@@ -184,9 +187,6 @@ public class Player_Collision : MonoBehaviour
 
         if (c.gameObject.tag == "Geyser")
         {
-            //PM.jumpHeight = 0.5f;
-            //PM.onGeyser = false;
-            //Player_Movement.grounded = false;
             StartCoroutine(ExittingGeyser());
         }
 
@@ -208,5 +208,12 @@ public class Player_Collision : MonoBehaviour
 
         PM.onGeyser = false;
         Player_Movement.grounded = false;
+    }
+
+    IEnumerator DamageOverTime()
+    {
+        yield return new WaitForSeconds(1f);
+
+        Player_Stats.TakeDamage(5);
     }
 }

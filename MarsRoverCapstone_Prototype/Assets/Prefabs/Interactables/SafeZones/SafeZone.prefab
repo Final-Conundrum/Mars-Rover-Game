@@ -421,6 +421,7 @@ GameObject:
   - component: {fileID: 6099614317159918826}
   - component: {fileID: 1126944309372439427}
   - component: {fileID: 936204787107315522}
+  - component: {fileID: 3882925930772246573}
   m_Layer: 9
   m_Name: BG
   m_TagString: Untagged
@@ -488,6 +489,23 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1183024399 &3882925930772246573
+LookAtConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5267223905248532727}
+  m_Enabled: 1
+  m_Weight: 1
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_RotationOffset: {x: 0, y: 0, z: 0}
+  m_Roll: 0
+  m_WorldUpObject: {fileID: 0}
+  m_UseUpObject: 0
+  m_IsContraintActive: 1
+  m_IsLocked: 0
+  m_Sources: []
 --- !u!1 &6162349515335874979
 GameObject:
   m_ObjectHideFlags: 0
@@ -607,7 +625,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6488826751035145806}
-  m_LocalRotation: {x: 0.03341511, y: 0.010204306, z: -0.00034118627, w: 0.9993894}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children:
@@ -615,7 +633,7 @@ RectTransform:
   - {fileID: 6099614317159918826}
   m_Father: {fileID: 6488826752972918493}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 3.83, y: 1.17, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0.065, y: 0.664}
@@ -1032,7 +1050,6 @@ MonoBehaviour:
   safeZoneInfo: {fileID: 6488826751265738723}
   background: {fileID: 936204787107315522}
   distanceToDisplay: 40
-  prompt: {fileID: 0}
   flag: {fileID: 8409822341435865482}
 --- !u!82 &6164227212488030161
 AudioSource:
