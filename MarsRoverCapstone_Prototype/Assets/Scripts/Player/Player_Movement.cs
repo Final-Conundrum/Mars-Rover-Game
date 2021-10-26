@@ -31,6 +31,7 @@ public class Player_Movement : MonoBehaviour
     public AudioSource audio_DriveSFX;
     public AudioSource audio_JumpSFX;
     public ParticleSystem boostParticles;
+    public ParticleSystem steepSlopeParticles;
 
     [Space]
 
@@ -97,6 +98,7 @@ public class Player_Movement : MonoBehaviour
         boost = boostLimit;
 
         boostParticles.gameObject.SetActive(false);
+        steepSlopeParticles.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -124,14 +126,23 @@ public class Player_Movement : MonoBehaviour
             SwapControlType();
         }
 
+        // Control particle effect status
         if(_currentSpeed > midDriveSpeed + 1)
         {
             boostParticles.gameObject.SetActive(true);
         }
-
-        if(_currentSpeed <= midDriveSpeed )
+        else if(_currentSpeed <= midDriveSpeed )
         {
             boostParticles.gameObject.SetActive(false);
+        }
+
+        if(onSteepSlope)
+        {
+            steepSlopeParticles.gameObject.SetActive(true);
+        }
+        else
+        {
+            steepSlopeParticles.gameObject.SetActive(false);
         }
     }
 

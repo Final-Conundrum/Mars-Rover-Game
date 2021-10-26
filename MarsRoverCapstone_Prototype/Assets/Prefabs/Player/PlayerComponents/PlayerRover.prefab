@@ -955,6 +955,7 @@ MonoBehaviour:
   audio_DriveSFX: {fileID: 1588541164}
   audio_JumpSFX: {fileID: 3222786564389895586}
   boostParticles: {fileID: 2857645020600002708}
+  steepSlopeParticles: {fileID: 0}
   _CCMovement: {x: 0, y: 0, z: 0}
   gravity: 0.6
   minDriveSpeed: 5
@@ -1003,7 +1004,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47ef7e85d67230e4fb9e4a2e589f4e8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exitPosY: 0
 --- !u!143 &227704063898548675
 CharacterController:
   m_ObjectHideFlags: 0
@@ -6813,22 +6813,22 @@ PrefabInstance:
     - target: {fileID: 8868727496061355184, guid: af3e3186f94ccb240bbdb24e92999e9b,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.10758941
       objectReference: {fileID: 0}
     - target: {fileID: 8868727496061355184, guid: af3e3186f94ccb240bbdb24e92999e9b,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0.08213916
       objectReference: {fileID: 0}
     - target: {fileID: 8868727496061355184, guid: af3e3186f94ccb240bbdb24e92999e9b,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.78752375
       objectReference: {fileID: 0}
     - target: {fileID: 8868727496061355184, guid: af3e3186f94ccb240bbdb24e92999e9b,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.6012354
       objectReference: {fileID: 0}
     - target: {fileID: 8868727496061355184, guid: af3e3186f94ccb240bbdb24e92999e9b,
         type: 3}
