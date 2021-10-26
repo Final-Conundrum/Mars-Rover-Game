@@ -10,9 +10,7 @@ public class EndOfLevel_Object : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player" && GM_Objectives.completedObjectives)
         {
-            Cursor.visible = true;
             EndOfLevel.EndOfLevelMenu.SetActive(true);
-            Time.timeScale = 0.1f;
         }
         else if(collision.gameObject.tag == "Player" && !GM_Objectives.completedObjectives)
         {
