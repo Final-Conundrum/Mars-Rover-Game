@@ -15,6 +15,7 @@ public class MiniGame_Drill : MonoBehaviour
     public Slider DrillSlider;
     public GameObject failText;
     public GameObject warningText;
+    public GameObject drillImage;
 
     // Audio
     [Space]
@@ -36,7 +37,7 @@ public class MiniGame_Drill : MonoBehaviour
     private float DrilltimeIteration;
 
     private bool buttonDown = false;
- 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -99,7 +100,7 @@ public class MiniGame_Drill : MonoBehaviour
     {
         drillingSFX.Stop();
 
-        if (DrillTime >= WinTime)
+        if (DrillTime >= WinTime && !completed)
         {
             Exit();
         }
@@ -131,10 +132,22 @@ public class MiniGame_Drill : MonoBehaviour
     public void Exit()
     {
         Time.timeScale = 1;
-        GM_Objectives.UpdateObjective("Drill");
+
         MiniGame_Systems.playingMinigame = false;
         Physical_Inventory.AddToInventory("Drill");
-        Destroy(this.gameObject);
+
+        completed = true;
+
+        StartCoroutine(MiniGame_Results.ShowDRILLResults(5f));
+        StartCoroutine(DestroyOnTimer(5f));
+    }
+
+    IEnumerator DestroyOnTimer(float timer)
+    {
+        gameObject.transform.localScale = new Vector3(0, 0, 0);
+
+        yield return new WaitForSeconds(timer);
+        Destroy(gameObject);
     }
 
     public void OnPress()
@@ -143,6 +156,7 @@ public class MiniGame_Drill : MonoBehaviour
         OnClickTrigger = Time.time;
         CoolDownTime = Random.Range(3f, 10f);
 
+        drillImage.GetComponent<Animator>().SetBool("Drill", true);
         drillingSFX.Play();
     }
 
@@ -154,6 +168,7 @@ public class MiniGame_Drill : MonoBehaviour
             DrillTime = 0;
         }
 
-        drillingSFX.Stop();
+        drillImage.GetComponent<Animator>().SetBool("Drill", false);
+        drillingSFX.Pause();
     }
 }

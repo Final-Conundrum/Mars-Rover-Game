@@ -22,13 +22,16 @@ public class Player_Movement : MonoBehaviour
 
     public Rigidbody RB => GetComponent<Rigidbody>();
     CharacterController CC => GetComponent<CharacterController>();
+    Player_Collision PC => GetComponent<Player_Collision>();
 
     public static bool grounded;
     public bool _alignToGround = true;
     public bool tankControls = true;
     public Camera playerCam;
-    public AudioSource audioSource => GetComponent<AudioSource>();
+    public AudioSource audio_DriveSFX;
+    public AudioSource audio_JumpSFX;
     public ParticleSystem boostParticles;
+    public ParticleSystem steepSlopeParticles;
 
     [Space]
 
@@ -95,6 +98,7 @@ public class Player_Movement : MonoBehaviour
         boost = boostLimit;
 
         boostParticles.gameObject.SetActive(false);
+        steepSlopeParticles.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -122,15 +126,23 @@ public class Player_Movement : MonoBehaviour
             SwapControlType();
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftShift) || (Input.GetKeyDown(KeyCode.RightShift)))
+        // Control particle effect status
+        if(_currentSpeed > midDriveSpeed + 1)
         {
             boostParticles.gameObject.SetActive(true);
         }
-
-        if(Input.GetKeyUp(KeyCode.LeftShift) || (Input.GetKeyUp(KeyCode.RightShift)))
+        else if(_currentSpeed <= midDriveSpeed )
         {
             boostParticles.gameObject.SetActive(false);
+        }
 
+        if(onSteepSlope)
+        {
+            steepSlopeParticles.gameObject.SetActive(true);
+        }
+        else
+        {
+            steepSlopeParticles.gameObject.SetActive(false);
         }
     }
 
@@ -153,14 +165,14 @@ public class Player_Movement : MonoBehaviour
         RaycastHit hit = new RaycastHit();
         Ray raycastDown = new Ray(transform.position, -transform.up);
 
-        if (Physics.SphereCast(raycastDown, 0.6f, out hit, transform.localScale.y / 2))
+        if (Physics.SphereCast(raycastDown, 0.7f, out hit, transform.localScale.y / 2))
         {
             if(hit.collider.gameObject.tag == "Ground")
             {
                 onSteepSlope = false;
                 hitNormal = new Vector3(0, 1, 0);
                 grounded = true;
-                audioSource.clip = GM_Audio.drivingSFX;
+                audio_DriveSFX.Play();
             }
         }
 
@@ -182,9 +194,7 @@ public class Player_Movement : MonoBehaviour
                     
                     if (Input.GetKeyDown(KeyCode.Space) && !MiniGame_Systems.playingMinigame)
                     {
-                        //GM_Audio.PlaySound(audioSource, "Jump");
-                        audioSource.clip = GM_Audio.jumpSFX;
-                        audioSource.Play();
+                        audio_JumpSFX.Play();
                     }
                 }
 
@@ -211,16 +221,19 @@ public class Player_Movement : MonoBehaviour
 
             // Player is Mid-air
             case false:
-                // Stop jump velocity after letting go jump button, giving it weighted feeling
-                if (_CCMovement.y > (jumpHeight / 2) && !Input.GetKey(KeyCode.Space))
+                if (_CCMovement.y > (jumpHeight / 1.5) && !Input.GetKey(KeyCode.Space))
+
                 {
                     _CCMovement.y = 0f;
                 }
 
+                
+                // Audio mid-air
+                audio_DriveSFX.Pause();
+
                 if(Input.GetKeyUp(KeyCode.Space))
                 {
-                    audioSource.clip = GM_Audio.drivingSFX;
-
+                    audio_JumpSFX.Stop();
                 }
 
                 // Check for fall damage
@@ -237,7 +250,7 @@ public class Player_Movement : MonoBehaviour
                 break;
         }
         // Driving SFX based on rovers speed
-        audioSource.pitch = _currentSpeed / 10;
+        audio_DriveSFX.pitch = _currentSpeed / 10;
     }
 
     // Method to encompass getting input and using CC to move object

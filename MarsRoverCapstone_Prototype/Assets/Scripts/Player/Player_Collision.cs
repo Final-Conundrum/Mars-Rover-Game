@@ -25,11 +25,11 @@ public class Player_Collision : MonoBehaviour
     private void OnCollisionEnter(Collision c)
     {
         // Checks for ground collision and whether to damage player with fall damage
-        if (c.gameObject.tag == "Ground" && PM.takeFallDamage && !jumpingFromGeyser)
+        if (c.gameObject.tag == "Ground" && PM.takeFallDamage)
         {
             if(transform.position.y <= exitPosY - PM.fallDamageHeight)
             {
-                Player_Stats.TakeDamage(25);
+                Player_Stats.TakeDamage(15);
                 Player_Movement.grounded = true;
 
                 Debug.Log(gameObject.name + ": Player_Collision, Player should take fall damage here...");
@@ -38,9 +38,9 @@ public class Player_Collision : MonoBehaviour
 
         if (c.gameObject.tag == "Ground")
         {
-            //GM_Audio.StopSound(PM.audioSource);
-            PM.audioSource.clip = GM_Audio.drivingSFX;
-            PM.audioSource.Play();
+            PM.onGeyser = false;
+
+            PM.audio_DriveSFX.Play();
         }
 
         if (c.gameObject.tag == "Hazard")
@@ -58,10 +58,9 @@ public class Player_Collision : MonoBehaviour
             Player_Movement.grounded = true;
             jumpingFromGeyser = false;
 
-            if(!PM.audioSource.isPlaying)
+            if(!PM.audio_DriveSFX.isPlaying)
             {
-                PM.audioSource.clip = GM_Audio.drivingSFX;
-                PM.audioSource.Play();
+                PM.audio_DriveSFX.Play();
             }
         }
     }
@@ -79,10 +78,7 @@ public class Player_Collision : MonoBehaviour
     {
         if (c.gameObject.tag == "Geyser")
         {
-            //PM.jumpHeight = PM.geyserJumpHeight;
-            //PM._CCMovement.y = PM.geyserJumpHeight;
             PM.onGeyser = true;
-
             jumpingFromGeyser = true;
         }
 
@@ -91,7 +87,7 @@ public class Player_Collision : MonoBehaviour
             Player_Stats.TakeDamage(5);
         }
 
-        if (c.gameObject.tag == "HazardRock" && PM.takeFallDamage)
+        if (c.gameObject.tag == "HazardRock")
         {
             if (transform.position.y <= exitPosY - PM.fallDamageHeight)
             {
@@ -106,7 +102,6 @@ public class Player_Collision : MonoBehaviour
         if (c.gameObject.tag == "PIXLMineral")
         {
             GUI_MineralAnalysis.currentMineral = c.gameObject.tag;
-            //InfoPanel.AragoniteText();
 
             GUI_HUD.UpdatePrompt("E", "Analyze with the PIXL camera", true);
         }
@@ -130,7 +125,7 @@ public class Player_Collision : MonoBehaviour
         {
             InfoPanel.GenerateFact();
             InfoPanel.ActivateFactPanel();
-         //   c.gameObject.SetActive(false);
+         // c.gameObject.SetActive(false);
         }
     }
 
@@ -175,11 +170,14 @@ public class Player_Collision : MonoBehaviour
 
         if (c.gameObject.tag == "Geyser")
         {
-            //PM.jumpHeight = PM.geyserJumpHeight;
-            //PM._CCMovement.y = PM._CCMovement.y + 10f;
             Player_Movement.grounded = true;
             PM.onGeyser = true;
             jumpingFromGeyser = true;
+        }
+
+        if (c.gameObject.tag == "Hazard")
+        {
+            StartCoroutine(DamageOverTime());
         }
     }
 
@@ -189,9 +187,7 @@ public class Player_Collision : MonoBehaviour
 
         if (c.gameObject.tag == "Geyser")
         {
-            //PM.jumpHeight = 0.5f;
-            PM.onGeyser = false;
-            Player_Movement.grounded = false;
+            StartCoroutine(ExittingGeyser());
         }
 
         // Disable prompt after leaving mineral
@@ -199,5 +195,25 @@ public class Player_Collision : MonoBehaviour
         {
             GUI_HUD.UpdatePrompt("", "", false);
         }
+
+        if(c.gameObject.tag == "FactTrigger")
+        {
+            c.gameObject.SetActive(false);
+        }
+    }
+
+    IEnumerator ExittingGeyser()
+    {
+        yield return new WaitForSeconds(2f);
+
+        PM.onGeyser = false;
+        Player_Movement.grounded = false;
+    }
+
+    IEnumerator DamageOverTime()
+    {
+        yield return new WaitForSeconds(1f);
+
+        Player_Stats.TakeDamage(5);
     }
 }

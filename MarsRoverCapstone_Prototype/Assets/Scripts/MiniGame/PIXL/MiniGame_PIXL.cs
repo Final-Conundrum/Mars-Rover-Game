@@ -13,6 +13,7 @@ public class MiniGame_PIXL : MonoBehaviour
     [Space]
     [Header("Audio sources")]
     public AudioSource SFX_Beep;
+    public AudioSource SFX_Scan;
 
     // Associated game objects
     [Space]
@@ -25,7 +26,8 @@ public class MiniGame_PIXL : MonoBehaviour
     [Space]
     [Header("UI elements")]
     public Image[] HidingPanels;
-    public GameObject ResultPanel;
+    public GameObject IntroPanel;
+    public GameObject[] TextPanels;
 
     public GameObject failText;
     public float failTextTimer = 2f;
@@ -33,8 +35,14 @@ public class MiniGame_PIXL : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartMiniGame();
-        ResultPanel.SetActive(false);
+        Cursor.visible = true;
+        IntroPanel.SetActive(true);
+        VirtualCursor.gameObject.SetActive(false);
+
+        foreach(GameObject i in TextPanels)
+        {
+            i.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -49,12 +57,23 @@ public class MiniGame_PIXL : MonoBehaviour
     // Play Mini-game
     public void StartMiniGame()
     {
+        IntroPanel.SetActive(false);
+        VirtualCursor.gameObject.SetActive(true);
+        SFX_Beep.PlayOneShot(SFX_Beep.clip);
+
+        foreach (Image i in HidingPanels)
+        {
+            i.gameObject.SetActive(true);
+        }
+
         VirtualCursor.StartPos = Input.mousePosition - MazeStart.transform.position;
 
         Cursor.visible = false;
         Completed = false;
 
         failText.SetActive(false);
+
+        SFX_Scan.Play();
     }
 
     // Fail-state warning: display text describing what the player did wrong.
@@ -70,19 +89,9 @@ public class MiniGame_PIXL : MonoBehaviour
     {
         switch(variationNum)
         {
-            // Hide scan maze and display info about the analysis screen
+            // Hide intro and display maze
             case 1:
-                ResultPanel.SetActive(true);
-                VirtualCursor.gameObject.SetActive(false);
-                Cursor.visible = true;
-
-                foreach (Image i in HidingPanels)
-                {
-                    i.color = new Color(0, 0, 0, 1);
-                }
-
-                SFX_Beep.PlayOneShot(SFX_Beep.clip);
-
+                StartMiniGame();
                 break;
         }
     }
@@ -93,11 +102,27 @@ public class MiniGame_PIXL : MonoBehaviour
         Time.timeScale = 1;
         Completed = true;
         Cursor.visible = true;
-        GUI_MineralAnalysis.Display(true);
 
-        GM_Objectives.UpdateObjective("PIXL");
+        //GM_Objectives.UpdateObjective("PIXL");
 
         MiniGame_Systems.playingMinigame = false;
+        Physical_Inventory.AddToInventory("PIXL");
+
+        StartCoroutine(MiniGame_Results.ShowPIXLResults(5f));
+        StartCoroutine(DestroyOnTimer(5f));
+    }
+
+    IEnumerator DestroyOnTimer(float timer)
+    {
+        gameObject.transform.localScale = new Vector3(0, 0, 0);
+
+        yield return new WaitForSeconds(timer);
         Destroy(gameObject);
+    }
+
+    // Called from buttons to reveal fact panels
+    public void LearnButton(int panelNum)
+    {
+        TextPanels[panelNum].SetActive(true);
     }
 }

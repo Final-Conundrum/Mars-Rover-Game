@@ -18,8 +18,10 @@ public class GM_SceneLoader : MonoBehaviour
     public static IEnumerator LoadToScene(string sceneName)
     {
         _transitionAnimation.SetBool("Transition", false);
+        Time.timeScale = 1;
 
         yield return new WaitForSeconds(2f);
+
         SceneManager.LoadScene(sceneName);
     }
 
