@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
     private GM_Audio _GM_Audio => GetComponent<GM_Audio>();
     private GM_Objectives _GM_Objectives => GetComponent<GM_Objectives>();
 
+    public static bool debugMode = false;
+
     [Space]
     [Header("Static Player Objects")]
     [SerializeField] public GameObject player;
@@ -83,10 +85,20 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            debugMode = true;
+        }
         // Testing checkpoints
 
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return) && debugMode)
         {
+            StartCoroutine(GM_SceneLoader.LoadToScene("Scene_MainGame"));
+        }
+
+        if (Input.GetKeyDown(KeyCode.Backspace) && debugMode)
+        {
+            _GM_Checkpoint.savedAtSafeZone = false;
             StartCoroutine(GM_SceneLoader.LoadToScene("Scene_MainGame"));
         }
 
@@ -110,6 +122,8 @@ public class GameManager : MonoBehaviour
         // Set player position to respawn point
         if (_GM_Checkpoint.savedAtSafeZone)
         {
+            Time.timeScale = 1;
+
             // Disable CC so that checkpoint position may be set
             player.GetComponent<CharacterController>().enabled = false;
 

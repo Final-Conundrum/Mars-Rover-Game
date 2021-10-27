@@ -10,7 +10,9 @@ public class Player_Collision : MonoBehaviour
     GUI_infoPanel InfoPanel => FindObjectOfType<GUI_infoPanel>();
 
     private float exitPosY;
-    private bool jumpingFromGeyser = false;
+    private bool inDamageZone = false;
+
+
 
     private void Update()
     {
@@ -54,7 +56,6 @@ public class Player_Collision : MonoBehaviour
             // Handle Coyote time
             Player_Movement.coyoteTime = Time.time + PM._coyoteTime;
             Player_Movement.grounded = true;
-            jumpingFromGeyser = false;
         }
     }
 
@@ -72,12 +73,14 @@ public class Player_Collision : MonoBehaviour
         if (c.gameObject.tag == "Geyser")
         {
             PM.onGeyser = true;
-            jumpingFromGeyser = true;
         }
 
         if (c.gameObject.tag == "Hazard")
         {
             Player_Stats.TakeDamage(5);
+            inDamageZone = true;
+            StartCoroutine(DamageOverTime());
+
         }
 
         if (c.gameObject.tag == "HazardRock")
@@ -164,17 +167,20 @@ public class Player_Collision : MonoBehaviour
         {
             Player_Movement.grounded = true;
             PM.onGeyser = true;
-            jumpingFromGeyser = true;
         }
 
         if (c.gameObject.tag == "Hazard")
         {
-            StartCoroutine(DamageOverTime());
         }
     }
 
     private void OnTriggerExit(Collider c)
     {
+        if(c.gameObject.tag == "Hazard")
+        {
+            inDamageZone = false;
+        }
+
         // Reset jump to standard after leaving geyser
 
         if (c.gameObject.tag == "Geyser")
@@ -204,8 +210,10 @@ public class Player_Collision : MonoBehaviour
 
     IEnumerator DamageOverTime()
     {
-        yield return new WaitForSeconds(1f);
-
-        Player_Stats.TakeDamage(5);
+        while(inDamageZone)
+        {
+            yield return new WaitForSeconds(2f);
+            Player_Stats.TakeDamage(5);
+        }
     }
 }

@@ -20,7 +20,7 @@ public class GUI_DeathScreen : MonoBehaviour
         Cursor.visible = true;
         DeathPanel.SetActive(true);
         dead = true;
-        Time.timeScale = 0;
+        Time.timeScale = 1;
     }
 
     public void Reboot()

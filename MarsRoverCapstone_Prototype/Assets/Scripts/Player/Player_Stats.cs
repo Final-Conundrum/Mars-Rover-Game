@@ -20,7 +20,8 @@ public class Player_Stats : MonoBehaviour
     public static float damage;
     public static GameObject hazard;
     public static GameObject player;
-    
+    public static bool dead = false;
+
     // Start is called before the first frame update
     public void Start()
     {
@@ -28,6 +29,7 @@ public class Player_Stats : MonoBehaviour
         player = gameObject;
 
         audioSource = _audioSource;
+        dead = false;
     }
 
     //Deals damage to the player based on the passed in damage amount. 
@@ -38,7 +40,7 @@ public class Player_Stats : MonoBehaviour
 
         healthCheck();
 
-        GM_Audio.PlaySound(audioSource, "Injury");
+        //GM_Audio.PlaySound(audioSource, "Injury");
         HUD.StartCoroutine(HUD.DamagePlayer());
     }
 
@@ -47,7 +49,8 @@ public class Player_Stats : MonoBehaviour
     {
         if (health <= 0)
         {
-            Destroy(player);
+            //Destroy(player);
+            dead = true;
             DeathScreen.Display();
         }
     }

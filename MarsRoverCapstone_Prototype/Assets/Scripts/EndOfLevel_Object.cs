@@ -21,7 +21,7 @@ public class EndOfLevel_Object : MonoBehaviour
         {
             Cursor.visible = true;
             EndOfLevelGUI.IncompleteEndOfLevelMenu.SetActive(true);
-            Time.timeScale = 0.1f;
+            Time.timeScale = 1;
         }
     }
 }
