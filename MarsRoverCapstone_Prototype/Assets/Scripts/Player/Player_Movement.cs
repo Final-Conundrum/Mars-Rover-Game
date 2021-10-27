@@ -308,7 +308,7 @@ public class Player_Movement : MonoBehaviour
         }
 
         // Interrupt movement operations if playing minigame
-        if(!MiniGame_Systems.playingMinigame)
+        if(!MiniGame_Systems.playingMinigame || !GM_Objectives.endOfGame)
         {
             // Finalize Movement directions
             CC.Move(_CCMovement);
@@ -334,7 +334,7 @@ public class Player_Movement : MonoBehaviour
 
     public void Jump()
     {
-        if (!onSteepSlope)
+        if (!onSteepSlope || !GM_Objectives.endOfGame)
         {
             _CCMovement.y = jumpHeight;
 

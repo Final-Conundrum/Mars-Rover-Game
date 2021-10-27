@@ -37,6 +37,9 @@ public class GUI_HUD : MonoBehaviour
 
     public GameObject inventory;
 
+    public GameObject EndOfLevelMenu;
+    public GameObject IncompleteEndOfLevelMenu;
+
     [Space]
     [Header("Static Prompt")]
     public TMP_Text universalPrompt, keyPrompt;

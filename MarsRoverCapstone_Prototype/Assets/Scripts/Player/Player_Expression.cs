@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class Player_Expression : MonoBehaviour
 {
@@ -12,9 +13,17 @@ public class Player_Expression : MonoBehaviour
 
     public Light headlight;
 
+    public CinemachineVirtualCamera[] _finaleCameras;
+    public static CinemachineVirtualCamera[] finaleCameras;
+
     void Start()
     {
-        
+        finaleCameras = _finaleCameras;
+
+        foreach(CinemachineVirtualCamera i in finaleCameras)
+        {
+            Debug.Log("Player_Expression: Added new finale camera");
+        }
     }
 
     // Update is called once per frame

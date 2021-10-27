@@ -14,20 +14,24 @@ public class EndOfGame_WinScreen : MonoBehaviour
         {
             i.SetActive(false);
         }
+
+        EndSequenceObjects[0].SetActive(true);
     }
 
     public static void EndOfGame_Activate()
     {
         Cursor.visible = true;
-        Time.timeScale = 0.1f;
-        
+        Time.timeScale = 1f;
+        GM_Objectives.endOfGame = true;
     }
     
     public void GoToSequence(int newSequenceNum)
     {
         EndSequenceObjects[currentSequence].SetActive(false);
+        Player_Expression.finaleCameras[currentSequence].Priority = 1;
 
         EndSequenceObjects[newSequenceNum].SetActive(true);
+        Player_Expression.finaleCameras[newSequenceNum].Priority = 12;
 
         currentSequence = newSequenceNum;
     }

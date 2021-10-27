@@ -25,6 +25,7 @@ public class GM_Objectives : MonoBehaviour
     public static bool completedObjectives = false;
 
     public static bool updatingObjectives = false;
+    public static bool endOfGame = false;
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +52,10 @@ public class GM_Objectives : MonoBehaviour
 
         FindObjectiveGUI();
         ObjectiveGUI.UpdateObjectives();
+
+        // Debug
+        completedObjectives = true;
+
     }
 
     public static void UpdateObjective(string objectiveType, int amount)

@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class EndOfLevel_Object : MonoBehaviour
 {
-    private GUI_PauseMenu EndOfLevel => FindObjectOfType<GUI_PauseMenu>();
+    private GUI_HUD EndOfLevelGUI => FindObjectOfType<GUI_HUD>();
 
     public void OnTriggerEnter(Collider collision)
     {
         if (collision.gameObject.tag == "Player" && GM_Objectives.completedObjectives)
         {
-            EndOfLevel.EndOfLevelMenu.SetActive(true);
+            EndOfLevelGUI.EndOfLevelMenu.SetActive(true);
+            EndOfLevelGUI.transitionAnimation.SetBool("Transition", false);
+            EndOfLevelGUI.EndOfLevelMenu.GetComponent<EndOfGame_WinScreen>().GoToSequence(0);
+            EndOfGame_WinScreen.EndOfGame_Activate();
         }
         else if(collision.gameObject.tag == "Player" && !GM_Objectives.completedObjectives)
         {
             Cursor.visible = true;
-            EndOfLevel.IncompleteEndOfLevelMenu.SetActive(true);
+            EndOfLevelGUI.IncompleteEndOfLevelMenu.SetActive(true);
             Time.timeScale = 0.1f;
         }
     }

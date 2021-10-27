@@ -104,7 +104,6 @@ public class GameManager : MonoBehaviour
         // Setup camera transiton
         playerCamera = FindObjectOfType<Player_ParentObject>().Camera;
         introCamera.Priority = 20;
-        //_GM_Audio.playerSource = player.GetComponent<AudioSource>();
 
         // Set player position to respawn point
         if (_GM_Checkpoint.savedAtSafeZone)
