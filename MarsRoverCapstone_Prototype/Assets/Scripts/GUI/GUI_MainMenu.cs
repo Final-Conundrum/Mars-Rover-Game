@@ -8,6 +8,7 @@ public class GUI_MainMenu : MonoBehaviour
     public GameObject DB;
     public GameObject settingsMenu;
     public GameObject creditsMenu;
+    public GameObject sourcedAssetsMenu;
 
     // Start is called before the first frame update
     void Start()
@@ -15,6 +16,7 @@ public class GUI_MainMenu : MonoBehaviour
         DB.SetActive(false);
         settingsMenu.SetActive(false);
         creditsMenu.SetActive(false);
+        sourcedAssetsMenu.SetActive(false);
         GM_SceneLoader.StartScene();
     }
 
@@ -36,6 +38,11 @@ public class GUI_MainMenu : MonoBehaviour
     public void OpenCredits(bool open)
     {
         creditsMenu.SetActive(open);
+    }
+
+    public void OpenSourcedAssets(bool open)
+    {
+        sourcedAssetsMenu.SetActive(open);
     }
 
     public void QuitGame()
