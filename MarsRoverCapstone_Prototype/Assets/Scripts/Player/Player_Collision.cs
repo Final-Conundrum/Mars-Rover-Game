@@ -39,8 +39,6 @@ public class Player_Collision : MonoBehaviour
         if (c.gameObject.tag == "Ground")
         {
             PM.onGeyser = false;
-
-            PM.audio_DriveSFX.Play();
         }
 
         if (c.gameObject.tag == "Hazard")
@@ -57,11 +55,6 @@ public class Player_Collision : MonoBehaviour
             Player_Movement.coyoteTime = Time.time + PM._coyoteTime;
             Player_Movement.grounded = true;
             jumpingFromGeyser = false;
-
-            if(!PM.audio_DriveSFX.isPlaying)
-            {
-                PM.audio_DriveSFX.Play();
-            }
         }
     }
 

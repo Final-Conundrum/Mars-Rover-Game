@@ -54,7 +54,7 @@ public class GM_Objectives : MonoBehaviour
         ObjectiveGUI.UpdateObjectives();
 
         // Debug
-        completedObjectives = true;
+        //completedObjectives = true;
 
     }
 
@@ -94,5 +94,23 @@ public class GM_Objectives : MonoBehaviour
     public void FindObjectiveGUI()
     {
         ObjectiveGUI = FindObjectOfType<GUI_Objectives>();
+    }
+
+    public static void CompleteMGTTS(string objectiveType)
+    {
+        switch (objectiveType)
+        {
+            case "PIXL":
+                _audioSource.PlayOneShot(_MG_PIXL_TTS);
+
+                break;
+            case "RIMFAX":
+                _audioSource.PlayOneShot(_MG_RIMFAX_TTS);
+
+                break;
+            case "Drill":
+                _audioSource.PlayOneShot(_MG_Drill_TTS);
+                break;
+        }
     }
 }

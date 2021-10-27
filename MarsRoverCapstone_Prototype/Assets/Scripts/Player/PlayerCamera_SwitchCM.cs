@@ -40,7 +40,7 @@ public class PlayerCamera_SwitchCM : MonoBehaviour
     {
         CameraTank.GetComponent<CinemachineCollider>().m_AvoidObstacles = false;
         CameraStandard.GetComponent<CinemachineCollider>().m_AvoidObstacles = false;
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(2);
         CameraTank.GetComponent<CinemachineCollider>().m_AvoidObstacles = true;
         CameraStandard.GetComponent<CinemachineCollider>().m_AvoidObstacles = true;
     }

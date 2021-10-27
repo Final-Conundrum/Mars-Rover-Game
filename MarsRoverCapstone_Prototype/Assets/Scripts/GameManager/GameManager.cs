@@ -5,6 +5,7 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Animations;
 
 [RequireComponent(typeof(GM_Checkpoint))]
 [RequireComponent(typeof(GM_Time))]
@@ -45,6 +46,7 @@ public class GameManager : MonoBehaviour
     public PostProcessProfile PP_night;
 
     private GeyserBurst[] geysers => FindObjectsOfType<GeyserBurst>();
+    private WorldSpaceUI_Trigger[] worldSpaceUI => FindObjectsOfType<WorldSpaceUI_Trigger>();
 
     // Passage of Time variables
     public bool usePassageOfTime = true;
@@ -158,5 +160,13 @@ public class GameManager : MonoBehaviour
         introCamera.Priority = 0;
 
         GM_Objectives.playerPopup = FindObjectOfType<GUI_infoPanel>();
+
+        foreach(WorldSpaceUI_Trigger i in worldSpaceUI)
+        {
+            i.lookAtConstraint = i.objectToAppear.GetComponent<LookAtConstraint>();
+            i.lookAtConstraint.AddSource(Player_ParentObject.cameraSource);
+
+            i.objectToAppear.SetActive(false);
+        }
     }
 }

@@ -186,7 +186,7 @@ public class Player_Movement : MonoBehaviour
 
                 // Input and AddForce for JUMP
                 if(!onSteepSlope)
-                {        
+                {
                     if (Input.GetKey(KeyCode.Space))
                     {
                         Jump();
@@ -195,6 +195,11 @@ public class Player_Movement : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.Space) && !MiniGame_Systems.playingMinigame)
                     {
                         audio_JumpSFX.Play();
+                    }
+
+                    if (!audio_DriveSFX.isPlaying)
+                    {
+                        audio_DriveSFX.Play();
                     }
                 }
 

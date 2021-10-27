@@ -107,6 +107,7 @@ public class MiniGame_PIXL : MonoBehaviour
 
         MiniGame_Systems.playingMinigame = false;
         Physical_Inventory.AddToInventory("PIXL");
+        GM_Objectives.CompleteMGTTS("PIXL");
 
         StartCoroutine(MiniGame_Results.ShowPIXLResults(5f));
         StartCoroutine(DestroyOnTimer(5f));

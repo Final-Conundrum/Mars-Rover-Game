@@ -9,7 +9,7 @@ public class WorldSpaceUI_Trigger : MonoBehaviour
     public GameObject objectToAppear;
 
     // The objectToAppear component for LookAtConstraint
-    [SerializeField] private LookAtConstraint lookAtConstraint;
+    public LookAtConstraint lookAtConstraint;
 
     // Start is called before the first frame update
     void Start()

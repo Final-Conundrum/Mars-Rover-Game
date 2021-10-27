@@ -135,6 +135,7 @@ public class MiniGame_Drill : MonoBehaviour
 
         MiniGame_Systems.playingMinigame = false;
         Physical_Inventory.AddToInventory("Drill");
+        GM_Objectives.CompleteMGTTS("Drill");
 
         completed = true;
 

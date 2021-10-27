@@ -36,6 +36,7 @@ public class MiniGame_RIMFAX : MonoBehaviour
     public GameObject IntroPanel;
     public GameObject[] TextPanel;
 
+    private bool startedMinigame = false;
     private bool completed = false;
 
     // Start is called before the first frame update
@@ -64,64 +65,68 @@ public class MiniGame_RIMFAX : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        // Move scanline from two different points
-        switch(currentTarget)
+        if(startedMinigame && !completed)
         {
-            case "A":
-                if(scanline.transform.position != ScanPointA.transform.position)
-                {
-                    scanline.transform.position = Vector3.MoveTowards(scanline.transform.position, ScanPointA.transform.position, scanlineSpeed);
-                }
-                else
-                {
-                    currentTarget = "B";
-
-                    // Increase speed
-                    if (scanlineSpeed <= scallineMaxSpeed)
+            // Move scanline from two different points
+            switch (currentTarget)
+            {
+                case "A":
+                    if (scanline.transform.position != ScanPointA.transform.position)
                     {
-                        scanlineSpeed++;
+                        scanline.transform.position = Vector3.MoveTowards(scanline.transform.position, ScanPointA.transform.position, scanlineSpeed);
                     }
-
-                    // Sets randomized position of scan lines
-                    for (int i = 0; i < scanningLines.Length; i++)
+                    else
                     {
-                        if (scanningLines[i] != null)
+                        currentTarget = "B";
+
+                        // Increase speed
+                        if (scanlineSpeed <= scallineMaxSpeed)
                         {
-                            scanningLines[i].transform.position = new Vector3(Random.Range(ScanPointA.transform.position.x, ScanPointB.transform.position.x), ScanPointA.transform.position.y, ScanPointA.transform.position.z);
+                            scanlineSpeed++;
                         }
-                    }
-                    scanSFX.PlayOneShot(scanSFX.clip);
-                }
-                break;
-            case "B":
-                if (scanline.transform.position != ScanPointB.transform.position)
-                {
-                    scanline.transform.position = Vector3.MoveTowards(scanline.transform.position, ScanPointB.transform.position, scanlineSpeed);
-                }
-                else
-                {
-                    currentTarget = "A";
-                    
-                    // Increase speed
-                    if (scanlineSpeed <= scallineMaxSpeed)
-                    {
-                        scanlineSpeed++;
-                    }
 
-                    if (!completed)
-                    {
                         // Sets randomized position of scan lines
-                        for (int i = 0; i < scanningLines.Length - 1; i++)
+                        for (int i = 0; i < scanningLines.Length; i++)
                         {
                             if (scanningLines[i] != null)
                             {
                                 scanningLines[i].transform.position = new Vector3(Random.Range(ScanPointA.transform.position.x, ScanPointB.transform.position.x), ScanPointA.transform.position.y, ScanPointA.transform.position.z);
                             }
                         }
+                        scanSFX.PlayOneShot(scanSFX.clip);
                     }
-                    scanSFX.PlayOneShot(scanSFX.clip);
-                }
-                break;
+                    break;
+                case "B":
+                    if (scanline.transform.position != ScanPointB.transform.position)
+                    {
+                        scanline.transform.position = Vector3.MoveTowards(scanline.transform.position, ScanPointB.transform.position, scanlineSpeed);
+                    }
+                    else
+                    {
+                        currentTarget = "A";
+
+                        // Increase speed
+                        if (scanlineSpeed <= scallineMaxSpeed)
+                        {
+                            scanlineSpeed++;
+                        }
+
+                        if (!completed)
+                        {
+                            // Sets randomized position of scan lines
+                            for (int i = 0; i < scanningLines.Length - 1; i++)
+                            {
+                                if (scanningLines[i] != null)
+                                {
+                                    scanningLines[i].transform.position = new Vector3(Random.Range(ScanPointA.transform.position.x, ScanPointB.transform.position.x), ScanPointA.transform.position.y, ScanPointA.transform.position.z);
+                                }
+                            }
+                        }
+                        scanSFX.PlayOneShot(scanSFX.clip);
+                    }
+                    break;
+            }
+
         }
 
         // Detect win-condition
@@ -142,6 +147,7 @@ public class MiniGame_RIMFAX : MonoBehaviour
                 IntroPanel.SetActive(false);
                 scanline.gameObject.SetActive(true);
                 gameplayObject.SetActive(true);
+                startedMinigame = true;
                 Cursor.visible = false;
 
                 scanSFX.PlayOneShot(scanSFX.clip);
@@ -165,7 +171,7 @@ public class MiniGame_RIMFAX : MonoBehaviour
     public void Exit()
     {
         completed = true;
-
+        
         winSFX.PlayOneShot(winSFX.clip);
 
         Time.timeScale = 1;
@@ -173,6 +179,7 @@ public class MiniGame_RIMFAX : MonoBehaviour
 
         MiniGame_Systems.playingMinigame = false;
         Physical_Inventory.AddToInventory("RIMFAX");
+        GM_Objectives.CompleteMGTTS("RIMFAX");
 
         StartCoroutine(MiniGame_Results.ShowRIMFAXResults(5f));
         StartCoroutine(DestroyOnTimer(5f));
