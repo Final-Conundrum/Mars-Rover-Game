@@ -10,8 +10,7 @@ public class GUI_PauseMenu : MonoBehaviour
     private GUI_HUD HUD => GetComponent<GUI_HUD>();
 
     public GameObject PauseMenu;
-    public GameObject EndOfLevelMenu;
-    public GameObject IncompleteEndOfLevelMenu;
+   
     public GameObject DataBaseMenu;
     public GameObject DataBaseReturnButton;
     public GameObject SettingsMenu;
@@ -21,7 +20,6 @@ public class GUI_PauseMenu : MonoBehaviour
     void Start()
     {
         PauseMenu.SetActive(false);
-        EndOfLevelMenu.SetActive(false);
         DataBaseMenu.SetActive(false);
         SettingsMenu.SetActive(false);
 
