@@ -16,12 +16,14 @@ public class EndOfLevel_Object : MonoBehaviour
             GM_Objectives.endOfGame = true;
 
             EndOfGame_WinScreen.EndOfGame_Activate();
+            EndOfLevelGUI.EndOfLevelMenu.SetActive(true);
+
         }
         else if(collision.gameObject.tag == "Player" && !GM_Objectives.completedObjectives)
         {
             Cursor.visible = true;
             EndOfLevelGUI.IncompleteEndOfLevelMenu.SetActive(true);
-            Time.timeScale = 1;
+            Player_Stats.dead = true;
         }
     }
 }

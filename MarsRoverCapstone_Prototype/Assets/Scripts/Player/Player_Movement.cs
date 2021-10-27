@@ -313,7 +313,7 @@ public class Player_Movement : MonoBehaviour
         }
 
         // Interrupt movement operations if playing minigame
-        if(!MiniGame_Systems.playingMinigame && !GM_Objectives.endOfGame && !Player_Stats.dead)
+        if(!MiniGame_Systems.playingMinigame && !Player_Stats.dead)
         {
             // Finalize Movement directions
             CC.Move(_CCMovement);

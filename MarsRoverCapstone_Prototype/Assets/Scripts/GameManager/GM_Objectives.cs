@@ -54,7 +54,7 @@ public class GM_Objectives : MonoBehaviour
         ObjectiveGUI.UpdateObjectives();
 
         // Debug
-        completedObjectives = true;
+        //completedObjectives = true;
 
     }
 

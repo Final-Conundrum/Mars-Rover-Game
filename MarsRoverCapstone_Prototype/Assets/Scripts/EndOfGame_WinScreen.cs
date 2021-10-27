@@ -20,6 +20,15 @@ public class EndOfGame_WinScreen : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    private void Update()
+    {
+        if (GM_Objectives.endOfGame)
+        {
+            gameObject.SetActive(true);
+        }
+
+    }
+
     public static void EndOfGame_Activate()
     {
         Cursor.visible = true;
