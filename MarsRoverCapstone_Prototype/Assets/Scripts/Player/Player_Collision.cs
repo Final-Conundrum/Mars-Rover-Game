@@ -89,13 +89,12 @@ public class Player_Collision : MonoBehaviour
 
         if (c.gameObject.tag == "HazardRock")
         {
-            if (transform.position.y <= exitPosY - PM.fallDamageHeight)
-            {
-                Player_Stats.TakeDamage(30);
-                Player_Movement.grounded = true;
 
-                Debug.Log(gameObject.name + ": Player_Collision, Player should take fall damage here from Hazardous Rock...");
-            }
+            Player_Stats.TakeDamage(5);
+            Player_Movement.grounded = true;
+
+            Debug.Log(gameObject.name + ": Player_Collision, Player should take fall damage here from Hazardous Rock...");
+            
         }
 
         // Call Mini-Game script when interacting with mineral

@@ -16,13 +16,14 @@ public class EndOfGame_WinScreen : MonoBehaviour
         }
 
         EndSequenceObjects[0].SetActive(true);
+
+        gameObject.SetActive(false);
     }
 
     public static void EndOfGame_Activate()
     {
         Cursor.visible = true;
         Time.timeScale = 1f;
-        GM_Objectives.endOfGame = true;
     }
     
     public void GoToSequence(int newSequenceNum)

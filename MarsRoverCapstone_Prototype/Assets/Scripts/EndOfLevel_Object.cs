@@ -13,6 +13,8 @@ public class EndOfLevel_Object : MonoBehaviour
             EndOfLevelGUI.EndOfLevelMenu.SetActive(true);
             EndOfLevelGUI.transitionAnimation.SetBool("Transition", false);
             EndOfLevelGUI.EndOfLevelMenu.GetComponent<EndOfGame_WinScreen>().GoToSequence(0);
+            GM_Objectives.endOfGame = true;
+
             EndOfGame_WinScreen.EndOfGame_Activate();
         }
         else if(collision.gameObject.tag == "Player" && !GM_Objectives.completedObjectives)
