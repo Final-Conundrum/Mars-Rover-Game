@@ -15,17 +15,19 @@ public class DespawnOnTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        /*
         if(ignoreIfRespawn = true && _GM_Checkpoint.savedAtSafeZone)
         {
             gameObject.SetActive(false);
-        }
-
-        _timer = Time.time;
+        }*/
 
         if(returnToStart)
         {
             spawnPoint = transform.position;
         }
+
+        _timer = Time.timeSinceLevelLoad;
+
     }
 
     // Update is called once per frame
@@ -41,7 +43,7 @@ public class DespawnOnTimer : MonoBehaviour
                 }
                 break;
             case false:
-                if (Time.time >= (_timer + despawnTimer))
+                if (Time.timeSinceLevelLoad >= (_timer + despawnTimer))
                 {
                     Destroy(gameObject);
                 }

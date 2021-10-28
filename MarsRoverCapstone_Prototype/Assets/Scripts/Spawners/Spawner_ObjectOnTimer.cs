@@ -18,8 +18,13 @@ public class Spawner_ObjectOnTimer : MonoBehaviour
 
     // Timers
     public float timer = 5f;
+    private float globalTimer;
     private float _timerAdd;
 
+    private void Awake()
+    {
+        globalTimer = Time.time;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +43,7 @@ public class Spawner_ObjectOnTimer : MonoBehaviour
     void Update()
     {
         // Spawn golf ball every timer check
-        if (Time.timeSinceLevelLoad > timer)
+        if (Time.timeSinceLevelLoad > timer )
         {
             GameObject newObj = Instantiate(spawnObjectPrefab);
             
