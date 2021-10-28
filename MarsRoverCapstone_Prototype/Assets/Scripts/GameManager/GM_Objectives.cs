@@ -53,9 +53,8 @@ public class GM_Objectives : MonoBehaviour
         FindObjectiveGUI();
         ObjectiveGUI.UpdateObjectives();
 
-        // Debug
-        //completedObjectives = true;
-
+        // Test ending of game
+        completedObjectives = true;
     }
 
     public static void UpdateObjective(string objectiveType, int amount)
