@@ -31,7 +31,11 @@ public class IntroCameraDirector : MonoBehaviour
         // Deactivate all sequence objects
         foreach(CinemachineVirtualCamera i in sceneCameras)
         {
-            i.Priority = 1;
+            if(i != sceneCameras[0])
+            {
+                i.Priority = 1;
+
+            }
         }
 
         foreach (GameObject[] x in propCollections)
