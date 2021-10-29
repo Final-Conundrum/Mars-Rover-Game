@@ -32,7 +32,7 @@ public class Player_AlignToGround : MonoBehaviour
         _CameraForward = PM.playerCam.transform.forward;
 
         // Correct rotation of object if it rotates too far
-        if (PM.tankControls)
+        if (Player_Movement.tankControls)
         {
             transform.rotation = new Quaternion(transform.rotation.x, transform.parent.rotation.y, transform.rotation.z, transform.rotation.w);
         }
@@ -63,7 +63,7 @@ public class Player_AlignToGround : MonoBehaviour
             AlignToGround();
         }
 
-        if (!PM.tankControls)
+        if (!Player_Movement.tankControls)
         {
             Transform target;
 

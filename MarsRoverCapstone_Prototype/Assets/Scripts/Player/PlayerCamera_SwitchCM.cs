@@ -21,7 +21,7 @@ public class PlayerCamera_SwitchCM : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        switch(PM.tankControls)
+        switch(Player_Movement.tankControls)
         {
             case true:
                 CameraTank.Priority = 2;
