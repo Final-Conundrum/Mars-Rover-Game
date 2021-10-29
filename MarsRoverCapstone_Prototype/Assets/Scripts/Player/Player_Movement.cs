@@ -26,7 +26,7 @@ public class Player_Movement : MonoBehaviour
 
     public static bool grounded;
     public bool _alignToGround = true;
-    public bool tankControls = true;
+    public static bool tankControls = true;
     public Camera playerCam;
     public AudioSource audio_DriveSFX;
     public AudioSource audio_JumpSFX;

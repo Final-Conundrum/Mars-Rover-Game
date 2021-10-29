@@ -128,7 +128,7 @@ public class GUI_HUD : MonoBehaviour
 
     public void ChooseControls(bool tankControls)
     {
-        PM.tankControls = tankControls;
+        Player_Movement.tankControls = tankControls;
         chooseControlsPanel.SetActive(false);
     }
 
