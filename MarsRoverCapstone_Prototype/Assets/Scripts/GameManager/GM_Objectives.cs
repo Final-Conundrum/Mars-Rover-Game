@@ -64,20 +64,32 @@ public class GM_Objectives : MonoBehaviour
             case "PIXL":
                 _PIXLCurrent += amount;
                 objectivePIXLString = "> Analyze minerals using the PIXL (" + _PIXLCurrent + "/" + _PIXLTotal + ")";
-                _audioSource.PlayOneShot(_MG_PIXL_TTS);
+
+                if(_PIXLCurrent == _PIXLTotal)
+                {
+                    _audioSource.PlayOneShot(_Obj_PIXL_TTS);
+                }
 
                 break;
             case "RIMFAX":
                 _RIMFAXCurrent += amount;
                 objectiveRIMFAXString = "> Use RIMFAX to construct underground scans (" + _RIMFAXCurrent + "/" + _RIMFAXTotal + ")";
-                _audioSource.PlayOneShot(_MG_RIMFAX_TTS);
+
+                if(_RIMFAXCurrent == _RIMFAXTotal)
+                {
+                    _audioSource.PlayOneShot(_MG_RIMFAX_TTS);
+                }
 
                 break;
             case "Drill":
                 _DrillCurrent += amount;
                 objectiveDrillString = "> Use the Drill to clear and collect samples (" + _DrillCurrent + "/" + _DrillTotal + ")";
-                _audioSource.PlayOneShot(_MG_Drill_TTS);
 
+                if(_DrillCurrent == _DrillTotal)
+                {
+                    _audioSource.PlayOneShot(_MG_Drill_TTS);
+
+                }
                 break;
         }
 

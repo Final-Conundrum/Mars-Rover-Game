@@ -106,11 +106,12 @@ public class MiniGame_PIXL : MonoBehaviour
         //GM_Objectives.UpdateObjective("PIXL");
 
         MiniGame_Systems.playingMinigame = false;
-        Physical_Inventory.AddToInventory("PIXL");
-        GM_Objectives.CompleteMGTTS("PIXL");
 
         StartCoroutine(MiniGame_Results.ShowPIXLResults(5f));
         StartCoroutine(DestroyOnTimer(5f));
+
+        Physical_Inventory.AddToInventory("PIXL");
+        GM_Objectives.CompleteMGTTS("PIXL");
     }
 
     IEnumerator DestroyOnTimer(float timer)

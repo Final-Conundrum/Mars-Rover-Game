@@ -134,13 +134,14 @@ public class MiniGame_Drill : MonoBehaviour
         Time.timeScale = 1;
 
         MiniGame_Systems.playingMinigame = false;
-        Physical_Inventory.AddToInventory("Drill");
-        GM_Objectives.CompleteMGTTS("Drill");
 
         completed = true;
 
         StartCoroutine(MiniGame_Results.ShowDRILLResults(5f));
         StartCoroutine(DestroyOnTimer(5f));
+
+        Physical_Inventory.AddToInventory("Drill");
+        GM_Objectives.CompleteMGTTS("Drill");
     }
 
     IEnumerator DestroyOnTimer(float timer)

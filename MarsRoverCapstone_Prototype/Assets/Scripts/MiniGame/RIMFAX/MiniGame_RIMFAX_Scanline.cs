@@ -25,15 +25,10 @@ public class MiniGame_RIMFAX_Scanline : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     { 
-        if (other.gameObject.tag == "RIMFAX" && (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)))
+        if (other.gameObject.tag == "RIMFAX" && (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0) || Input.GetKeyUp(KeyCode.Space) || Input.GetMouseButtonUp(0)))
         {
             Destroy(other.gameObject);
             parent.scanninglinesCounter++;
-        }
-
-        if (other.gameObject.tag != "RIMFAX" && (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)))
-        {
-            parent.Fail();
         }
     }
 

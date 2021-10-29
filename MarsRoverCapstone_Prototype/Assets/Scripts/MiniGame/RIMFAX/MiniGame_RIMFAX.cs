@@ -178,11 +178,12 @@ public class MiniGame_RIMFAX : MonoBehaviour
         Cursor.visible = false;
 
         MiniGame_Systems.playingMinigame = false;
-        Physical_Inventory.AddToInventory("RIMFAX");
-        GM_Objectives.CompleteMGTTS("RIMFAX");
 
         StartCoroutine(MiniGame_Results.ShowRIMFAXResults(5f));
         StartCoroutine(DestroyOnTimer(5f));
+
+        Physical_Inventory.AddToInventory("RIMFAX");
+        GM_Objectives.CompleteMGTTS("RIMFAX");
     }
 
     IEnumerator DestroyOnTimer(float timer)

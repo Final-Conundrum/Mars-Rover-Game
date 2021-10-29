@@ -172,7 +172,11 @@ public class Player_Movement : MonoBehaviour
                 onSteepSlope = false;
                 hitNormal = new Vector3(0, 1, 0);
                 grounded = true;
-                audio_DriveSFX.Play();
+
+                if(!audio_DriveSFX.isPlaying)
+                {
+                    audio_DriveSFX.Play();
+                }
             }
         }
 
