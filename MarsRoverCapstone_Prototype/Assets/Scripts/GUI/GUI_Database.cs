@@ -28,7 +28,7 @@ public class GUI_Database : MonoBehaviour
         MarsPanel.SetActive(false);
         InstrumentsPanel.SetActive(false);
         ExternalPanel.SetActive(false);
-    // somehow get a way to get the currently activated panel and then find a way to swap between active and inactive 
+    //could use a bool 'open' variable  
 }
 
     // Update is called once per frame

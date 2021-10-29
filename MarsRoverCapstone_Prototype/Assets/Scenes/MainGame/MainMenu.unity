@@ -5437,7 +5437,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1634454521
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6730,6 +6730,12 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &2076037444 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1839364592639826075, guid: 51f79b0f571b19e47946c8a3b3482d1b,
+    type: 3}
+  m_PrefabInstance: {fileID: 6018246201929541554}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2121843918
 GameObject:
   m_ObjectHideFlags: 0
@@ -7621,6 +7627,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1766148009}
+    - target: {fileID: 1839364592639826075, guid: 51f79b0f571b19e47946c8a3b3482d1b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4546377587850829488, guid: 51f79b0f571b19e47946c8a3b3482d1b,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -7836,6 +7847,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -33.007
       objectReference: {fileID: 0}
+    - target: {fileID: 4810897761901826685, guid: 51f79b0f571b19e47946c8a3b3482d1b,
+        type: 3}
+      propertyPath: ExternalPanel
+      value: 
+      objectReference: {fileID: 2076037444}
     - target: {fileID: 9066947070214934497, guid: 51f79b0f571b19e47946c8a3b3482d1b,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
