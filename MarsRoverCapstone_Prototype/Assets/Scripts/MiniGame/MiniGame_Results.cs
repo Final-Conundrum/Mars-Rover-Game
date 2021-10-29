@@ -97,8 +97,34 @@ public class MiniGame_Results : MonoBehaviour
     {
         Debug.Log("MiniGame_Results: Showing PIXL results...");
 
+        // Count viewed result images and reset if all viewed
+        int viewcount = 0;
+        foreach (GameObject i in _PIXL_ImagePrefab)
+        {
+            if (i.GetComponent<MiniGame_ResultCheck>().hasBeenViewed)
+            {
+                viewcount++;
+            }
+        }
+
+        if (viewcount == _PIXL_ImagePrefab.Length - 1)
+        {
+            foreach (GameObject i in _PIXL_ImagePrefab)
+            {
+                i.GetComponent<MiniGame_ResultCheck>().hasBeenViewed = false;
+            }
+        }
+
+
         // Randomize, Display and Animate PIXL image
         int random = Random.Range(0, _PIXL_ImagePrefab.Length - 1);
+
+        while(_PIXL_ImagePrefab[random].GetComponent<MiniGame_ResultCheck>().hasBeenViewed)
+        {
+            random = Random.Range(0, _PIXL_ImagePrefab.Length - 1);
+        }
+
+        _PIXL_ImagePrefab[random].GetComponent<MiniGame_ResultCheck>().hasBeenViewed = true;
 
         _PIXL_ResultsObject.gameObject.SetActive(true);
         currentPIXLResult = Instantiate(_PIXL_ImagePrefab[random], _PIXL_Transform);
@@ -129,11 +155,36 @@ public class MiniGame_Results : MonoBehaviour
     {
         Debug.Log("MiniGame_Results: Showing RIMFAX results...");
 
+        // Count viewed result images and reset if all viewed
+        int viewcount = 0;
+        foreach(GameObject i in _RIMFAX_ImagePrefab)
+        {
+            if(i.GetComponent<MiniGame_ResultCheck>().hasBeenViewed)
+            {
+                viewcount++;
+            }
+        }
+
+        if (viewcount == _RIMFAX_ImagePrefab.Length - 1)
+        {
+            foreach (GameObject i in _RIMFAX_ImagePrefab)
+            {
+                i.GetComponent<MiniGame_ResultCheck>().hasBeenViewed = false;
+            }
+        }
+
         // Randomize, Display and Animate RIMFAX image
         int random = Random.Range(0, _RIMFAX_ImagePrefab.Length - 1);
 
+        while (_RIMFAX_ImagePrefab[random].GetComponent<MiniGame_ResultCheck>().hasBeenViewed)
+        {
+            random = Random.Range(0, _RIMFAX_ImagePrefab.Length - 1);
+        }
+
+        _RIMFAX_ImagePrefab[random].GetComponent<MiniGame_ResultCheck>().hasBeenViewed = true;
+
         _RIMFAX_ResultsObject.gameObject.SetActive(true);
-        currentDRILLResult = Instantiate(_RIMFAX_ImagePrefab[random], _RIMFAX_Transform);
+        currentRIMFAXResult = Instantiate(_RIMFAX_ImagePrefab[random], _RIMFAX_Transform);
         _RIMFAX_ResultsObject.GetComponent<Animator>().SetBool("Transition", true);
 
         RIMFAXActive = true;

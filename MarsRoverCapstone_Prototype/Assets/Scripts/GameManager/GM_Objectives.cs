@@ -54,7 +54,7 @@ public class GM_Objectives : MonoBehaviour
         ObjectiveGUI.UpdateObjectives();
 
         // Test ending of game
-        completedObjectives = true;
+        //completedObjectives = true;
     }
 
     public static void UpdateObjective(string objectiveType, int amount)
@@ -93,7 +93,7 @@ public class GM_Objectives : MonoBehaviour
                 break;
         }
 
-        if(_PIXLCurrent == _PIXLTotal && _RIMFAXCurrent == _RIMFAXTotal && _DrillCurrent == _DrillTotal)
+        if(_PIXLCurrent >= _PIXLTotal && _RIMFAXCurrent >= _RIMFAXTotal && _DrillCurrent >= _DrillTotal)
         {
             completedObjectives = true;
         }
