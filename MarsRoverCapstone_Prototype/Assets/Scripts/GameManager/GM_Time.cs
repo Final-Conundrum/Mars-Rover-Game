@@ -19,13 +19,7 @@ public class GM_Time : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetSceneLights(1f);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        SetSceneLights(4f);
     }
 
     // Set lights in scene depending on given number associated with time of day
