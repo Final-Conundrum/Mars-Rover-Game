@@ -17,8 +17,6 @@ public class MiniGame_Results : MonoBehaviour
     [Header("PIXL Result Assets")]
     public GameObject PIXL_ResultsObject;
     public static GameObject _PIXL_ResultsObject;
-    public GameObject[] PIXL_ImagePrefab;
-    public static GameObject[] _PIXL_ImagePrefab;
 
     public static Transform _PIXL_Transform;
 
@@ -30,8 +28,6 @@ public class MiniGame_Results : MonoBehaviour
     [Header("RIMFAX Result Assets")]
     public GameObject RIMFAX_ResultsObject;
     public static GameObject _RIMFAX_ResultsObject;
-    public GameObject[] RIMFAX_ImagePrefab;
-    public static GameObject[] _RIMFAX_ImagePrefab;
 
     public static Transform _RIMFAX_Transform;
 
@@ -61,11 +57,9 @@ public class MiniGame_Results : MonoBehaviour
         DRILL_ResultsObject.gameObject.SetActive(false);
 
         _PIXL_ResultsObject = PIXL_ResultsObject;
-        _PIXL_ImagePrefab = PIXL_ImagePrefab;
         _PIXL_Transform = PIXL_ResultsObject.transform;
 
         _RIMFAX_ResultsObject = RIMFAX_ResultsObject;
-        _RIMFAX_ImagePrefab = RIMFAX_ImagePrefab;
         _RIMFAX_Transform = RIMFAX_ResultsObject.transform;
 
         _DRILL_ResultsObject = DRILL_ResultsObject;
@@ -99,7 +93,7 @@ public class MiniGame_Results : MonoBehaviour
 
         // Count viewed result images and reset if all viewed
         int viewcount = 0;
-        foreach (GameObject i in _PIXL_ImagePrefab)
+        foreach (GameObject i in GM_Objectives._PIXL_ImagePrefab)
         {
             if (i.GetComponent<MiniGame_ResultCheck>().hasBeenViewed)
             {
@@ -107,9 +101,9 @@ public class MiniGame_Results : MonoBehaviour
             }
         }
 
-        if (viewcount == _PIXL_ImagePrefab.Length - 1)
+        if (viewcount == GM_Objectives._PIXL_ImagePrefab.Length)
         {
-            foreach (GameObject i in _PIXL_ImagePrefab)
+            foreach (GameObject i in GM_Objectives._PIXL_ImagePrefab)
             {
                 i.GetComponent<MiniGame_ResultCheck>().hasBeenViewed = false;
             }
@@ -117,17 +111,17 @@ public class MiniGame_Results : MonoBehaviour
 
 
         // Randomize, Display and Animate PIXL image
-        int random = Random.Range(0, _PIXL_ImagePrefab.Length - 1);
+        int random = Random.Range(0, GM_Objectives._PIXL_ImagePrefab.Length - 1);
 
-        while(_PIXL_ImagePrefab[random].GetComponent<MiniGame_ResultCheck>().hasBeenViewed)
+        while(GM_Objectives._PIXL_ImagePrefab[random].GetComponent<MiniGame_ResultCheck>().hasBeenViewed)
         {
-            random = Random.Range(0, _PIXL_ImagePrefab.Length - 1);
+            random = Random.Range(0, GM_Objectives._PIXL_ImagePrefab.Length);
         }
 
-        _PIXL_ImagePrefab[random].GetComponent<MiniGame_ResultCheck>().hasBeenViewed = true;
+        GM_Objectives._PIXL_ImagePrefab[random].GetComponent<MiniGame_ResultCheck>().hasBeenViewed = true;
 
         _PIXL_ResultsObject.gameObject.SetActive(true);
-        currentPIXLResult = Instantiate(_PIXL_ImagePrefab[random], _PIXL_Transform);
+        currentPIXLResult = Instantiate(GM_Objectives._PIXL_ImagePrefab[random], _PIXL_Transform);
         _PIXL_ResultsObject.GetComponent<Animator>().SetBool("Transition", true);
 
         PIXLActive = true;
@@ -157,7 +151,7 @@ public class MiniGame_Results : MonoBehaviour
 
         // Count viewed result images and reset if all viewed
         int viewcount = 0;
-        foreach(GameObject i in _RIMFAX_ImagePrefab)
+        foreach(GameObject i in GM_Objectives._RIMFAX_ImagePrefab)
         {
             if(i.GetComponent<MiniGame_ResultCheck>().hasBeenViewed)
             {
@@ -165,26 +159,26 @@ public class MiniGame_Results : MonoBehaviour
             }
         }
 
-        if (viewcount == _RIMFAX_ImagePrefab.Length - 1)
+        if (viewcount == GM_Objectives._RIMFAX_ImagePrefab.Length - 1)
         {
-            foreach (GameObject i in _RIMFAX_ImagePrefab)
+            foreach (GameObject i in GM_Objectives._RIMFAX_ImagePrefab)
             {
                 i.GetComponent<MiniGame_ResultCheck>().hasBeenViewed = false;
             }
         }
 
         // Randomize, Display and Animate RIMFAX image
-        int random = Random.Range(0, _RIMFAX_ImagePrefab.Length - 1);
+        int random = Random.Range(0, GM_Objectives._RIMFAX_ImagePrefab.Length - 1);
 
-        while (_RIMFAX_ImagePrefab[random].GetComponent<MiniGame_ResultCheck>().hasBeenViewed)
+        while (GM_Objectives._RIMFAX_ImagePrefab[random].GetComponent<MiniGame_ResultCheck>().hasBeenViewed)
         {
-            random = Random.Range(0, _RIMFAX_ImagePrefab.Length - 1);
+            random = Random.Range(0, GM_Objectives._RIMFAX_ImagePrefab.Length - 1);
         }
 
-        _RIMFAX_ImagePrefab[random].GetComponent<MiniGame_ResultCheck>().hasBeenViewed = true;
+        GM_Objectives._RIMFAX_ImagePrefab[random].GetComponent<MiniGame_ResultCheck>().hasBeenViewed = true;
 
         _RIMFAX_ResultsObject.gameObject.SetActive(true);
-        currentRIMFAXResult = Instantiate(_RIMFAX_ImagePrefab[random], _RIMFAX_Transform);
+        currentRIMFAXResult = Instantiate(GM_Objectives._RIMFAX_ImagePrefab[random], _RIMFAX_Transform);
         _RIMFAX_ResultsObject.GetComponent<Animator>().SetBool("Transition", true);
 
         RIMFAXActive = true;

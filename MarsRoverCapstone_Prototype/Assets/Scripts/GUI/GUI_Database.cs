@@ -31,12 +31,6 @@ public class GUI_Database : MonoBehaviour
     //could use a bool 'open' variable  
 }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     //method for each button
 
     public void ActivatePerseverancePanel()
@@ -91,5 +85,10 @@ public class GUI_Database : MonoBehaviour
         MarsPanel.SetActive(false);
         InstrumentsPanel.SetActive(false);
         ExternalPanel.SetActive(true);
+    }
+
+    public void OpenLink(string url)
+    {
+        Application.OpenURL(url);
     }
 }

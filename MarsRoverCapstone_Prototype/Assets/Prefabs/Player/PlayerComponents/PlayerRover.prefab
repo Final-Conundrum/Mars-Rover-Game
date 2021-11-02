@@ -932,7 +932,6 @@ Transform:
   - {fileID: 124026144}
   - {fileID: 131516777}
   - {fileID: 472292262786535419}
-  - {fileID: 5460783687497130522}
   - {fileID: 6857023873684335809}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -950,7 +949,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _alignToGround: 1
-  tankControls: 1
   playerCam: {fileID: 0}
   audio_DriveSFX: {fileID: 1588541164}
   audio_JumpSFX: {fileID: 3222786564389895586}
@@ -1490,12 +1488,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6327204659837812431}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6269989, y: 0, z: -1.4150085}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.6269989, y: 0, z: -1.2863715}
+  m_LocalScale: {x: 1, y: 1, z: 0.90909094}
   m_Children:
   - {fileID: 2803377910989810927}
-  m_Father: {fileID: 82978926857982627}
-  m_RootOrder: 3
+  m_Father: {fileID: 472292262786535419}
+  m_RootOrder: 40
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1183024399 &9186968467399320284
 LookAtConstraint:
@@ -6748,7 +6746,7 @@ PrefabInstance:
     - target: {fileID: 8868727496061355184, guid: af3e3186f94ccb240bbdb24e92999e9b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8868727496061355184, guid: af3e3186f94ccb240bbdb24e92999e9b,
         type: 3}
@@ -6813,22 +6811,22 @@ PrefabInstance:
     - target: {fileID: 8868727496061355184, guid: af3e3186f94ccb240bbdb24e92999e9b,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.10758941
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8868727496061355184, guid: af3e3186f94ccb240bbdb24e92999e9b,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.08213916
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8868727496061355184, guid: af3e3186f94ccb240bbdb24e92999e9b,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.78752375
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8868727496061355184, guid: af3e3186f94ccb240bbdb24e92999e9b,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.6012354
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8868727496061355184, guid: af3e3186f94ccb240bbdb24e92999e9b,
         type: 3}

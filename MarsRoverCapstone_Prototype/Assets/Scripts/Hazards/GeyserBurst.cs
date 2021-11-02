@@ -39,10 +39,11 @@ public class GeyserBurst : MonoBehaviour
         }
 
         // Move position of geyser
+        /*
         if (geyserBurst.transform.position != posB.position)
         {
             geyserBurst.transform.position = Vector3.MoveTowards(geyserBurst.transform.position, posB.position, burstSpeed * Time.deltaTime);
-        }
+        }*/
     }
 
     private IEnumerator GeyserBursting()
@@ -50,7 +51,7 @@ public class GeyserBurst : MonoBehaviour
         geyserBurst.SetActive(true);
 
         // Transform position of geyser
-        geyserBurst.transform.position = posA.position;
+        geyserBurst.transform.position = posB.position;
 
         GM_Audio.PlaySound(audioSource, "Geyser");
 
