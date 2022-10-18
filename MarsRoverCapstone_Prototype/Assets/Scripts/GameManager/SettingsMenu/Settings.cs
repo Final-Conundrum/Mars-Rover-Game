@@ -22,9 +22,9 @@ public class Settings : MonoBehaviour
     }
 
     // Screen resolution settings
-    public void ScreenSize1620()
+    public void ScreenSize1440()
     {
-        Screen.SetResolution(2880, 1620, isFullscreen);
+        Screen.SetResolution(2560, 1440, isFullscreen);
     }
 
     public void ScreenSize1080()
