@@ -32,6 +32,8 @@ public class MiniGame_PIXL : MonoBehaviour
     public GameObject failText;
     public float failTextTimer = 2f;
 
+    public float revealPanelMultiplier = 400f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,7 +52,7 @@ public class MiniGame_PIXL : MonoBehaviour
     {
         foreach (Image i in HidingPanels)
         {
-            i.color = new Color(0, 0, 0, Vector3.Distance(VirtualCursor.transform.position, MazeEnd.transform.position) / 100);
+            i.color = new Color(0, 0, 0, Vector3.Distance(VirtualCursor.transform.position, MazeEnd.transform.position) / revealPanelMultiplier);
         }
     }
 

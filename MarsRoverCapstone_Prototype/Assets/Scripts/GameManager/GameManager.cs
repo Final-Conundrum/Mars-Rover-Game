@@ -137,31 +137,27 @@ public class GameManager : MonoBehaviour
             // Set time of day
             if (usePassageOfTime)
             {
-                if (passTime == 1)
+                switch(passTime)
                 {
-                    passTime++;
-                    _GM_Popup.FadingPopup("Mars > Jezero Crater \n 1650 hours ", 6f);
+                    case 1:
+                        passTime++;
+                        _GM_Popup.FadingPopup("Mars > Jezero Crater \n 1650 hours ", 6f);
+                        break;
+                    case 2:
+                        passTime++;
+                        _GM_Popup.FadingPopup("Mars > Jezero Crater \n 2200 hours ", 6f);
+                        PP_Volume.profile = PP_night;
+                        break;
+                    case 3:
+                        passTime++;
+                        _GM_Popup.FadingPopup("Mars > Jezero Crater \n 1200 hours ", 6f);
+                        PP_Volume.profile = PP_day;
+                        break;
+                    case 4:
+                        passTime = 1;
+                        _GM_Popup.FadingPopup("Mars > Jezero Crater \n 700 hours ", 6f);
+                        break;
                 }
-                else if (passTime == 2)
-                {
-                    passTime++;
-                    _GM_Popup.FadingPopup("Mars > Jezero Crater \n 2200 hours ", 6f);
-                    PP_Volume.profile = PP_night;
-
-                }
-                else if (passTime == 3 || passTime == 0)
-                {
-                    passTime++;
-                    _GM_Popup.FadingPopup("Mars > Jezero Crater \n 1200 hours ", 6f);
-                    PP_Volume.profile = PP_day;
-                }
-                else if (passTime == 4)
-                {
-                    passTime = 1;
-                    _GM_Popup.FadingPopup("Mars > Jezero Crater \n 700 hours ", 6f);
-
-                }
-
                 _GM_Time.SetSceneLights(passTime);
             }
         }

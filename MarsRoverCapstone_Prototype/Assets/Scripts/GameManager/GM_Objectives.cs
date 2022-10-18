@@ -27,6 +27,13 @@ public class GM_Objectives : MonoBehaviour
     public static bool updatingObjectives = false;
     public static bool endOfGame = false;
 
+    // Result images used by MiniGame_Results, which interacts with attached script MiniGame_ResultCheck
+
+    public GameObject[] PIXL_ImagePrefab;
+    public static GameObject[] _PIXL_ImagePrefab;
+    public GameObject[] RIMFAX_ImagePrefab;
+    public static GameObject[] _RIMFAX_ImagePrefab;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,6 +52,9 @@ public class GM_Objectives : MonoBehaviour
         _Obj_PIXL_TTS = Obj_PIXL_TTS;
         _Obj_RIMFAX_TTS = Obj_RIMFAX_TTS;
         _Obj_Drill_TTS = Obj_Drill_TTS;
+
+        _PIXL_ImagePrefab = PIXL_ImagePrefab;
+        _RIMFAX_ImagePrefab = RIMFAX_ImagePrefab;
 
         objectivePIXLString = "> Analyze minerals using the PIXL (" + _PIXLCurrent + "/" + _PIXLTotal + ")";
         objectiveRIMFAXString = "> Use RIMFAX to construct underground scans (" + _RIMFAXCurrent + "/" + _RIMFAXTotal + ")";
